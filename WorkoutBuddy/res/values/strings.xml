@@ -7,5 +7,14 @@
     <string name="button_myWorkOuts">My Workouts</string>
     <string name="button_createWorkOuts">Create New Workout</string>
     <string name="title_activity_my_workout">My Workout</string>
+    <string name="title_activity_main">MainActivity</string>
+    <string name="title_section1">Workouts</string>
+    <string name="title_section2">Exercises</string>
+    <string name="title_section3">Graphs</string>
+    <string name="title_section4">Social</string>
+    <string-array name="graph_spinner_entries">
+        <item>Time</item>
+        <item>Day</item>
+    </string-array>
 
 </resources>
