@@ -1,7 +1,6 @@
 package com.example.workoutbuddy.test;
 
-import com.example.workoutbuddy.HomeActivity;
-import com.example.workoutbuddy.MyWorkoutsActivity;
+import com.example.workoutbuddy.MainActivity;
 
 import android.test.ActivityUnitTestCase;
 import android.test.suitebuilder.annotation.MediumTest;
@@ -9,10 +8,12 @@ import android.test.suitebuilder.annotation.SmallTest;
 import android.app.Activity;
 import android.app.Instrumentation.ActivityMonitor;
 
-public class HomeActivityTest extends ActivityUnitTestCase<HomeActivity> {
-
+public class HomeActivityTest extends ActivityUnitTestCase<MainActivity> {
+	public HomeActivityTest() {
+	    super(MainActivity.class);
+	}
 	
-	public HomeActivityTest(Class<HomeActivity> activityClass) {
+	public HomeActivityTest(Class<MainActivity> activityClass) {
 		super(activityClass);
 		// TODO Auto-generated constructor stub
 	}
@@ -28,17 +29,18 @@ public class HomeActivityTest extends ActivityUnitTestCase<HomeActivity> {
 
 	@SmallTest
 	public void testonCreate() {
-		HomeActivity ha = new HomeActivity();
-		ha.onCreate(null);
+		//MainActivity ha = new MainActivity();
+		assertNotNull(null);
+		//ha.onCreate(null);
 		//TODO TEST list buttons.
 	}
 	
 	@SmallTest
 	public void testgoToMyWorkouts() {
-		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(MyWorkoutsActivity.class.getName(), null, false);
+		ActivityMonitor activityMonitor = getInstrumentation().addMonitor(MainActivity.class.getName(), null, false);
 
-		HomeActivity ha = new HomeActivity();
-		ha.goToCreateWorkOut(null);
+		MainActivity ha = new MainActivity();
+		//ha.goToCreateWorkOut(null);
 		//ASSERT My Workouts activity started
 		
 		Activity nextActivity = getInstrumentation().waitForMonitorWithTimeout(activityMonitor, 10000);
