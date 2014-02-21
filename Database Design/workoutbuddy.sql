@@ -16,7 +16,7 @@ CREATE TABLE Sets(
        s_id INT PRIMARY KEY,
        reps INT,
        weight INT,
-       time INTERVAL,
+       time INTERVAL HOUR(8) TO MINUTE,
        e_id INT REFERENCES Exercise(e_id),
        w_id INT REFERENCES Workout(w_id)	       
 );
