@@ -6,5 +6,9 @@
     <string name="title_section1">Section 1</string>
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
-
+    <string name="title_activity_my_workouts">MyWorkouts</string>
+	
+    <string name="button1_text">button1Text</string>
+    <string name="button2_text">button2Text</string>
+    
 </resources>
