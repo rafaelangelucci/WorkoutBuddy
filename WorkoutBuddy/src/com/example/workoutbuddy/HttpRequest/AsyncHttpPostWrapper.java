@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
+import java.util.concurrent.ExecutionException;
+
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -30,8 +32,8 @@ public class AsyncHttpPostWrapper {
 		this.requestListener = requestListener;
 	}
 	
-	public void makeRequest(HashMap<String, String> data){
-		new AsyncHttpPost(data).execute();
+	public String makeRequest(HashMap<String, String> data, String URL) throws InterruptedException, ExecutionException{
+		return new AsyncHttpPost(data).execute(URL).get();
 	}
 	
 	
