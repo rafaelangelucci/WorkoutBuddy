@@ -7,8 +7,18 @@
     <string name="title_section2">Section 2</string>
     <string name="title_section3">Section 3</string>
     <string name="title_activity_my_workouts">MyWorkouts</string>
-	
-    <string name="button1_text">button1Text</string>
-    <string name="button2_text">button2Text</string>
-    
+    <string name="title_activity_new_workout">NewWorkoutActivity</string>
+    <string name="button1_text">My Workouts</string>
+    <string name="button2_text">Create New Workout</string>
+    <string name="buttonDone_text">Done</string>
+    <string name="buttonPlus_text">+</string>
+    <string name="buttonMinus_text">-</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="textView_NewWorkout">New Workout</string>
+    <string name="textView_Exercises">Exercises</string>
+    <string name="textView_Description">Description</string>
+    <string name="textView_Name">Name</string>
+    <string name="hint_Name">Enter Name here</string>
+    <string name="hint_Description">Enter Description here</string>
+
 </resources>

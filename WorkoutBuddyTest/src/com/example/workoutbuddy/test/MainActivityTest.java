@@ -1,8 +1,12 @@
 package com.example.workoutbuddy.test;
 
 import junit.framework.Assert;
+import android.annotation.SuppressLint;
 import android.test.ActivityInstrumentationTestCase2;
+import android.view.View;
+import android.widget.Button;
 import com.example.workoutbuddy.MainActivity;
+import com.example.workoutbuddy.R;
 
 
 public class MainActivityTest extends
@@ -25,16 +29,22 @@ public class MainActivityTest extends
 	}
 	
 	
-	public void testPreConditions() {
-		Assert.assertTrue(true);
-	}
-	
 	
 	public void testLayout(){
-		Assert.fail();
+		testButtonLayout(mActivity.findViewById(R.id.button1));
+		testButtonLayout(mActivity.findViewById(R.id.button2));
 	}
 	
+	public void testButtonLayout(View view)
+	{
+		Assert.assertNotNull(view);
+		Assert.assertTrue(view.isShown());
+		Assert.assertTrue(view.isClickable());
+	}
+	
+	@SuppressLint("NewApi")
 	public void testNewWorkoutClick(){
-		Assert.fail();
+		Button button = (Button)mActivity.findViewById(R.id.button2);
+		Assert.assertTrue(button.callOnClick());
 	}
 }
