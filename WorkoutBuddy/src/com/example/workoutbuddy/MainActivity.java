@@ -4,6 +4,7 @@ import java.util.Locale;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -48,8 +49,7 @@ public class MainActivity extends FragmentActivity implements
 
 		// Create the adapter that will return a fragment for each of the three
 		// primary sections of the app.
-		mSectionsPagerAdapter = new SectionsPagerAdapter(
-				getSupportFragmentManager());
+		mSectionsPagerAdapter = new SectionsPagerAdapter(this, getSupportFragmentManager());
 
 		// Set up the ViewPager with the sections adapter.
 		mViewPager = (ViewPager) findViewById(R.id.pager);
@@ -103,39 +103,34 @@ public class MainActivity extends FragmentActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-	/**
-	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-	 * one of the sections/tabs/pages.
-	 */
-	public class SectionsPagerAdapter extends FragmentPagerAdapter {
+    /**
+     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+     * one of the sections/tabs/pages.
+     */
+    public class SectionsPagerAdapter extends FragmentPagerAdapter
+    {
+        Context c;
 
-		public SectionsPagerAdapter(FragmentManager fm) {
-			super(fm);
-		}
+        public SectionsPagerAdapter(Context c, FragmentManager fm) {
+            super(fm);
+            this.c = c;
+        }
 
-		@Override
-		public Fragment getItem(int position) {
-			// getItem is called to instantiate the fragment for the given page.
-			// Return a DummySectionFragment (defined as a static inner class
-			// below) with the page number as its lone argument.
-			if(position==0)
-			{
-				//main page
-				Fragment fragment = new MainFragment0();
-				Bundle args = new Bundle();
-				args.putInt(MainFragment0.ARG_SECTION_NUMBER, position + 1);
-				fragment.setArguments(args);
-				return fragment;
-			}
-			else
-			{
-				Fragment fragment = new DummySectionFragment();
-				Bundle args = new Bundle();
-				args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-				fragment.setArguments(args);
-				return fragment;
-			}
-		}
+        @Override
+        public Fragment getItem(int position) {
+            // getItem is called to instantiate the fragment for the given page.
+            // Return a DummySectionFragment (defined as a static inner class
+            // below) with the page number as its lone argument.
+            switch (position) {
+            case 0:
+                return new WorkoutFragment(c);
+            case 1:
+                return new ExerciseFragment(c);
+            //TODO: Implement HistoryFragment as case 3
+            default:
+                return new Fragment();
+            }
+        }
 
 		@Override
 		public int getCount() {
@@ -148,11 +143,11 @@ public class MainActivity extends FragmentActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-				return getString(R.string.title_section1).toUpperCase(l);
-			case 1:
-				return getString(R.string.title_section2).toUpperCase(l);
-			case 2:
-				return getString(R.string.title_section3).toUpperCase(l);
+                return getString(R.string.workouts).toUpperCase(l);
+            case 1:
+                return getString(R.string.exercises).toUpperCase(l);
+            case 2:
+                return getString(R.string.history).toUpperCase(l);
 			}
 			return null;
 		}
