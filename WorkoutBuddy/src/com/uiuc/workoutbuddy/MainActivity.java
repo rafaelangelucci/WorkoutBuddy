@@ -1,6 +1,8 @@
-package com.example.workoutbuddy;
+package com.uiuc.workoutbuddy;
 
 import java.util.Locale;
+
+import com.example.workoutbuddy.R;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;

@@ -14,7 +14,7 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="com.example.workoutbuddy.MainActivity"
+            android:name="com.uiuc.workoutbuddy.MainActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -23,7 +23,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.workoutbuddy.MyWorkouts"
+            android:name="com.uiuc.workoutbuddy.MyWorkouts"
             android:label="@string/title_activity_my_workouts"
             android:parentActivityName="android.support.v4.app.FragmentActivity" >
             <meta-data

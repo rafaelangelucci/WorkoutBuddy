@@ -1,4 +1,6 @@
-package com.example.workoutbuddy;
+package com.uiuc.workoutbuddy;
+
+import com.example.workoutbuddy.R;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -22,7 +24,7 @@ import android.widget.Toast;
 *
 */
 @SuppressLint("ValidFragment")
-public class ExerciseFragment extends Fragment implements OnClickListener
+public class WorkoutFragment extends Fragment implements OnClickListener
 {
 	View view;
 	Context c;
@@ -30,13 +32,13 @@ public class ExerciseFragment extends Fragment implements OnClickListener
 	/**
 	 * Default Constructor
 	 */
-	public ExerciseFragment(){}
+	public WorkoutFragment(){}
 
 	/**
 	 * Constructor
 	 * @param c context
 	 */
-	public ExerciseFragment(Context c)
+	public WorkoutFragment(Context c)
 	{
 		this.c = c;
 	}
@@ -48,41 +50,36 @@ public class ExerciseFragment extends Fragment implements OnClickListener
 	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
 	{
 		try {
-			view = inflater.inflate(R.layout.exercise_fragment, container, false);
+			view = inflater.inflate(R.layout.workout_fragment, container, false);
 		} catch(InflateException e) {
 			//already made
 		}
 
-		Button new_exercise = (Button)view.findViewById(R.id.btn_new_exercise);
-		Button add_exercise = (Button)view.findViewById(R.id.btn_add_exercise);
-		Button delete_exercise = (Button)view.findViewById(R.id.btn_delete_exercise);
+		Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
+		Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
 		
-		new_exercise.setOnClickListener(this);
-		add_exercise.setOnClickListener(this);
-		delete_exercise.setOnClickListener(this);
+		my_workouts.setOnClickListener(this);
+		new_workout.setOnClickListener(this);
 
 		return view;
 	}
 
 	/**
-	 * On click listener for exercise top row buttons
+	 * On click listener for my workouts and new workout buttons
 	 */
 	@Override
 	public void onClick(View v) 
 	{
 		switch(v.getId())
 		{
-		case R.id.btn_new_exercise:
-			Log.i( "ExerciseFragment", "OnClick : New Exercise");
+		case R.id.btn_my_workouts:
+			Log.i( "WorkoutFragment", "OnClick : My Workouts");
 			break;
-		case R.id.btn_add_exercise:
-			Log.i( "ExerciseFragment", "OnClick : Add Exercise");
-			break;
-		case R.id.btn_delete_exercise:
-			Log.i( "ExerciseFragment", "OnClick : Delete Exercise");
+		case R.id.btn_new_workout:
+			Log.i( "WorkoutFragment", "OnClick : New Workout");
 			break;
 		default:
-			Log.i( "ExerciseFragment", "OnClick : No ID matched");
+			Log.i( "WorkoutFragment", "OnClick : No ID matched");
 		}
 		
 	}
