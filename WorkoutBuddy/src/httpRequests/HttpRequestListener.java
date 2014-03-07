@@ -1,4 +1,4 @@
-package com.example.workoutbuddy.HttpRequest;
+package httpRequests;
 
 /**
  * Interface to make Async testing easier
