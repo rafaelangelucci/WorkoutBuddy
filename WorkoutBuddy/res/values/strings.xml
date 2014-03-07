@@ -21,4 +21,9 @@
     <string name="exercises">Exercises</string>
     <string name="history">History</string>
     
+    <string name="login_button_text">Login</string>
+    <string name="skip_button_text">Skip Login</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    
 </resources>
