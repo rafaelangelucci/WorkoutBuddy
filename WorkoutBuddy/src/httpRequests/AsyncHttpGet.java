@@ -1,4 +1,4 @@
-package com.example.workoutbuddy.HttpRequest;
+package httpRequests;
 
 import java.io.BufferedReader;
 import java.io.InputStream;
