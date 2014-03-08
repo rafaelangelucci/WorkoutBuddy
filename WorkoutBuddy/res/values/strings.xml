@@ -20,5 +20,21 @@
     <string name="textView_Name">Name</string>
     <string name="hint_Name">Enter Name here</string>
     <string name="hint_Description">Enter Description here</string>
+    
+    <string name="workouts">Workouts</string>
+    <string name="exercises">Exercises</string>
+    <string name="history">History</string>
+    <string name="temp">Tmp</string>
+
+    <string name="my_workouts">My Workouts</string>
+    <string name="new_workout">New Workout</string>
+    <string name="new_exercise">New\nExercise</string>
+    <string name="add_exercise">Add\nExercise</string>
+    <string name="delete_exercise">Delete\nExercise</string>
+    
+    <string name="username_hint">Username Hint</string>
+    <string name="password_hint">Password Hint</string>
+    <string name="login_button_text">Login Button</string>
+    <string name="skip_button_text">Skip Button</string>
 
 </resources>
