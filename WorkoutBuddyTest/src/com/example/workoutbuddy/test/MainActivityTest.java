@@ -1,6 +1,6 @@
 package com.example.workoutbuddy.test;
 
-import com.example.workoutbuddy.MainActivity;
+import com.uiuc.workoutbuddy.MainActivity;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
