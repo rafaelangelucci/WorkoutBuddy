@@ -2,7 +2,9 @@ package com.uiuc.workoutbuddy;
 
 import java.util.Locale;
 
+import com.example.workoutbuddy.NewWorkoutActivity;
 import com.example.workoutbuddy.R;
+
 //testing
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
@@ -206,8 +208,8 @@ public class MainActivity extends FragmentActivity implements
     }
     
     //button2Handler
-//    public void goToCreateWorkOut(View view) {
-//    	Intent intent = new Intent(this, NewWorkoutActivity.class);
-//    	startActivity(intent);
-//    }
+    public void goToCreateWorkOut(View view) {
+    	Intent intent = new Intent(this, NewWorkoutActivity.class);
+    	startActivity(intent);
+    }
 }
