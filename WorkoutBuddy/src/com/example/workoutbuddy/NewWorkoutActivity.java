@@ -1,11 +1,10 @@
-package com.uiuc.workoutbuddy;
+package com.example.workoutbuddy;
 
 import java.util.Locale;
 
-import com.example.workoutbuddy.R;
-
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -18,11 +17,13 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.TextView;
+import android.widget.Button;
+import android.widget.LinearLayout;
 
-public class MyWorkouts extends FragmentActivity implements
+public class NewWorkoutActivity extends FragmentActivity implements
 		ActionBar.TabListener {
 
+	public int numExercises = 1;
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -41,7 +42,7 @@ public class MyWorkouts extends FragmentActivity implements
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_my_workouts);
+		setContentView(R.layout.activity_new_workout);
 
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
@@ -84,7 +85,7 @@ public class MyWorkouts extends FragmentActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.my_workouts, menu);
+		getMenuInflater().inflate(R.menu.new_workout, menu);
 		return true;
 	}
 
@@ -138,10 +139,18 @@ public class MyWorkouts extends FragmentActivity implements
 			// getItem is called to instantiate the fragment for the given page.
 			// Return a DummySectionFragment (defined as a static inner class
 			// below) with the page number as its lone argument.
-			Fragment fragment = new DummySectionFragment();
-			Bundle args = new Bundle();
-			args.putInt(DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
-			fragment.setArguments(args);
+			Fragment fragment;
+			if(position==0)
+			{
+				fragment = new NewWorkoutFrag0();
+			}
+			else
+			{
+				fragment = new MainActivity.DummySectionFragment();
+				Bundle args = new Bundle();
+				args.putInt(MainActivity.DummySectionFragment.ARG_SECTION_NUMBER, position + 1);
+				fragment.setArguments(args);
+			}
 			return fragment;
 		}
 
@@ -165,32 +174,54 @@ public class MyWorkouts extends FragmentActivity implements
 			return null;
 		}
 	}
+	
+	
 
 	/**
-	 * A dummy fragment representing a section of the app, but that simply
-	 * displays dummy text.
+	 * The first fragment on the New Workout Activity page.
 	 */
-	public static class DummySectionFragment extends Fragment {
+	public static class NewWorkoutFrag0 extends Fragment {
 		/**
 		 * The fragment argument representing the section number for this
 		 * fragment.
 		 */
 		public static final String ARG_SECTION_NUMBER = "section_number";
 
-		public DummySectionFragment() {
+		public NewWorkoutFrag0() {
 		}
 
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
 			View rootView = inflater.inflate(
-					R.layout.fragment_my_workouts_dummy, container, false);
-			TextView dummyTextView = (TextView) rootView
-					.findViewById(R.id.section_label);
-			dummyTextView.setText(Integer.toString(getArguments().getInt(
-					ARG_SECTION_NUMBER)));
+					R.layout.fragment_new_workout0, container, false);
 			return rootView;
 		}
 	}
-
+	
+/////// Button Click Triggers
+	
+	public void buttonPlus_Clicked(View view) {
+		LinearLayout ll = (LinearLayout)findViewById(R.id.linearLayout);
+		if(ll==null) return;
+		Button myButton = new Button(this);
+		myButton.setText("pushups" + this.numExercises);
+		ll.addView(myButton, this.numExercises);
+		this.numExercises++;
+    }
+	
+	public void buttonMinus_Clicked(View view) {
+		if(this.numExercises>1)
+		{
+			LinearLayout ll = (LinearLayout)findViewById(R.id.linearLayout);
+			ll.removeViewAt(this.numExercises - 1);
+			this.numExercises--;
+		}
+    }
+	
+	public void buttonDone_Clicked(View view) {
+		//TODO: add workout to database
+		Intent intent = new Intent(this, MainActivity.class);
+    	startActivity(intent);
+    }
 }

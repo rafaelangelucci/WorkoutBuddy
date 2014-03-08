@@ -6,18 +6,19 @@ import com.example.workoutbuddy.R;
 
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
+<<<<<<< HEAD:WorkoutBuddy/src/com/example/workoutbuddy/MainActivity.java
+import android.content.Intent;
+=======
 import android.content.Context;
+>>>>>>> 35bf23a85d01e53ad420a2623bb03bf61a1a01e9:WorkoutBuddy/src/com/uiuc/workoutbuddy/MainActivity.java
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
-import android.support.v4.app.NavUtils;
 import android.support.v4.view.ViewPager;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
@@ -209,7 +210,7 @@ public class MainActivity extends FragmentActivity implements
     
     //button2Handler
     public void goToCreateWorkOut(View view) {
-//    	Intent intent = new Intent(this, CreateWorkoutActivity.class);
-//    	startActivity(intent);
+    	Intent intent = new Intent(this, NewWorkoutActivity.class);
+    	startActivity(intent);
     }
 }
