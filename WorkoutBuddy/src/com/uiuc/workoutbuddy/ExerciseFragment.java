@@ -88,30 +88,4 @@ public class ExerciseFragment extends Fragment implements OnClickListener
 		}
 		
 	}
-
-/*
-	@Override
-	public void onClick(View v) 
-	{
-		new ClearDBTask().execute((Object)null);
-	}
-
-	private class ClearDBTask extends AsyncTask {
-
-		@Override
-		protected String doInBackground(Object... params) {
-			// TODO Auto-generated method stub
-			return ServerInterface.resetDB();
-		}
-
-		protected void onPostExecute(Object result) {
-			// now update the textView here
-			//TextView tv = (TextView) mView.findViewById(yourTextViewId);
-			// now you have reference to tv, probably update the text by
-			//tv.setText(yourString);
-			Toast.makeText(c, "Database Reset", Toast.LENGTH_SHORT).show();
-			DrinkFragment.reset();
-		}
-	}
-*/
 }

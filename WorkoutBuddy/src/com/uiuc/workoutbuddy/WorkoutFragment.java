@@ -5,7 +5,6 @@ import com.uiuc.workoutbuddy.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -15,7 +14,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.Button;
-import android.widget.Toast;
 
 /**
 * Class to contain information for the Workout Fragment tab 
@@ -85,30 +83,4 @@ public class WorkoutFragment extends Fragment implements OnClickListener
 		}
 		
 	}
-
-/*
-	@Override
-	public void onClick(View v) 
-	{
-		new ClearDBTask().execute((Object)null);
-	}
-
-	private class ClearDBTask extends AsyncTask {
-
-		@Override
-		protected String doInBackground(Object... params) {
-			// TODO Auto-generated method stub
-			return ServerInterface.resetDB();
-		}
-
-		protected void onPostExecute(Object result) {
-			// now update the textView here
-			//TextView tv = (TextView) mView.findViewById(yourTextViewId);
-			// now you have reference to tv, probably update the text by
-			//tv.setText(yourString);
-			Toast.makeText(c, "Database Reset", Toast.LENGTH_SHORT).show();
-			DrinkFragment.reset();
-		}
-	}
-*/
 }
