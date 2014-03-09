@@ -26,18 +26,28 @@ public class BasicActivityTest extends
 	    myActivity = getActivity();
 	}
 	
+	/**
+	 * Test successful start up of NewWorkoutActivity aka BasicActivity
+	 */
 	public void testActivityStartup()
 	{
 		final String expected = myActivity.getString(com.uiuc.workoutbuddy.R.string.title_activity_new_workout);
 		assertEquals(expected, "NewWorkoutActivity");
 	}
 	
+	/**
+	 * Test proper activity layout with all the necessary buttons
+	 */
 	public void testLayout(){
 		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus));
 		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonPlus));
 		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonDone));
 	}
 	
+	/**
+	 * Test all button clicks and verify they work as designed
+	 * @param view
+	 */
 	public void testButtonLayout(View view)
 	{
 		Assert.assertNotNull(view);

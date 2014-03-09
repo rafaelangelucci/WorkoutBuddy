@@ -32,12 +32,18 @@ public class MainActivityTest extends
 	    mActivity = getActivity();
 	}
 	
-	
-	public void testActivitySetup()
+	/**
+	 * Test successful start up of MainActivity
+	 */
+	public void testActivityStartup()
 	{
-		
+		final String expected = mActivity.getString(com.uiuc.workoutbuddy.R.string.app_name);
+		assertEquals(expected, "WorkoutBuddy");
 	}
 	
+	/**
+	 * Test proper activity layout with all the necessary buttons
+	 */
 	public void testLayout(){
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_workouts));
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_workout));
@@ -46,18 +52,16 @@ public class MainActivityTest extends
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
 	}
 	
+	/**
+	 * Test all button clicks and verify they work as designed
+	 * @param view
+	 */
 	public void testButtonLayout(View view)
 	{
 		Assert.assertNotNull(view);
 		Assert.assertTrue(view.isShown());
 		Assert.assertTrue(view.isClickable());
 	}
-	
-//	@SuppressLint("NewApi")
-//	public void testNewWorkoutClick(){
-//		Button button = (Button)mActivity.findViewById(R.id.button2);
-//		Assert.assertTrue(button.callOnClick());
-//	}
 	
 //	public void testWorkoutList(){
 //		ViewAsserts.assertOnScreen(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment).getRootView(),
