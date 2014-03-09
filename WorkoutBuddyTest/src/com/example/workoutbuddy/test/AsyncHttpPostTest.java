@@ -61,6 +61,19 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 		
 	}
 	
+	@UiThreadTest
+	public void testgetExerciseList() throws InterruptedException, ExecutionException
+	{
+		String[][] responses = wrapper.getExerciseList("usernameA");
+		signal.await(5, TimeUnit.SECONDS);
+		
+		assertEquals(responses[0][0], "ExerciseA");
+		assertEquals(responses[0][1], "ExerciseB");
+		assertEquals(responses[1][0], "strength");
+		assertEquals(responses[2][0], "desc");
+		
+	}
+	
 
 	/**
 	 * Signals a completed request

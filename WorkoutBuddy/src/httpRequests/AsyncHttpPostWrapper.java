@@ -90,6 +90,45 @@ public class AsyncHttpPostWrapper {
 		return returnArray;		
 	}
 	
+	/**
+	 * 
+	 * @param username name associated with the account
+	 * @return array data array[0]=names, array[1]=types, array[2]=descriptions
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public String[][] getExerciseList(String username) throws InterruptedException, ExecutionException{
+		//Make the post request to URL with username in postdata
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExerciseList.php";
+		HashMap<String, String> postData = new HashMap<String,String>();
+		postData.put("username", username);
+		String response = this.makeRequest(postData, URL);
+		
+		//get response and parse it into an array
+		String[] names = {};
+		String[] types = {};
+		String[] descriptions = {};
+		
+		//take JSON format and put into array
+		try{
+			JSONArray jArray = new JSONArray(response);
+			int arrayLength = jArray.length();
+			names = new String[arrayLength];
+			types = new String[arrayLength];
+			descriptions = new String[arrayLength];
+			for(int i = 0; i<jArray.length(); i++){
+				JSONObject json_data = jArray.getJSONObject(i);
+				names[i] = json_data.getString("name");
+				types[i] = json_data.getString("date");
+				descriptions[i] = json_data.getString("description");
+			}
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		String[][] returnArray = {names, types, descriptions};		
+		return returnArray;		
+	}
+	
 	
 
 
