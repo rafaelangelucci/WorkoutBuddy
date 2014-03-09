@@ -53,26 +53,21 @@ public class WorkoutFragment extends Fragment implements OnClickListener
 			//already made
 		}
 
-		Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
 		Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
 		
-		my_workouts.setOnClickListener(this);
 		new_workout.setOnClickListener(this);
 
 		return view;
 	}
 
 	/**
-	 * On click listener for my workouts and new workout buttons
+	 * On click listener for new workout button
 	 */
 	@Override
 	public void onClick(View v) 
 	{
 		switch(v.getId())
 		{
-		case R.id.btn_my_workouts:
-			Log.i( "WorkoutFragment", "OnClick : My Workouts");
-			break;
 		case R.id.btn_new_workout:
 			Intent i = new Intent(c, BasicActivity.class);
 			startActivity(i);

@@ -1,19 +1,24 @@
 package com.example.workoutbuddy.test;
 
 import com.uiuc.workoutbuddy.MainActivity;
+import com.uiuc.workoutbuddy.MyWorkoutsListFragment;
+import com.uiuc.workoutbuddy.WorkoutFragment;
 
 import junit.framework.Assert;
 import android.annotation.SuppressLint;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.ListFragment;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 
 
 public class MainActivityTest extends
 		ActivityInstrumentationTestCase2<MainActivity> {
 
 	private MainActivity mActivity;
-	
 	
 	public MainActivityTest(){
 		super(MainActivity.class);
@@ -24,7 +29,6 @@ public class MainActivityTest extends
 	    super.setUp();
 
 	    setActivityInitialTouchMode(false);
-	    
 	    mActivity = getActivity();
 	}
 	
@@ -47,4 +51,9 @@ public class MainActivityTest extends
 //		Button button = (Button)mActivity.findViewById(R.id.button2);
 //		Assert.assertTrue(button.callOnClick());
 //	}
+	
+	public void testWorkoutList(){
+		ViewAsserts.assertOnScreen(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment).getRootView(),
+				mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment));
+	}
 }
