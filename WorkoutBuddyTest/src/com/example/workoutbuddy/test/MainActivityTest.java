@@ -33,27 +33,30 @@ public class MainActivityTest extends
 	}
 	
 	
-//	
-//	public void testLayout(){
-//		testButtonLayout(mActivity.findViewById(R.id.button1));
-//		testButtonLayout(mActivity.findViewById(R.id.button2));
-//	}
-//	
-//	public void testButtonLayout(View view)
-//	{
-//		Assert.assertNotNull(view);
-//		Assert.assertTrue(view.isShown());
-//		Assert.assertTrue(view.isClickable());
-//	}
-//	
+	
+	public void testLayout(){
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_workouts));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_workout));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_add_exercise));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_delete_exercise));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
+	}
+	
+	public void testButtonLayout(View view)
+	{
+		Assert.assertNotNull(view);
+		Assert.assertTrue(view.isShown());
+		Assert.assertTrue(view.isClickable());
+	}
+	
 //	@SuppressLint("NewApi")
 //	public void testNewWorkoutClick(){
 //		Button button = (Button)mActivity.findViewById(R.id.button2);
 //		Assert.assertTrue(button.callOnClick());
 //	}
 	
-	public void testWorkoutList(){
-		ViewAsserts.assertOnScreen(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment).getRootView(),
-				mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment));
-	}
+//	public void testWorkoutList(){
+//		ViewAsserts.assertOnScreen(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment).getRootView(),
+//				mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment));
+//	}
 }
