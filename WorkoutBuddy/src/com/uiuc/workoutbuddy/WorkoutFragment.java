@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import com.example.workoutbuddy.NewWorkoutActivity;
 import com.example.workoutbuddy.R;
 
 import android.annotation.SuppressLint;
@@ -74,6 +75,8 @@ public class WorkoutFragment extends Fragment implements OnClickListener
 		{
 		case R.id.btn_my_workouts:
 			Log.i( "WorkoutFragment", "OnClick : My Workouts");
+			Intent intent = new Intent(this.getActivity().getApplicationContext(), NewWorkoutActivity.class);
+	    	startActivity(intent);
 			break;
 		case R.id.btn_new_workout:
 			Log.i( "WorkoutFragment", "OnClick : New Workout");
