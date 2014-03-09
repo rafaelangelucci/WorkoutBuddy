@@ -89,10 +89,8 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 					for(int j = 0; j < responses[i].length; j++)
 						Log.i( "WorkoutFragment", "OnClick DB response : " + responses[i][j]);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
             break;
