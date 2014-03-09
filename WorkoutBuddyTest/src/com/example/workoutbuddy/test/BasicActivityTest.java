@@ -33,9 +33,9 @@ public class BasicActivityTest extends
 	}
 	
 	public void testLayout(){
-		//testButtonLayout(nwActivity.findViewById(R.id.buttonMinus));
-		//testButtonLayout(nwActivity.findViewById(R.id.buttonPlus));
-		//testButtonLayout(nwActivity.findViewById(R.id.buttonDone));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonPlus));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonDone));
 	}
 	
 	public void testButtonLayout(View view)
@@ -47,19 +47,19 @@ public class BasicActivityTest extends
 	
 	@SuppressLint("NewApi")
 	public void testbuttonDoneClick(){
-		Button button = (Button)myActivity.findViewById(R.id.buttonDone);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonDone);
 		Assert.assertTrue(button.callOnClick());
 	}
 	
 	@SuppressLint("NewApi")
 	public void testbuttonPlusClick(){
-		Button button = (Button)myActivity.findViewById(R.id.buttonPlus);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonPlus);
 		Assert.assertTrue(button.callOnClick());
 	}
 	
 	@SuppressLint("NewApi")
 	public void testbuttonMinusClick(){
-		Button button = (Button)myActivity.findViewById(R.id.buttonMinus);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus);
 		Assert.assertTrue(button.callOnClick());
 	}
 }

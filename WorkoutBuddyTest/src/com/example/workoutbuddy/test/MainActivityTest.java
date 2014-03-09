@@ -33,6 +33,10 @@ public class MainActivityTest extends
 	}
 	
 	
+	public void testActivitySetup()
+	{
+		
+	}
 	
 	public void testLayout(){
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_workouts));
