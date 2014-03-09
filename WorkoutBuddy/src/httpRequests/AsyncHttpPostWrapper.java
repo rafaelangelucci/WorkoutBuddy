@@ -122,7 +122,7 @@ public class AsyncHttpPostWrapper {
 			for(int i = 0; i<jArray.length(); i++){
 				JSONObject json_data = jArray.getJSONObject(i);
 				names[i] = json_data.getString("name");
-				types[i] = json_data.getString("date");
+				types[i] = json_data.getString("type");
 				descriptions[i] = json_data.getString("description");
 			}
 		}catch(JSONException e){

@@ -83,14 +83,11 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
         try {
 			String[][] responses = wrapper.getExerciseList("usernameA");
 			signal.await(5, TimeUnit.SECONDS);
-			for(int i = 0; i < responses.length; i++)
-				for(int j = 0; j < responses[i].length; j++)
-				{
-					Log.i( "ExerciseFragment", "OnClick DB response : " + responses[i][j]);
-					if(responses[i][j] != null)
-						dbResponse += responses[i][j] + "\n";
-				}
-		} catch (InterruptedException e) {
+			for(int i = 0; i < responses[0].length; i++)
+			{
+				dbResponse += responses[0][i] + " " + responses[1][i] + " " + responses[2][i] + '\n';
+			}
+        } catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
