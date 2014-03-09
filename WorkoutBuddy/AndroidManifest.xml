@@ -31,6 +31,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="android.support.v4.app.FragmentActivity" />
         </activity>
+        <activity
+            android:name="com.uiuc.workoutbuddy.BasicActivity"
+            android:label="@string/title_activity_new_workout" >
+        </activity>
     </application>
 
 </manifest>

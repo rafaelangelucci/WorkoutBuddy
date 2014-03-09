@@ -76,6 +76,8 @@ public class WorkoutFragment extends Fragment implements OnClickListener
 			Log.i( "WorkoutFragment", "OnClick : My Workouts");
 			break;
 		case R.id.btn_new_workout:
+			Intent i = new Intent(c, BasicActivity.class);
+			startActivity(i);
 			Log.i( "WorkoutFragment", "OnClick : New Workout");
 			break;
 		default:

@@ -1,10 +1,7 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.Locale;
-
-
 import com.uiuc.workoutbuddy.R;
-//testing
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
