@@ -16,66 +16,71 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 /**
-* Class to contain information for the Workout Fragment tab 
-* 
+* Class to contain information for the Workout Fragment tab
+*
 * @author tmadigan7
 *
 */
 @SuppressLint("ValidFragment")
 public class WorkoutFragment extends Fragment implements OnClickListener
 {
-	View view;
-	Context c;
+    View view;
+    Context c;
 
-	/**
-	 * Default Constructor
-	 */
-	public WorkoutFragment(){}
+    /**
+     * Default Constructor
+     */
+    public WorkoutFragment(){}
 
-	/**
-	 * Constructor
-	 * @param c context
-	 */
-	public WorkoutFragment(Context c)
-	{
-		this.c = c;
-	}
+    /**
+     * Constructor
+     * @param c context
+     */
+    public WorkoutFragment(Context c)
+    {
+        this.c = c;
+    }
 
-	/**
-	 * On Creation of this fragment, this method executes to load the layout
-	 * and registers all buttons and sets onclick listeners
-	 */
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
-	{
-		try {
-			view = inflater.inflate(R.layout.workout_fragment, container, false);
-		} catch(InflateException e) {
-			//already made
-		}
+    /**
+     * On Creation of this fragment, this method executes to load the layout
+     * and registers all buttons and sets onclick listeners
+     */
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+    {
+        try {
+            view = inflater.inflate(R.layout.workout_fragment, container, false);
+        } catch(InflateException e) {
+            //already made
+        }
 
-		Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
-		
-		new_workout.setOnClickListener(this);
+        Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
+        Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
 
-		return view;
-	}
+        my_workouts.setOnClickListener(this);
+        new_workout.setOnClickListener(this);
 
-	/**
-	 * On click listener for new workout button
-	 */
-	@Override
-	public void onClick(View v) 
-	{
-		switch(v.getId())
-		{
-		case R.id.btn_new_workout:
-			Intent i = new Intent(c, BasicActivity.class);
-			startActivity(i);
-			Log.i( "WorkoutFragment", "OnClick : New Workout");
-			break;
-		default:
-			Log.i( "WorkoutFragment", "OnClick : No ID matched");
-		}
-		
-	}
+        return view;
+    }
+
+    /**
+     * On click listener for my workouts and new workout buttons
+     */
+    @Override
+    public void onClick(View v)
+    {
+        switch(v.getId())
+        {
+        case R.id.btn_my_workouts:
+            Log.i( "WorkoutFragment", "OnClick : My Workouts");
+            break;
+        case R.id.btn_new_workout:
+            Intent i = new Intent(c, BasicActivity.class);
+            startActivity(i);
+            Log.i( "WorkoutFragment", "OnClick : New Workout");
+            break;
+        default:
+            Log.i( "WorkoutFragment", "OnClick : No ID matched");
+        }
+
+    }
 }
