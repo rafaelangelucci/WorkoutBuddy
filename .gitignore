@@ -2,4 +2,4 @@ gen/
 bin/
 .DS_Store
 .classpath
-WorkoutBuddyTest/.settings/
+.settings/
