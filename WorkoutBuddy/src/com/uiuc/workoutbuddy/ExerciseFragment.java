@@ -1,7 +1,7 @@
 package com.uiuc.workoutbuddy;
 
 
-import android.R;
+import com.uiuc.workoutbuddy.R;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
