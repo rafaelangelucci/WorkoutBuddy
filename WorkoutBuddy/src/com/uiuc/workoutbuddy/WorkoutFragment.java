@@ -1,5 +1,12 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
+import httpRequests.AsyncHttpPostWrapper;
+import httpRequests.HttpRequestListener;
+
 import com.uiuc.workoutbuddy.R;
 
 import android.annotation.SuppressLint;
@@ -22,10 +29,11 @@ import android.widget.Button;
 *
 */
 @SuppressLint("ValidFragment")
-public class WorkoutFragment extends Fragment implements OnClickListener
+public class WorkoutFragment extends Fragment implements OnClickListener, HttpRequestListener
 {
     View view;
     Context c;
+	CountDownLatch signal;
 
     /**
      * Default Constructor
@@ -72,6 +80,21 @@ public class WorkoutFragment extends Fragment implements OnClickListener
         {
         case R.id.btn_my_workouts:
             Log.i( "WorkoutFragment", "OnClick : My Workouts");
+            AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+            signal = new CountDownLatch(1);
+            try {
+				String[][] responses = wrapper.getWorkoutList("usernameA");
+				signal.await(5, TimeUnit.SECONDS);
+				for(int i = 0; i < responses.length; i++)
+					for(int j = 0; j < responses[i].length; j++)
+						Log.i( "WorkoutFragment", "OnClick DB response : " + responses[i][j]);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
             break;
         case R.id.btn_new_workout:
             Intent i = new Intent(c, BasicActivity.class);
@@ -83,4 +106,11 @@ public class WorkoutFragment extends Fragment implements OnClickListener
         }
 
     }
+
+	@Override
+	public void requestComplete() 
+	{
+        Log.i( "requestComplete()", "Request Completed countDown()");
+		signal.countDown();
+	}
 }
