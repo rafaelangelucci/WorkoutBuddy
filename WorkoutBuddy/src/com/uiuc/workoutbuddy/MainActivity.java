@@ -2,7 +2,6 @@ package com.uiuc.workoutbuddy;
 
 import java.util.Locale;
 
-import com.example.workoutbuddy.NewWorkoutActivity;
 import com.example.workoutbuddy.R;
 
 //testing

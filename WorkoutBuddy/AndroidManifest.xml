@@ -24,7 +24,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.example.workoutbuddy.NewWorkoutActivity"
+            android:name="com.uiuc.workoutbuddy.NewWorkoutActivity"
             android:label="@string/title_activity_new_workout"
             android:parentActivityName="android.support.v4.app.FragmentActivity" >
             <meta-data
