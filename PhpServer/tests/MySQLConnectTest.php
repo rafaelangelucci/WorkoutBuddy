@@ -68,6 +68,7 @@ class MySQLConnectTest extends PHPUnit_Framework_TestCase
 		$db = $mysql->connect($host_name, $db_user, $db_pwd, $db_name);
 		
 		$mysql->addExercise($db, $username, $name, $type, $description);
+		
 	}
 }
 	

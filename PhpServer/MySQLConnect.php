@@ -84,5 +84,19 @@ class MySQLTools
 		return 'error';
 	}
 	
+	function addExercise($mysqli, $username, $name, $type, $description){
+		$sql_query = "INSERT INTO `Exercise`(`type`, `name`, `description`, `username`) 
+			VALUES (?,?,?,?)";
+		$statement = $mysqli->stmt_init();
+		//prepare the statement
+    	if($statement->prepare($sql_query)){
+    		//create prepared statement object
+			$statement->bind_param('ssss', $type, $name, $description, $username);
+			
+			//execute
+			$statement->execute();
+    		}		
+	}
+	
 }
 ?>
