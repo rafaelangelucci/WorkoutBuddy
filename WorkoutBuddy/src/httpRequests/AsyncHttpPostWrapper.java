@@ -47,7 +47,8 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String makeRequest(HashMap<String, String> data, String URL) throws InterruptedException, ExecutionException{
+	public String makeRequest(HashMap<String, String> data, String URL) 
+			throws InterruptedException, ExecutionException{
 		return new AsyncHttpPost(data).execute(URL).get();
 	}
 	
@@ -58,7 +59,8 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getWorkoutList(String username) throws InterruptedException, ExecutionException{
+	public String[][] getWorkoutList(String username) 
+			throws InterruptedException, ExecutionException{
 		//Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkoutList.php";
 		HashMap<String, String> postData = new HashMap<String,String>();
@@ -97,7 +99,8 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getExerciseList(String username) throws InterruptedException, ExecutionException{
+	public String[][] getExerciseList(String username)
+			throws InterruptedException, ExecutionException{
 		//Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExerciseList.php";
 		HashMap<String, String> postData = new HashMap<String,String>();
@@ -127,6 +130,18 @@ public class AsyncHttpPostWrapper {
 		}
 		String[][] returnArray = {names, types, descriptions};		
 		return returnArray;		
+	}
+	
+	public void addExercise(String username, String type, String name, String desc)
+			throws InterruptedException, ExecutionException{
+		//Make the post request to URL with username in postdata
+				String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
+				HashMap<String, String> postData = new HashMap<String,String>();
+				postData.put("username", username);
+				postData.put("type", type);
+				postData.put("name", name);
+				postData.put("description", desc);
+				String response = this.makeRequest(postData, URL);
 	}
 	
 	

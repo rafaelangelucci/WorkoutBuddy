@@ -18,7 +18,9 @@
 		
 		echo $result;
 	}
-	echo 'fail';
+	else{
+		echo 'fail';
+	}
 		
 
 ?>
