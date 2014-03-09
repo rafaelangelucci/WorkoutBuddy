@@ -51,8 +51,23 @@ class MySQLConnectTest extends PHPUnit_Framework_TestCase
 		$resultArray = json_decode($result);
 		$this->assertEquals($resultArray[0]->{'name'}, 'ExerciseA');
 		$this->assertEquals($resultArray[0]->{'type'}, 'strength');
-		$this->assertEquals($resultArray[0]->{'description'}, 'desc');
+		$this->assertEquals($resultArray[0]->{'description'}, 'desc');	
+	}
+	
+	public function testAddExercise(){
+		$host_name = 'engr-cpanel-mysql.engr.illinois.edu';
+		$db_user = 'workoutbuddy_ad';
+		$db_pwd = 'admin';
+		$db_name = 'workoutbuddy_01';
+		$username = 'usernameA';
+		$name = 'ExerciseC';
+		$type = 'strength';
+		$description = 'desc';
 		
+		$mysql = new MySQLTools();
+		$db = $mysql->connect($host_name, $db_user, $db_pwd, $db_name);
+		
+		$mysql->addExercise($db, $username, $name, $type, $description);
 	}
 }
 	
