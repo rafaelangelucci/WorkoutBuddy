@@ -25,7 +25,7 @@ class MySQLTools
 		
 		$statement = $mysqli->stmt_init();
 		//prepare the statement
-    	if($statement->prepare($sql_query)){
+		if($statement->prepare($sql_query)){
 			//create prepared statement object
 			$statement->bind_param('s', $username);
 		

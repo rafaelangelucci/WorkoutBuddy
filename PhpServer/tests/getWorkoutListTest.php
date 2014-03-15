@@ -5,9 +5,10 @@
 		public function testWorkoutList(){
 			$url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkoutList.php';
 			$ch = curl_init($url);
+			$data = array('username' => 'usernameA');
  
 			curl_setopt($ch, CURLOPT_POST, 1);
-			curl_setopt($ch, CURLOPT_POSTFIELDS, 'username=' . urlencode('usernameA'));
+			curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 			curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
  
 			$response = curl_exec($ch);
