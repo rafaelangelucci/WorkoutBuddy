@@ -1,6 +1,6 @@
 <?php
 	//include
-	require_once '../helperFunctions.php';
+	require_once '../../helperFunctions.php';
 	
 	class MySQLConnectTest extends PHPUnit_Framework_TestCase
 	{
@@ -21,6 +21,16 @@
 			$responseArray = json_decode($getResponse);
 			
 			$this->assertEquals($responseArray[0]->{'name'}, 'ExerciseD');
+			
+			//Curl for updating exercise
+			$updateUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyExercise.php';
+			$updateData = array(
+				'e_id' => $eid,
+ 				'username' => 'usernameA',
+				'name' => 'ExerciseE',
+				'description' => 'Changed exercise',
+				'type' => 'strength');
+			$updateResponse = curlHelper($updateUrl, $updateData);
 			
 			
 		}
