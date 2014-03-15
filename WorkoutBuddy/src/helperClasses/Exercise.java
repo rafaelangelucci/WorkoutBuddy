@@ -2,8 +2,8 @@ package helperClasses;
 
 public class Exercise 
 {
-	private String type;
 	private String name;
+	private String type;
 	private String description;
 	//TODO: Decide if we should add a list of sets here
 	
@@ -23,10 +23,10 @@ public class Exercise
 	 * @param name title of exercise
 	 * @param desc description of exercise
 	 */
-	public Exercise(String type, String name, String desc)
+	public Exercise(String name, String type, String desc)
 	{
-		this.type = type;
 		this.name = name;
+		this.type = type;
 		this.description = desc;
 	}
 
