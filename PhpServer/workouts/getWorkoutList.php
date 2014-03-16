@@ -1,22 +1,19 @@
 <?php
-	include 'MySQLConnect.php';
-
-	
-	$host_name = 'engr-cpanel-mysql.engr.illinois.edu';
-	$db_user = 'workoutbuddy_ad';
-	$db_pwd = 'admin';
-	$db_name = 'workoutbuddy_01';
+	// Include Medoo
+	require_once 'medoo.php';
+	// Initialize
+	$database = new medoo('workoutbuddy_01');
 	
 	if(isset($_POST['username'])){
-		$mysql = new MySQLTools();
-		$db = $mysql->connect($host_name, $db_user, $db_pwd, $db_name);
-		
 		$username = $_POST['username'];
-		$result = $mysql->listWorkout($db, $username);
-		
-		echo $result;
+		$data = array('name', 'username', 'date', 'description');
+		$where = array('username' => $username);
+		$result = $database->select('Workout', $data, $where);		
+		echo json_encode($result);
 	}
-	echo 'fail';
+	else{
+		echo 'fail';
+	}
 		
 
 ?>
