@@ -8,17 +8,15 @@
         $username = $_POST['username'];
         $password = $_POST['password'];
         $data = array('username');
-        $where = array('username' => $username,'password' =>$password);
+        $where = array('AND' => array('username' => $username, 'password' => $password));
         $response = $database->select('User', $data, $where);
-        if(count($response)==0){
+        if($response == null){
             echo 'fail';
         }else{
-            echo 'success';
+            echo json_encode($response);
         }
     }
     else{
         echo 'fail';
     }
-
-//echo $_POST['username'];
 ?>

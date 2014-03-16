@@ -7,10 +7,16 @@
     if(isset($_POST['username'], $_POST['password'])){
         $username = $_POST['username'];
         $password = $_POST['password'];
-        $data = array(
-            'username' => $username,
-            'password' => $password);
-        echo $database->insert('User', $data);
+        $data = array('username','password');
+        $where = array('username' => $username);
+        $response = $database->select('User', $data, $where);
+        if(count($response)>0){
+            echo 'username already exists';
+        }else{
+            $data = array('username'=>$username,'password'=>$password);
+            $database->insert('User', $data);
+            echo 'success';
+        }
     }
     else{
         echo 'fail';
