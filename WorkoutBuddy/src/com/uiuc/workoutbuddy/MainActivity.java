@@ -207,4 +207,10 @@ public class MainActivity extends FragmentActivity implements
     	Intent intent = new Intent(this, NewWorkoutActivity.class);
     	startActivity(intent);
     }
+    
+    //button3Handler
+    public void goToTimer(View view) {
+    	Intent intent = new Intent(this, TimerActivity.class);
+    	startActivity(intent);
+    }
 }

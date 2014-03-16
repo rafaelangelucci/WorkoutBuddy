@@ -40,5 +40,7 @@
     
     <string name="timer_set_button">Set</string>
     <string name="timer_input">Seconds</string>
+    <string name="title_activity_timer">Rest Timer</string>
+    
 
 </resources>
