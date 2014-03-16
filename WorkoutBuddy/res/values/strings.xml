@@ -32,9 +32,9 @@
     <string name="add_exercise">Add\nExercise</string>
     <string name="delete_exercise">Delete\nExercise</string>
     
-    <string name="username_hint">Username Hint</string>
-    <string name="password_hint">Password Hint</string>
-    <string name="login_button_text">Login Button</string>
-    <string name="skip_button_text">Skip Button</string>
+    <string name="username_hint">Username</string>
+    <string name="password_hint">Password</string>
+    <string name="login_button_text">Login</string>
+    <string name="skip_button_text">Skip</string>
 
 </resources>
