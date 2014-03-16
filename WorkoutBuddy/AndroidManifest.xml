@@ -28,7 +28,7 @@
             android:label="@string/app_name" >
         </activity>
         <activity
-            android:name="com.uiuc.workoutbuddy.ExerciseActivity"
+            android:name="com.uiuc.workoutbuddy.ExerciseListActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

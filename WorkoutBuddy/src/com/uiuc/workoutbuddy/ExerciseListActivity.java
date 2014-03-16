@@ -6,7 +6,7 @@ import android.app.ListActivity;
 import android.os.Bundle;
 import android.widget.ArrayAdapter;
 
-public class ExerciseActivity extends ListActivity
+public class ExerciseListActivity extends ListActivity
 {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

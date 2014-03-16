@@ -104,7 +104,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		{
 		case R.id.btn_my_exercises:
 			Log.i( "ExerciseFragment", "OnClick : New Exercise");
-			Intent i = new Intent(c, ExerciseActivity.class);
+			Intent i = new Intent(c, ExerciseListActivity.class);
 			startActivity(i);
 			break;
 		case R.id.btn_new_exercise:
