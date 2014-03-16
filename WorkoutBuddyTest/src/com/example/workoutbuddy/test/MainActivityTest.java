@@ -47,8 +47,8 @@ public class MainActivityTest extends
 	public void testLayout(){
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_workouts));
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_workout));
-		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_add_exercise));
-		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_delete_exercise));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_exercises));
+		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
 	}
 	

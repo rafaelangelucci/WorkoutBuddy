@@ -1,38 +1,38 @@
 package helperClasses;
 
-public class Exercise 
-{
+public class Exercise {
 	private String name;
 	private String type;
 	private String description;
-	//TODO: Decide if we should add a list of sets here
-	
+	private Set[] sets;
+
 	/**
 	 * Default Constructor
 	 */
-	public Exercise()
-	{
+	public Exercise() {
 		this.type = "";
 		this.name = "";
 		this.description = "";
 	}
-	
+
 	/**
 	 * Constructor
-	 * @param type specifies exercise type
-	 * @param name title of exercise
-	 * @param desc description of exercise
+	 * 
+	 * @param type
+	 *            specifies exercise type
+	 * @param name
+	 *            title of exercise
+	 * @param desc
+	 *            description of exercise
 	 */
-	public Exercise(String name, String type, String desc)
-	{
+	public Exercise(String name, String type, String desc) {
 		this.name = name;
 		this.type = type;
 		this.description = desc;
 	}
 
-	
-/*************** GETTERS AND SETTERS ***************/	
-	
+	/*************** GETTERS AND SETTERS ***************/
+
 	public String getType() {
 		return type;
 	}
