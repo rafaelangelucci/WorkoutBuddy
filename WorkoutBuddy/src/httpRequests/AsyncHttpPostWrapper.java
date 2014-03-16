@@ -135,13 +135,60 @@ public class AsyncHttpPostWrapper {
 	public void addExercise(String username, String type, String name, String desc)
 			throws InterruptedException, ExecutionException{
 		//Make the post request to URL with username in postdata
-				String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
-				HashMap<String, String> postData = new HashMap<String,String>();
-				postData.put("username", username);
-				postData.put("type", type);
-				postData.put("name", name);
-				postData.put("description", desc);
-				String response = this.makeRequest(postData, URL);
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
+		HashMap<String, String> postData = new HashMap<String,String>();
+		postData.put("username", username);
+		postData.put("type", type);
+		postData.put("name", name);
+		postData.put("description", desc);
+		String response = this.makeRequest(postData, URL);
+	}
+	
+	public String[] getExercise(int eid) throws InterruptedException, ExecutionException{
+		//make the post request to URL with e_id
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExercise.php";
+		HashMap<String, String> postData = new HashMap<String,String>();
+		postData.put("e_id", Integer.toString(eid));
+		String response = this.makeRequest(postData, URL);
+		String[] exercise = new String[4];
+		
+		//parse JSON
+		//take JSON format and put into array
+		try{
+			JSONArray jArray = new JSONArray(response);
+			JSONObject json_data = jArray.getJSONObject(0);
+			exercise[0] = json_data.getString("username");
+			exercise[1] = json_data.getString("name");
+			exercise[2] = json_data.getString("type");
+			exercise[3] = json_data.getString("description");
+		}catch(JSONException e){
+			e.printStackTrace();
+		}
+		
+		return exercise;
+	}
+	
+	public void updateExercise(int eid, String name, String username, String description, String type) 
+			throws InterruptedException, ExecutionException{
+		//make the post request to URL with e_id and all update fields
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyExercise.php";
+		HashMap<String, String> postData = new HashMap<String,String>();
+		postData.put("e_id", Integer.toString(eid));
+		postData.put("username", username);
+		postData.put("name", name);
+		postData.put("type", type);
+		postData.put("description", description);
+		
+		String response = this.makeRequest(postData, URL);
+	}
+	
+	public void deleteExercise(int eid) 
+			throws InterruptedException, ExecutionException{
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteExercise.php";
+		HashMap<String, String> postData = new HashMap<String,String>();
+		postData.put("e_id", Integer.toString(eid));
+		
+		String response = this.makeRequest(postData, URL);
 	}
 	
 	

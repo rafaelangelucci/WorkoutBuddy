@@ -14,8 +14,7 @@ public class TimerReceiver extends BroadcastReceiver {
 		Toast.makeText(context, "Rest Period Over", Toast.LENGTH_LONG).show();
 		
 		// Vibrate the phone
-		Vibrator vibrator = (Vibrator) context
-				.getSystemService(Context.VIBRATOR_SERVICE);
+		Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
 		vibrator.vibrate(2000);
 	}
 

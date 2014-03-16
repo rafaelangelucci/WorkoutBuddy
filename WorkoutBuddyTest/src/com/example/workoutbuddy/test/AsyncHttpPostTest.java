@@ -42,7 +42,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	{
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/emptyPostRequestTest.php";
 		String response = wrapper.makeRequest(new HashMap<String,String>(), URL);
-		signal.await(5, TimeUnit.SECONDS);
+		signal.await(1, TimeUnit.SECONDS);
 
 		assertEquals(response, "success");
 		
@@ -52,7 +52,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	public void testgetWorkoutList() throws InterruptedException, ExecutionException
 	{
 		String[][] responses = wrapper.getWorkoutList("usernameA");
-		signal.await(5, TimeUnit.SECONDS);
+		signal.await(1, TimeUnit.SECONDS);
 		
 		assertEquals(responses[0][0], "WorkoutA");
 		assertEquals(responses[0][1], "WorkoutB");
@@ -65,13 +65,25 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	public void testgetExerciseList() throws InterruptedException, ExecutionException
 	{
 		String[][] responses = wrapper.getExerciseList("usernameA");
-		signal.await(5, TimeUnit.SECONDS);
+		signal.await(1, TimeUnit.SECONDS);
 		
 		assertEquals(responses[0][0], "ExerciseA");
 		assertEquals(responses[0][1], "ExerciseB");
 		assertEquals(responses[1][0], "strength");
 		assertEquals(responses[2][0], "desc");
 		
+	}
+	
+	@UiThreadTest
+	public void testgetExercise() throws InterruptedException, ExecutionException 
+	{
+		String[] response = wrapper.getExercise(2);
+		signal.await(1, TimeUnit.SECONDS);
+		
+		assertEquals(response[0], "usernameA");
+		assertEquals(response[1], "ExerciseA");
+		assertEquals(response[2], "strength");
+		assertEquals(response[3], "desc");
 	}
 	
 

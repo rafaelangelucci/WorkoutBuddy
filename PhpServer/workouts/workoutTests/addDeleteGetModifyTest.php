@@ -48,9 +48,6 @@
 			$deleteData = array('w_id' => $wid);
 			$deleteResponse = curlHelper($deleteUrl, $deleteData);
 			$this->assertEquals($deleteResponse[0], '1');
-			
-			
-			
 		}
 	
 	
