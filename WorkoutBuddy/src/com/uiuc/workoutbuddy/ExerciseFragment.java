@@ -12,6 +12,7 @@ import com.uiuc.workoutbuddy.R;
 import android.annotation.SuppressLint;
 import android.app.ListFragment;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -32,13 +33,12 @@ import android.widget.TextView;
 *
 */
 @SuppressLint("ValidFragment")
-public class ExerciseFragment extends ListFragment implements OnClickListener, HttpRequestListener
+public class ExerciseFragment extends Fragment implements OnClickListener, HttpRequestListener
 {
 	View view;
 	Context c;
 	CountDownLatch signal;
-	private ArrayList<Exercise> exercises = new ArrayList<Exercise>();
-	ListView listview;
+	static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
 	/**
 	 * Default Constructor
@@ -70,12 +70,10 @@ public class ExerciseFragment extends ListFragment implements OnClickListener, H
 
 		// Set up all button call backs
 		Button new_exercise = (Button)view.findViewById(R.id.btn_new_exercise);
-		Button add_exercise = (Button)view.findViewById(R.id.btn_add_exercise);
-		Button delete_exercise = (Button)view.findViewById(R.id.btn_delete_exercise);
+		Button my_exercises = (Button)view.findViewById(R.id.btn_my_exercises);
 		
 		new_exercise.setOnClickListener(this);
-		add_exercise.setOnClickListener(this);
-		delete_exercise.setOnClickListener(this);
+		my_exercises.setOnClickListener(this);
 				
 		// Set up text view from database pull
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
@@ -92,16 +90,6 @@ public class ExerciseFragment extends ListFragment implements OnClickListener, H
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-        
-    	final ArrayList<String> list = new ArrayList<String>();
-		for(int i = 0; i < exercises.size(); i++)
-		{
-			list.add(exercises.get(i).getName());
-		}
-		
-		final ArrayAdapter<String> adapter = new ArrayAdapter<String>
-				(c, android.R.layout.simple_list_item_1, list);
-		setListAdapter(adapter);
 		
 		return view;
 	}
@@ -114,14 +102,13 @@ public class ExerciseFragment extends ListFragment implements OnClickListener, H
 	{
 		switch(v.getId())
 		{
-		case R.id.btn_new_exercise:
+		case R.id.btn_my_exercises:
 			Log.i( "ExerciseFragment", "OnClick : New Exercise");
+			Intent i = new Intent(c, ExerciseActivity.class);
+			startActivity(i);
 			break;
-		case R.id.btn_add_exercise:
+		case R.id.btn_new_exercise:
 			Log.i( "ExerciseFragment", "OnClick : Add Exercise");
-			break;
-		case R.id.btn_delete_exercise:
-			Log.i( "ExerciseFragment", "OnClick : Delete Exercise");
 			break;
 		default:
 			Log.i( "ExerciseFragment", "OnClick : No ID matched");
