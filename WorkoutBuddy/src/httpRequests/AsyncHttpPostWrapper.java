@@ -132,6 +132,16 @@ public class AsyncHttpPostWrapper {
 		return returnArray;		
 	}
 	
+	/**
+	 * Takes in all parameters and creates the exercise in the database
+	 * 
+	 * @param username username associated with the exercise
+	 * @param type the type definition of the exercise
+	 * @param name name of the exercise
+	 * @param desc the description of how to do the exercise
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public void addExercise(String username, String type, String name, String desc)
 			throws InterruptedException, ExecutionException{
 		//Make the post request to URL with username in postdata
@@ -144,6 +154,15 @@ public class AsyncHttpPostWrapper {
 		String response = this.makeRequest(postData, URL);
 	}
 	
+	/**
+	 * Query the database and return the exercise
+	 * 
+	 * @param eid the id of the exercise
+	 * @return returns all of the information about the exercise in array form
+	 * 			exercise[0] = username, e[1] = name, e[2] = type, e[3] = description
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public String[] getExercise(int eid) throws InterruptedException, ExecutionException{
 		//make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExercise.php";
@@ -168,6 +187,18 @@ public class AsyncHttpPostWrapper {
 		return exercise;
 	}
 	
+	/**
+	 * Updates the exercise with the given information. All fields need to be
+	 * provided even if there is no change
+	 * 
+	 * @param eid the id associated with the exercise
+	 * @param username username associated with the exercise
+	 * @param type the type definition of the exercise
+	 * @param name name of the exercise
+	 * @param desc the description of how to do the exercise
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public void updateExercise(int eid, String name, String username, String description, String type) 
 			throws InterruptedException, ExecutionException{
 		//make the post request to URL with e_id and all update fields
@@ -182,6 +213,13 @@ public class AsyncHttpPostWrapper {
 		String response = this.makeRequest(postData, URL);
 	}
 	
+	/**
+	 * Deletes exercise from the database
+	 * 
+	 * @param eid id associated with the exercise
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public void deleteExercise(int eid) 
 			throws InterruptedException, ExecutionException{
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteExercise.php";
