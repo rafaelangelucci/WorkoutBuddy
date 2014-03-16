@@ -16,9 +16,11 @@ public class LoginActivity extends Activity implements OnClickListener{
 		setContentView(R.layout.activity_login);
 		
 		Button login = (Button)findViewById(R.id.login_button);
+		Button signup = (Button)findViewById(R.id.signup_button);
 		Button skip = (Button)findViewById(R.id.skip_button);
 		
 		login.setOnClickListener(this);
+		signup.setOnClickListener(this);
 		skip.setOnClickListener(this);
 	}
 
@@ -29,6 +31,9 @@ public class LoginActivity extends Activity implements OnClickListener{
 		{
 		case R.id.login_button:
 			Toast.makeText(this.getApplicationContext(), "Login Clicked", Toast.LENGTH_SHORT).show();
+			break;
+		case R.id.signup_button:
+			Toast.makeText(this.getApplicationContext(), "Sign Up Clicked", Toast.LENGTH_SHORT).show();
 			break;
 		case R.id.skip_button:
 			Intent intent = new Intent(this, MainActivity.class);
