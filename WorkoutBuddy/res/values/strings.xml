@@ -37,5 +37,8 @@
     <string name="login_button_text">Login</string>
     <string name="signup_button_text">Sign Up</string>
     <string name="skip_button_text">Skip</string>
+    
+    <string name="timer_set_button">Set</string>
+    <string name="timer_input">Seconds</string>
 
 </resources>
