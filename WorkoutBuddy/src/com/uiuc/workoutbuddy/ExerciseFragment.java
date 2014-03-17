@@ -103,6 +103,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		switch(v.getId())
 		{
 		case R.id.btn_my_exercises:
+			//TODO: add refresh functionality
 			Log.i( "ExerciseFragment", "OnClick : New Exercise");
 			Intent i = new Intent(c, ExerciseListActivity.class);
 			startActivity(i);
