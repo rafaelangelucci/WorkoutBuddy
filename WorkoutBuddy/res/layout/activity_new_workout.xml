@@ -8,8 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin" >
-    
-    
+
     <Button
         android:id="@+id/buttonDone"
         android:layout_width="wrap_content"
@@ -33,7 +32,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentRight="true"
-        android:layout_below="@+id/button2"
         android:text="@string/buttonMinus_text" />
 
     <TextView
@@ -42,10 +40,9 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:textAppearance="?android:attr/textAppearanceLarge" 
-        android:text="@string/textView_NewWorkout"/>
+        android:text="@string/textView_NewWorkout"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
 
-    
     <TextView
         android:id="@+id/TextView02"
         android:layout_width="wrap_content"
@@ -74,7 +71,7 @@
         android:layout_marginTop="21dp"
         android:text="@string/textView_Name"
         android:textAppearance="?android:attr/textAppearanceMedium" />
-    
+
     <EditText
         android:id="@+id/editText1"
         android:layout_width="match_parent"
@@ -94,34 +91,22 @@
         android:ems="10"
         android:hint="@string/hint_Description" />
 
-    
-    
+
+    <ListView
+        android:id="@+id/listView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/TextView02"
+        android:orientation="vertical" >
+    </ListView>
 
     <LinearLayout
         android:id="@+id/linearLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignBottom="@+id/button1"
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/TextView02"
-        android:layout_toLeftOf="@+id/button2"
         android:orientation="vertical" >
-
-        <Button
-            android:id="@+id/button4"
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/hello_world" />
-
     </LinearLayout>
-
 </RelativeLayout>
-<!-- <android.support.v4.view.ViewPager xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/pager"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".NewWorkoutActivity0" />
-
- -->

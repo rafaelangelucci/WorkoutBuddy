@@ -72,4 +72,39 @@ public class BasicActivityTest extends
 		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus);
 		Assert.assertTrue(button.callOnClick());
 	}
+	
+
+	public void testExerciseAdded()
+	{
+		//get list of exercise inputs
+		//check list is 1
+		//btn_PlusClicked()
+		//get list of exercise inputs
+		//check list is 2
+		Assert.fail();
+	}
+	
+	public void testExerciseRemoved()
+	{
+//		//btn_PlusClicked()
+//		List<View> exercisesInputs = myActivity.getExerciseInputs();
+//		//get list of exercise inputs
+//		//check list is 2
+//		//btn_MinusClicked()
+//		List<View> exercisesInputs = myActivity.getExerciseInputs();
+//		//check list is 1
+//		//btn_MinusClicked()
+//		List<View> exercisesInputs = myActivity.getExerciseInputs();
+//		//check list is 1
+		Assert.fail();
+	}
+	
+	public void testWorkoutAdded()
+	{
+//		List<View> workoutInputs() = myActivity.getAllInputs();
+//		//set inputs
+//		//clickDone
+		//check workout in database
+		Assert.fail();
+	}
 }
