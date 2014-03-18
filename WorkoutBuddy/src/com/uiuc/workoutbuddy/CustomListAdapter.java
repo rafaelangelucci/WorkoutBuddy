@@ -5,6 +5,7 @@ import helperClasses.Exercise;
 import java.util.ArrayList;
 
 import android.content.Context;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -16,7 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 public class CustomListAdapter extends BaseAdapter implements OnClickListener {
-	
+
 	private final Context context;
 	private final ArrayList<Exercise> exerciseList;
 
@@ -51,40 +52,44 @@ public class CustomListAdapter extends BaseAdapter implements OnClickListener {
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
 		Exercise entry = exerciseList.get(position);
-        if (convertView == null) {
-            LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            convertView = inflater.inflate(R.layout.row_layout, null);
-        }
-        
-        // Grab both text views in each row
-        TextView firstLine = (TextView) convertView.findViewById(R.id.row_name);
-        firstLine.setText(entry.getName());
+		if (convertView == null) {
+			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			convertView = inflater.inflate(R.layout.row_layout, null);
+		}
 
-        TextView secondLine = (TextView) convertView.findViewById(R.id.row_type);
-        secondLine.setText(entry.getType());
+		// Grab both text views in each row
+		TextView firstLine = (TextView) convertView.findViewById(R.id.row_name);
+		firstLine.setText(entry.getName());
+		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
+
+		TextView secondLine = (TextView) convertView.findViewById(R.id.row_type);
+		secondLine.setText(entry.getType());
+		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getType());
 
 //        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
 //        tvMail.setText(entry.getDescription());
 
-        // Set the onClick Listener on this button
-        RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.btn_radio);
-        radioBtn.setOnClickListener(this);
-        // Set the entry, so that you can capture which item was clicked and
-        // then remove it
-        // As an alternative, you can use the id/position of the item to capture
-        // the item
-        // that was clicked.
-        radioBtn.setTag(entry);
+		// Set the onClick Listener on this button
+		RadioButton radioBtn = (RadioButton) convertView.findViewById(R.id.btn_radio);
+		radioBtn.setOnClickListener(this);
+		// Set the entry, so that you can capture which item was clicked and
+		// then remove it
+		// As an alternative, you can use the id/position of the item to capture
+		// the item
+		// that was clicked.
+		radioBtn.setTag(entry);
 
-        // btnRemove.setId(position);
+		// btnRemove.setId(position);
 
-        return convertView;
+		return convertView;
 	}
 
 	@Override
 	public void onClick(View v) {
 		Exercise selected = (Exercise)v.getTag();
-		
+
 		Toast.makeText(this.context, selected.getDescription(), Toast.LENGTH_SHORT).show();
+		
+		Log.i( "CustomListAdapter", "onClick : " + selected.getName());
 	}
 }
