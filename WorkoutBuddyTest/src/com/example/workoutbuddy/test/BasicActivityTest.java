@@ -101,10 +101,11 @@ public class BasicActivityTest extends
 	
 	public void testWorkoutAdded()
 	{
-//		List<View> workoutInputs() = myActivity.getAllInputs();
-//		//set inputs
-//		//clickDone
-		//check workout in database
+		Assert.fail();
+	}
+	
+	public void testWorkoutNotAdded()
+	{
 		Assert.fail();
 	}
 }

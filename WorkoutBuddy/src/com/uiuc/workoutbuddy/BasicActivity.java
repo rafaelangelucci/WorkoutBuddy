@@ -3,27 +3,25 @@ package com.uiuc.workoutbuddy;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.ListAdapter;
-import android.widget.ListView;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class BasicActivity extends Activity implements OnClickListener, HttpRequestListener
@@ -38,9 +36,9 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_workout);
 
-		Button done = (Button)findViewById(R.id.buttonDone);
-		Button plus = (Button)findViewById(R.id.buttonMinus);
-		Button minus = (Button)findViewById(R.id.buttonPlus);
+		Button done = (Button)findViewById(R.id.btn_done);
+		Button minus = (Button)findViewById(R.id.btn_minus);
+		Button plus = (Button)findViewById(R.id.btn_plus);
 
 		done.setOnClickListener(this);
 		plus.setOnClickListener(this);
@@ -72,16 +70,17 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 	{
 		switch(v.getId())
 		{
-		case R.id.buttonDone:
+		case R.id.btn_done:
 			btn_DoneClicked(v);
 			break;
-		case R.id.buttonPlus:
+		case R.id.btn_plus:
 			btn_PlusClicked(v);
 			break;
-		case R.id.buttonMinus:
+		case R.id.btn_minus:
 			btn_MinusClicked(v);
 			break;
 		default:
+			break;
 		}
 	}
 
@@ -90,25 +89,33 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		EditText et = (EditText)findViewById(R.id.editText1);
 		String name = et.getText().toString();
 		et = (EditText)findViewById(R.id.EditText01);
-		String description = et.getText().toString();
+		String descript = et.getText().toString();
+
+		DateFormat df = new SimpleDateFormat("MM/dd/yyyy");		
+		Calendar rightNow = Calendar.getInstance();
+		String createDate = df.format(rightNow.getTime());
 		
-		
-//		
-//
-//		LinearLayout lv = (LinearLayout)findViewById(R.id.linearLayout);
-//		lv.		lv.removeViewAt(this.numExercises -1);
-//		this.numExercises--;
-//	
-//		
-		Toast.makeText(this.getApplicationContext(), "Done Clicked", Toast.LENGTH_SHORT).show();
-		Toast.makeText(this.getApplicationContext(), "description = " + description, Toast.LENGTH_SHORT).show();
-		Toast.makeText(this.getApplicationContext(), "name = " + name, Toast.LENGTH_SHORT).show();
+		if(name.equals(""))
+			Toast.makeText(this.getApplicationContext(), "The name textbox must be filled.", Toast.LENGTH_SHORT).show();
+		else
+		{
+			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+			signal = new CountDownLatch(1);
+			try {
+				wrapper.addWorkout("usernameA", createDate, name, descript);
+				signal.await(5, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			Intent intent = new Intent(this, MainActivity.class);
+	    	startActivity(intent);
+		}
 	}
 
 	private void btn_MinusClicked(View v)
 	{
-		Toast.makeText(this.getApplicationContext(), "Minus Clicked", Toast.LENGTH_SHORT).show();
-
 		if(this.numExercises>1)
 		{
 			LinearLayout lv = (LinearLayout)findViewById(R.id.linearLayout);
@@ -119,7 +126,6 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 
 	private void btn_PlusClicked(View v)
 	{
-		Toast.makeText(this.getApplicationContext(), "Plus Clicked", Toast.LENGTH_SHORT).show();
 		addExerciseSpinner();	
 	}
 
