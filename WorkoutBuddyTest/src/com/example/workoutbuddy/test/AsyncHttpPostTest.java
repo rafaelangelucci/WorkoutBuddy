@@ -55,36 +55,48 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	{
 		Workout workout = new Workout("TestWorkout", "03/20/2014", "testdesc", "usernameA", null);
 		wrapper.addWorkout(workout);
-		signal.await(1, TimeUnit.SECONDS);
 		
 		Workout dbworkout = wrapper.getWorkout(workout.getWid());
-		assertEquals(dbworkout.getName(), "TestWorkout");
+		
+		assertEquals(dbworkout.getName(), workout.getName());
+		assertEquals(dbworkout.getUsername(), workout.getUsername());
+		assertEquals(dbworkout.getDate(), workout.getDate());
+		assertEquals(dbworkout.getDescription(), workout.getDescription());
+		
+		workout.setName("Modified Name");
+		wrapper.updateWorkout(workout);
+		
+		dbworkout = wrapper.getWorkout(workout.getWid());
+		assertEquals(dbworkout.getName(), workout.getName());
+		
+		int del = wrapper.deleteWorkout(workout.getWid());
+		assertEquals(1, del);
+		
+		
 		
 	}
 	
 	@UiThreadTest
-	public void testgetExerciseList() throws InterruptedException, ExecutionException
+	public void testAddGetModifyGetDeleteExercise() throws InterruptedException, ExecutionException
 	{
-		Exercise[] responses = wrapper.getExerciseList("usernameA");
-		signal.await(1, TimeUnit.SECONDS);
+		Exercise exercise = new Exercise("TestExercise", "strength", "testdesc", "usernameA", null);
+		wrapper.addExercise(exercise);
 		
-		assertEquals(responses[0].getName(), "ExerciseA");
-		assertEquals(responses[1].getName(), "ExerciseB");
-		assertEquals(responses[0].getType(), "strength");
-		assertEquals(responses[0].getDescription(), "desc");
+		Exercise dbworkout = wrapper.getExercise(exercise.getEid());
+		assertEquals(dbworkout.getName(), exercise.getName());
+		assertEquals(dbworkout.getUsername(), exercise.getUsername());
+		assertEquals(dbworkout.getType(), exercise.getType());
+		assertEquals(dbworkout.getDescription(), exercise.getDescription());
 		
-	}
-	
-	@UiThreadTest
-	public void testgetExercise() throws InterruptedException, ExecutionException 
-	{
-		Exercise response = wrapper.getExercise(2);
-		signal.await(1, TimeUnit.SECONDS);
+		exercise.setName("Modified Name");
+		wrapper.updateExercise(exercise);
 		
-		assertEquals(response.getUsername(), "usernameA");
-		assertEquals(response.getName(), "ExerciseA");
-		assertEquals(response.getType(), "strength");
-		assertEquals(response.getDescription(), "desc");
+		dbworkout = wrapper.getExercise(exercise.getEid());
+		assertEquals(dbworkout.getName(), exercise.getName());
+		
+		int del = wrapper.deleteExercise(exercise.getEid());
+		assertEquals(1, del);
+		
 	}
 	
 
