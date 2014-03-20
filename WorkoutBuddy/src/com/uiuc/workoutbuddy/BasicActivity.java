@@ -46,17 +46,21 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		plus.setOnClickListener(this);
 		minus.setOnClickListener(this);
 
-
-		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-		signal = new CountDownLatch(1);
-		try {
-			exerciseList = wrapper.getExerciseList("usernameA");
-			signal.await(5, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		exerciseList = new Exercise[ExerciseFragment.exercises.size()];
+		for(int i = 0; i < ExerciseFragment.exercises.size(); i++)
+		{
+			exerciseList[i] = ExerciseFragment.exercises.get(i);
 		}
+//		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+//		signal = new CountDownLatch(1);
+//		try {
+//			exerciseList = wrapper.getExerciseList("usernameA");
+//			signal.await(1, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		} catch (ExecutionException e) {
+//			e.printStackTrace();
+//		}
 		addExerciseSpinner();
 	}
 
