@@ -155,7 +155,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("type", exercise.getType());
 		postData.put("name", exercise.getName());
 		postData.put("description", exercise.getDescription());
-		int eid = Integer.parseInt(this.makeRequest(postData, URL));
+		int eid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		exercise.setEid(eid);
 	}
 
@@ -341,7 +341,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("type", exercise.getType());
 		postData.put("description", exercise.getDescription());
 
-		return Integer.parseInt(this.makeRequest(postData, URL));
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
@@ -365,7 +365,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("date", workout.getDate());
 		postData.put("description", workout.getDescription());
 
-		return Integer.parseInt(this.makeRequest(postData, URL));
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
@@ -376,13 +376,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void deleteExercise(int eid) throws InterruptedException,
+	public int deleteExercise(int eid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("e_id", Integer.toString(eid));
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
@@ -393,13 +393,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void deleteWorkout(int wid) throws InterruptedException,
+	public int deleteWorkout(int wid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("w_id", Integer.toString(wid));
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
