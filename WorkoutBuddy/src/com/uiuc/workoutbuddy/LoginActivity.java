@@ -5,6 +5,7 @@ import httpRequests.HttpRequestListener;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -44,7 +45,7 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		switch(v.getId())
 		{
 		case R.id.login_button:
-			Toast.makeText(this.getApplicationContext(), "Login Clicked", Toast.LENGTH_SHORT).show();
+			login(v);
 			break;
 		case R.id.signup_button:
 			signup(v);
@@ -54,6 +55,42 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	    	startActivity(intent);
 			break;
 		default:
+		}
+	}
+	
+	private void login(View v)
+	{
+		// Get user password and username
+		EditText et = (EditText)findViewById(R.id.inputUsername);
+		String username = et.getText().toString();
+		
+		et = (EditText)findViewById(R.id.inputPassword);
+		String password = et.getText().toString();
+	
+		// Call userlogin() in the wrapper class to check is the user exists and the password is correct
+		if(username.equals("") || password.equals(""))
+			Toast.makeText(this.getApplicationContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+		else
+		{
+			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+			signal = new CountDownLatch(1);
+			try {
+				 boolean success = wrapper.userLogin(username, password);
+				
+				 if (success) {
+						Toast.makeText(this.getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+						
+						Intent intent = new Intent(this, MainActivity.class);
+				    	startActivity(intent);
+					} else {
+						Toast.makeText(this.getApplicationContext(), "Login information incorrect. Try again.", Toast.LENGTH_SHORT).show();
+					}
+				//signal.await(1, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
@@ -67,15 +104,16 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		String password = et.getText().toString();
 	
 	
-		if(username.equals(""))
-			Toast.makeText(this.getApplicationContext(), "The name textbox must be filled.", Toast.LENGTH_SHORT).show();
+		// Call the wrapper class to create the account
+		if(username.equals("") || password.equals(""))
+			Toast.makeText(this.getApplicationContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
 		else
 		{
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			signal = new CountDownLatch(1);
 			try {
 				wrapper.addUser(username, password);
-				signal.await(2, TimeUnit.SECONDS);
+				signal.await(1, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
@@ -92,7 +130,7 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	@Override
 	public void requestComplete() {
 		Log.i( "requestComplete()", "Request Completed countDown()");
-		signal.countDown();
+		//signal.countDown();
 		
 	}
 
