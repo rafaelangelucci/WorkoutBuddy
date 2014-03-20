@@ -59,11 +59,10 @@ public class CustomListAdapter extends BaseAdapter implements OnClickListener {
 
 		// Grab both text views in each row
 		TextView firstLine = (TextView) convertView.findViewById(R.id.row_name);
-		firstLine.setText(entry.getName());
-		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
-
 		TextView secondLine = (TextView) convertView.findViewById(R.id.row_type);
-		secondLine.setText(entry.getType());
+		firstLine.setText(entry.getDescription());
+		secondLine.setText(entry.getName());
+		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
 		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getType());
 
 //        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
@@ -88,7 +87,7 @@ public class CustomListAdapter extends BaseAdapter implements OnClickListener {
 	public void onClick(View v) {
 		Exercise selected = (Exercise)v.getTag();
 
-		Toast.makeText(this.context, selected.getDescription(), Toast.LENGTH_SHORT).show();
+		Toast.makeText(this.context, selected.getType(), Toast.LENGTH_SHORT).show();
 		
 		Log.i( "CustomListAdapter", "onClick : " + selected.getName());
 	}

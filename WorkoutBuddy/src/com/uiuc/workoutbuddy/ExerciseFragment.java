@@ -66,7 +66,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 			Log.i( "ExerciseFragment", "InflateException : onCreateView");
 		}
 		
-		//listview = (ListView)view.findViewById(R.id.list_view);
+		exercises.clear();
 
 		// Set up all button call backs
 		Button new_exercise = (Button)view.findViewById(R.id.btn_new_exercise);
