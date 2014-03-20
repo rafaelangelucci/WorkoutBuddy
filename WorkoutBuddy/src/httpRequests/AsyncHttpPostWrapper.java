@@ -106,7 +106,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getExerciseList(String username)
+	public Exercise[] getExerciseList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExerciseList.php";
@@ -115,39 +115,25 @@ public class AsyncHttpPostWrapper {
 		String response = this.makeRequest(postData, URL);
 
 		// get response and parse it into an array
-		String[] names = {};
-		String[] types = {};
-		String[] descriptions = {};
-		
-		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+		Exercise[] exercises = {};
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
 			int arrayLength = jArray.length();
-			names = new String[arrayLength];
-			types = new String[arrayLength];
-			descriptions = new String[arrayLength];
+			exercises = new Exercise[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				//TODO take out code below to stars
-				names[i] = json_data.getString("name");
-				types[i] = json_data.getString("type");
-				descriptions[i] = json_data.getString("description");
-				//*********************
 				String name = json_data.getString("name");
 				String type = json_data.getString("type");
 				String desc = json_data.getString("description");
 				int eid = Integer.parseInt(json_data.getString("e_id"));
 				Exercise exercise = new Exercise(eid, name, type, desc, username, null);
-				exercises.add(exercise);
+				exercises[i] = exercise;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String[][] returnArray = { names, types, descriptions };
-		return returnArray;
-		//TODO
-		//return exercises;
+		return exercises;
 	}
 
 	/**
@@ -232,24 +218,25 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[] getExercise(int eid) throws InterruptedException,
+	public Exercise getExercise(int eid) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("e_id", Integer.toString(eid));
 		String response = this.makeRequest(postData, URL);
-		String[] exercise = new String[4];
 
 		// parse JSON
 		// take JSON format and put into array
+		Exercise exercise = null;
 		try {
 			JSONArray jArray = new JSONArray(response);
 			JSONObject json_data = jArray.getJSONObject(0);
-			exercise[0] = json_data.getString("username");
-			exercise[1] = json_data.getString("name");
-			exercise[2] = json_data.getString("type");
-			exercise[3] = json_data.getString("description");
+			String username = json_data.getString("username");
+			String name = json_data.getString("name");
+			String type = json_data.getString("type");
+			String desc = json_data.getString("description");
+			exercise = new Exercise(eid, name, type, desc, username, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -268,24 +255,25 @@ public class AsyncHttpPostWrapper {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	public String[] getWorkout(int wid) throws InterruptedException,
+	public Workout getWorkout(int wid) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("w_id", Integer.toString(wid));
 		String response = this.makeRequest(postData, URL);
-		String[] workout = new String[4];
+		Workout workout = null;
 
 		// parse JSON
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
 			JSONObject json_data = jArray.getJSONObject(0);
-			workout[0] = json_data.getString("username");
-			workout[1] = json_data.getString("name");
-			workout[2] = json_data.getString("date");
-			workout[3] = json_data.getString("description");
+			String username = json_data.getString("username");
+			String name = json_data.getString("name");
+			String date = json_data.getString("date");
+			String desc = json_data.getString("description");
+			workout = new Workout(wid, name, date, desc, username, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

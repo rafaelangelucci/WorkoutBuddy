@@ -79,11 +79,11 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
         signal = new CountDownLatch(1);
         try {
-			String[][] responses = wrapper.getExerciseList("usernameA");
+			Exercise[] responses = wrapper.getExerciseList("usernameA");
 			signal.await(5, TimeUnit.SECONDS);
-			for(int i = 0; i < responses[0].length; i++)
+			for(int i = 0; i < responses.length; i++)
 			{
-				exercises.add(new Exercise(responses[0][i], responses[1][i], responses[2][i], "usernameA", null));
+				exercises.add(new Exercise(responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
 			}
         } catch (InterruptedException e) {
 			e.printStackTrace();

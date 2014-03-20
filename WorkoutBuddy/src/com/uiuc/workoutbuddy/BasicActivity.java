@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import helperClasses.Exercise;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
@@ -29,7 +30,7 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 
 	CountDownLatch signal;
 	public int numExercises = 0;
-	public String[][] exerciseList;
+	public Exercise[] exerciseList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -142,8 +143,11 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		
 
 		Spinner spinner = new Spinner(this);
-		
-		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseList[0]);
+		String[] exerciseNames = new String[exerciseList.length];
+		for(int i = 0; i < exerciseNames.length; i++){
+			exerciseNames[i] = exerciseList[i].getName();
+		}
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseNames);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Specify the layout to use when the list of choices appears
 		spinner.setAdapter(adapter);
 		ll.addView(spinner, this.numExercises);

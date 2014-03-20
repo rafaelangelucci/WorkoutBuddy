@@ -1,5 +1,6 @@
 package com.example.workoutbuddy.test;
 
+import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -65,26 +66,26 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	@UiThreadTest
 	public void testgetExerciseList() throws InterruptedException, ExecutionException
 	{
-		String[][] responses = wrapper.getExerciseList("usernameA");
+		Exercise[] responses = wrapper.getExerciseList("usernameA");
 		signal.await(1, TimeUnit.SECONDS);
 		
-		assertEquals(responses[0][0], "ExerciseA");
-		assertEquals(responses[0][1], "ExerciseB");
-		assertEquals(responses[1][0], "strength");
-		assertEquals(responses[2][0], "desc");
+		assertEquals(responses[0].getName(), "ExerciseA");
+		assertEquals(responses[1].getName(), "ExerciseB");
+		assertEquals(responses[0].getType(), "strength");
+		assertEquals(responses[0].getDescription(), "desc");
 		
 	}
 	
 	@UiThreadTest
 	public void testgetExercise() throws InterruptedException, ExecutionException 
 	{
-		String[] response = wrapper.getExercise(2);
+		Exercise response = wrapper.getExercise(2);
 		signal.await(1, TimeUnit.SECONDS);
 		
-		assertEquals(response[0], "usernameA");
-		assertEquals(response[1], "ExerciseA");
-		assertEquals(response[2], "strength");
-		assertEquals(response[3], "desc");
+		assertEquals(response.getUsername(), "usernameA");
+		assertEquals(response.getName(), "ExerciseA");
+		assertEquals(response.getType(), "strength");
+		assertEquals(response.getDescription(), "desc");
 	}
 	
 
