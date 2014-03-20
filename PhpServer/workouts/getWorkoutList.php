@@ -6,7 +6,7 @@
 	
 	if(isset($_POST['username'])){
 		$username = $_POST['username'];
-		$data = array('name', 'username', 'date', 'description');
+		$columns = array('w_id', 'name', 'username', 'date', 'description');
 		$where = array('username' => $username);
 		$result = $database->select('Workout', $data, $where);		
 		echo json_encode($result);

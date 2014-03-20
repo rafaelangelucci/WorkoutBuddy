@@ -83,7 +83,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 			signal.await(5, TimeUnit.SECONDS);
 			for(int i = 0; i < responses[0].length; i++)
 			{
-				exercises.add(new Exercise(responses[0][i], responses[1][i], responses[2][i]));
+				exercises.add(new Exercise(responses[0][i], responses[1][i], responses[2][i], "usernameA", null));
 			}
         } catch (InterruptedException e) {
 			e.printStackTrace();

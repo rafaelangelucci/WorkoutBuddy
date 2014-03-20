@@ -1,5 +1,6 @@
 package com.example.workoutbuddy.test;
 
+import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
@@ -51,13 +52,13 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	@UiThreadTest
 	public void testgetWorkoutList() throws InterruptedException, ExecutionException
 	{
-		String[][] responses = wrapper.getWorkoutList("usernameA");
+		Workout[] responses = wrapper.getWorkoutList("usernameA");
 		signal.await(1, TimeUnit.SECONDS);
 		
-		assertEquals(responses[0][0], "WorkoutA");
-		assertEquals(responses[0][1], "WorkoutB");
-		assertEquals(responses[1][0], "03-4-2014");
-		assertEquals(responses[2][0], "desc");
+		assertEquals(responses[0].getName(), "WorkoutA");
+		assertEquals(responses[1].getName(), "WorkoutB");
+		assertEquals(responses[0].getDate(), "03-4-2014");
+		assertEquals(responses[0].getDescription(), "desc");
 		
 	}
 	

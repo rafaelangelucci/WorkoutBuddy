@@ -1,5 +1,8 @@
 package httpRequests;
 
+import helperClasses.Exercise;
+import helperClasses.Workout;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -65,7 +68,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getWorkoutList(String username)
+	public Workout[] getWorkoutList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkoutList.php";
@@ -73,29 +76,26 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", username);
 		String response = this.makeRequest(postData, URL);
 
-		// get response and parse it into an array
-		String[] names = {};
-		String[] dates = {};
-		String[] descriptions = {};
-
 		// take JSON format and put into array
+		Workout[] workouts = {};
 		try {
 			JSONArray jArray = new JSONArray(response);
 			int arrayLength = jArray.length();
-			names = new String[arrayLength];
-			dates = new String[arrayLength];
-			descriptions = new String[arrayLength];
+			workouts = new Workout[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				names[i] = json_data.getString("name");
-				dates[i] = json_data.getString("date");
-				descriptions[i] = json_data.getString("description");
+				String name = json_data.getString("name");
+				String date = json_data.getString("date");
+				String desc = json_data.getString("description");
+				int wid = Integer.parseInt(json_data.getString("w_id"));
+				Workout workout = new Workout(wid, name, date, desc, username, null);
+				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String[][] returnArray = { names, dates, descriptions };
-		return returnArray;
+		//TODO uncomment this
+		return workouts;
 	}
 
 	/**
@@ -118,7 +118,8 @@ public class AsyncHttpPostWrapper {
 		String[] names = {};
 		String[] types = {};
 		String[] descriptions = {};
-
+		
+		ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
@@ -128,15 +129,25 @@ public class AsyncHttpPostWrapper {
 			descriptions = new String[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
+				//TODO take out code below to stars
 				names[i] = json_data.getString("name");
 				types[i] = json_data.getString("type");
 				descriptions[i] = json_data.getString("description");
+				//*********************
+				String name = json_data.getString("name");
+				String type = json_data.getString("type");
+				String desc = json_data.getString("description");
+				int eid = Integer.parseInt(json_data.getString("e_id"));
+				Exercise exercise = new Exercise(eid, name, type, desc, username, null);
+				exercises.add(exercise);
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
 		String[][] returnArray = { names, types, descriptions };
 		return returnArray;
+		//TODO
+		//return exercises;
 	}
 
 	/**
@@ -379,6 +390,8 @@ public class AsyncHttpPostWrapper {
 
 		this.makeRequest(postData, URL);
 	}
+	
+	
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
 

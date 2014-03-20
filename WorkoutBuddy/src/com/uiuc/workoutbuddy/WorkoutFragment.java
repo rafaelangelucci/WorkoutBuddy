@@ -4,6 +4,7 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
@@ -83,11 +84,10 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
             AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
             signal = new CountDownLatch(1);
             try {
-				String[][] responses = wrapper.getWorkoutList("usernameA");
+				Workout[] responses = wrapper.getWorkoutList("usernameA");
 				signal.await(5, TimeUnit.SECONDS);
 				for(int i = 0; i < responses.length; i++)
-					for(int j = 0; j < responses[i].length; j++)
-						Log.i( "WorkoutFragment", "OnClick DB response : " + responses[i][j]);
+					Log.i( "WorkoutFragment", "OnClick DB response : " + responses[i].getName() + responses[i].getDate() + responses[i].getDescription());
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
