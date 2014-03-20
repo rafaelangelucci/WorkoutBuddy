@@ -1,6 +1,6 @@
 <?php
 	// Include Medoo
-	require_once '../medoo.php';
+	require_once 'medoo.php';
 	// Initialize
 	$database = new medoo('workoutbuddy_01');
 
@@ -13,7 +13,7 @@
         if($response == null){
             echo 'fail';
         }else{
-            echo json_encode($response);
+            echo 'success';
         }
     }
     else{

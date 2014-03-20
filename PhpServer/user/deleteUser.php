@@ -1,7 +1,7 @@
 <?php
 
     // Include Medoo
-    require_once '../medoo.php';
+    require_once 'medoo.php';
     // Initialize
     $database = new medoo('workoutbuddy_01');
 
