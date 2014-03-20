@@ -1,19 +1,19 @@
 package helperClasses;
 
-public class Workout 
-{
+import java.util.ArrayList;
+
+public class Workout {
 	private String name;
 	private String date;
 	private String description;
 	private String username;
 	private int wid;
-	private Exercise[] exercises;
-	
+	private ArrayList<Exercise> exercises;
+
 	/**
 	 * Default Constructor
 	 */
-	public Workout()
-	{
+	public Workout() {
 		this.name = "";
 		this.date = "";
 		this.description = "";
@@ -21,45 +21,51 @@ public class Workout
 		this.exercises = null;
 		this.wid = -1;
 	}
-	
-	
+
 	/**
 	 * Constructor for when a user creates the workout
-	 * @param name identifies the workout
-	 * @param date of the workout
-	 * @param desc description of the workout
+	 * 
+	 * @param name
+	 *            identifies the workout
+	 * @param date
+	 *            of the workout
+	 * @param desc
+	 *            description of the workout
 	 */
-	public Workout(String name, String date, String desc, String username, int wid, Exercise[] exercises)
-	{
+	public Workout(String name, String date, String desc, String username,
+			ArrayList<Exercise> exercises) {
 		this.name = name;
 		this.date = date;
 		this.description = desc;
 		this.username = username;
-		this.wid = wid;
+		this.wid = -1;
 		this.exercises = exercises;
 	}
-	
+
 	/**
 	 * Constructor for when the database creates the workout
-	 * @param wid id of the workout
-	 * @param name identifies the workout
-	 * @param date of the workout
-	 * @param desc description of the workout
-	 * @param username of the user
-	 * @param exercises list of exercises in the workout
+	 * 
+	 * @param wid
+	 *            id of the workout
+	 * @param name
+	 *            identifies the workout
+	 * @param date
+	 *            of the workout
+	 * @param desc
+	 *            description of the workout
+	 * @param username
+	 *            of the user
+	 * @param exercises
+	 *            list of exercises in the workout
 	 */
-	public Workout(int wid, String name, String date, String desc, String username, Exercise[] exercises){
+	public Workout(int wid, String name, String date, String desc,
+			String username, ArrayList<Exercise> exercises) {
+		this(name, date, desc, username, exercises);
 		this.wid = wid;
-		this.date = date;
-		this.description = desc;
-		this.username = username;
-		this.exercises = exercises;
 	}
 	
-	
+	/*************** GETTERS AND SETTERS ***************/
 
-/*************** GETTERS AND SETTERS ***************/	
-	
 	public String getName() {
 		return name;
 	}
@@ -83,4 +89,31 @@ public class Workout
 	public void setDescription(String description) {
 		this.description = description;
 	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public int getWid() {
+		return wid;
+	}
+
+	public void setWid(int wid) {
+		this.wid = wid;
+	}
+
+	public ArrayList<Exercise> getExercises() {
+		return exercises;
+	}
+
+	public void setExercises(ArrayList<Exercise> exercises) {
+		this.exercises = exercises;
+	}
+
+	
+
 }
