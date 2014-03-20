@@ -4,3 +4,5 @@ bin/
 .classpath
 .settings/
 .idea/
+PhpServer/.DS_Store
+PhpServer/tests/.DS_Store
