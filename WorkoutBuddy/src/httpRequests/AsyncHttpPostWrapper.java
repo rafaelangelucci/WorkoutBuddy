@@ -209,6 +209,31 @@ public class AsyncHttpPostWrapper {
 		postData.put("password", password);
 		this.makeRequest(postData, URL);
 	}
+	
+	/**
+	 * Takes in all parameters and checks for the user in the db to login
+	 * 
+	 * @param username
+	 *            username to login
+	 * @param password
+	 *            password for the user
+	 * @return true if user exists and the password is correct
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public boolean userLogin(String username, String password) throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+		
+		String response = this.makeRequest(postData, URL);
+		if (response.equals("success"))
+			return true;
+		else 
+			return false;
+	}
 
 	/**
 	 * Query the database and return the exercise
