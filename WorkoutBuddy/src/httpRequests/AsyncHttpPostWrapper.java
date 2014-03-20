@@ -190,6 +190,25 @@ public class AsyncHttpPostWrapper {
 		postData.put("description", desc);
 		this.makeRequest(postData, URL);
 	}
+	
+	/**
+	 * Takes in all parameters and creates the account in the database
+	 * 
+	 * @param username
+	 *            username to name the account
+	 * @param password
+	 *            password for the account
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void addUser(String username, String password) throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+		this.makeRequest(postData, URL);
+	}
 
 	/**
 	 * Query the database and return the exercise
