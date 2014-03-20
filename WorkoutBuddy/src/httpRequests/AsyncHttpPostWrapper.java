@@ -176,7 +176,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("date", workout.getDate());
 		postData.put("name", workout.getName());
 		postData.put("description", workout.getDescription());
-		int wid = Integer.parseInt(this.makeRequest(postData, URL));
+		int wid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		workout.setWid(wid);
 	}
 
