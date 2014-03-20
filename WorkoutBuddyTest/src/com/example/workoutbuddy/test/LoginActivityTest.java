@@ -43,7 +43,7 @@ public class LoginActivityTest extends
 	public void testActivityStartup()
 	{
 		String expected = lActivity.getString(com.uiuc.workoutbuddy.R.string.app_name);
-		assertEquals(expected, "WorkoutBuddy");
+		assertEquals(expected, "Workout\nBuddy");
 	}
 	
 	/**
