@@ -1,9 +1,11 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.ArrayList;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
+import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -35,6 +37,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
     View view;
     Context c;
 	CountDownLatch signal;
+	static ArrayList<Workout> workouts = new ArrayList<Workout>();
 
     /**
      * Default Constructor
@@ -62,11 +65,32 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
             //already made
         }
 
+        workouts.clear();
+        
         Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
         Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
 
         my_workouts.setOnClickListener(this);
         new_workout.setOnClickListener(this);
+        
+        AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+        signal = new CountDownLatch(1);
+        try {
+			Workout[] responses = wrapper.getWorkoutList("usernameA");
+			if(responses.length == 0)
+				Log.i("Asyn Task", "0 workouts");
+			signal.await(1, TimeUnit.SECONDS);
+			for(int i = 0; i < responses.length; i++)
+			{
+				workouts.add(new Workout(responses[i].getName(), responses[i].getDate(), responses[i].getDescription(), responses[i].getUsername(),
+						responses[i].getExercises()));
+				Log.i("Workout Added", responses[i].getName());
+			}
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 
         return view;
     }
@@ -81,18 +105,8 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
         {
         case R.id.btn_my_workouts:
             Log.i( "WorkoutFragment", "OnClick : My Workouts");
-            AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-            signal = new CountDownLatch(1);
-            try {
-				Workout[] responses = wrapper.getWorkoutList("usernameA");
-				signal.await(5, TimeUnit.SECONDS);
-				for(int i = 0; i < responses.length; i++)
-					Log.i( "WorkoutFragment", "OnClick DB response : " + responses[i].getName() + responses[i].getDate() + responses[i].getDescription());
-			} catch (InterruptedException e) {
-				e.printStackTrace();
-			} catch (ExecutionException e) {
-				e.printStackTrace();
-			}
+			Intent intent = new Intent(c, WorkoutListActivity.class);
+			startActivity(intent);
             break;
         case R.id.btn_new_workout:
             Intent i = new Intent(c, BasicActivity.class);

@@ -12,6 +12,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 
 
@@ -38,7 +39,7 @@ public class TimerActivityTest extends
 	public void testActivityStartup()
 	{
 		final String expected = tActivity.getString(com.uiuc.workoutbuddy.R.string.app_name);
-		assertEquals(expected, "WorkoutBuddy");
+		assertEquals(expected, "Workout\nBuddy");
 	}
 	
 	/**
@@ -58,4 +59,18 @@ public class TimerActivityTest extends
 		Assert.assertTrue(view.isShown());
 		Assert.assertTrue(view.isClickable());
 	}
+	
+	public void testText() {
+		  // simulate user action to input some value into EditText:
+		  final EditText time = (EditText) tActivity.findViewById(com.uiuc.workoutbuddy.R.id.time_input);
+		  
+		  tActivity.runOnUiThread(new Runnable() {
+		    public void run() {
+		      time.setText("2");
+		    }
+		  });
+
+		  // Check if the EditText was given an input
+		  assertNotNull(time.getText());
+		}
 }

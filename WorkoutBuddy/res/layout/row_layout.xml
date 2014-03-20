@@ -34,8 +34,8 @@
        
     </LinearLayout>
 
-    <RadioButton
-        android:id="@+id/btn_radio"
+    <CheckBox
+        android:id="@+id/btn_check_box"
         android:layout_weight="1"
         android:layout_width="0dp"
         android:layout_height="match_parent"

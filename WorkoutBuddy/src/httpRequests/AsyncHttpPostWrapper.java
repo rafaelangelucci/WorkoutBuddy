@@ -88,13 +88,14 @@ public class AsyncHttpPostWrapper {
 				String date = json_data.getString("date");
 				String desc = json_data.getString("description");
 				int wid = Integer.parseInt(json_data.getString("w_id"));
-				Workout workout = new Workout(wid, name, date, desc, username, null);
+				Workout workout = new Workout(wid, name, date, desc, username,
+						null);
 				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		//TODO uncomment this
+		// TODO uncomment this
 		return workouts;
 	}
 
@@ -127,7 +128,8 @@ public class AsyncHttpPostWrapper {
 				String type = json_data.getString("type");
 				String desc = json_data.getString("description");
 				int eid = Integer.parseInt(json_data.getString("e_id"));
-				Exercise exercise = new Exercise(eid, name, type, desc, username, null);
+				Exercise exercise = new Exercise(eid, name, type, desc,
+						username, null);
 				exercises[i] = exercise;
 			}
 		} catch (JSONException e) {
@@ -137,57 +139,47 @@ public class AsyncHttpPostWrapper {
 	}
 
 	/**
-	 * Takes in all parameters and creates the exercise in the database
+	 * Takes in an exercise object, adds it to the database, then sets its eid
 	 * 
-	 * @param username
-	 *            username associated with the exercise
-	 * @param type
-	 *            the type definition of the exercise
-	 * @param name
-	 *            name of the exercise
-	 * @param desc
-	 *            the description of how to do the exercise
+	 * @param exercise
+	 *            the exercise to be added
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addExercise(String username, String type, String name,
-			String desc) throws InterruptedException, ExecutionException {
+	public void addExercise(Exercise exercise) throws InterruptedException,
+			ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("username", username);
-		postData.put("type", type);
-		postData.put("name", name);
-		postData.put("description", desc);
-		this.makeRequest(postData, URL);
+		postData.put("username", exercise.getUsername());
+		postData.put("type", exercise.getType());
+		postData.put("name", exercise.getName());
+		postData.put("description", exercise.getDescription());
+		int eid = Integer.parseInt(this.makeRequest(postData, URL));
+		exercise.setEid(eid);
 	}
 
 	/**
-	 * Takes in all parameters and creates the workout in the database
+	 * Takes in a workout object, adds it to the database, then sets its wid
 	 * 
-	 * @param username
-	 *            associated with the workout
-	 * @param date
-	 *            date the workout is performed
-	 * @param name
-	 *            of the workout
-	 * @param desc
-	 *            the description of the workout
+	 * @param workout
+	 *            the workout to be added
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addWorkout(String username, String date, String name,
-			String desc) throws InterruptedException, ExecutionException {
+	public void addWorkout(Workout workout) throws InterruptedException,
+			ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("username", username);
-		postData.put("date", date);
-		postData.put("name", name);
-		postData.put("description", desc);
-		this.makeRequest(postData, URL);
+		postData.put("username", workout.getUsername());
+		postData.put("date", workout.getDate());
+		postData.put("name", workout.getName());
+		postData.put("description", workout.getDescription());
+		int wid = Integer.parseInt(this.makeRequest(postData, URL).trim());
+		workout.setWid(wid);
 	}
-	
+
 	/**
 	 * Takes in all parameters and creates the account in the database
 	 * 
@@ -198,13 +190,60 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addUser(String username, String password) throws InterruptedException, ExecutionException {
+	public void addUser(String username, String password)
+			throws InterruptedException, ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
 		postData.put("password", password);
 		this.makeRequest(postData, URL);
+	}
+
+	/**
+	 * Takes in all parameters and deletes the account in the database
+	 * 
+	 * @param username
+	 *            username to delete
+	 * @param password
+	 *            password for the account
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void deleteUser(String username, String password)
+			throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+		this.makeRequest(postData, URL);
+	}
+
+	/**
+	 * Takes in all parameters and checks for the user in the db to login
+	 * 
+	 * @param username
+	 *            username to login
+	 * @param password
+	 *            password for the user
+	 * @return true if user exists and the password is correct
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public boolean userLogin(String username, String password)
+			throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+
+		String response = this.makeRequest(postData, URL);
+		if (response.equals("success"))
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -285,64 +324,48 @@ public class AsyncHttpPostWrapper {
 	 * Updates the exercise with the given information. All fields need to be
 	 * provided even if there is no change
 	 * 
-	 * @param eid
-	 *            the id associated with the exercise
-	 * @param username
-	 *            username associated with the exercise
-	 * @param type
-	 *            the type definition of the exercise
-	 * @param name
-	 *            name of the exercise
-	 * @param desc
-	 *            the description of how to do the exercise
+	 * @param exercise
+	 *            the exercise to be changed (must contain eid field)
+	 * @return the number of rows affected
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void updateExercise(int eid, String name, String username,
-			String description, String type) throws InterruptedException,
+	public int updateExercise(Exercise exercise) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id and all update fields
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("e_id", Integer.toString(eid));
-		postData.put("username", username);
-		postData.put("name", name);
-		postData.put("type", type);
-		postData.put("description", description);
+		postData.put("e_id", Integer.toString(exercise.getEid()));
+		postData.put("username", exercise.getUsername());
+		postData.put("name", exercise.getName());
+		postData.put("type", exercise.getType());
+		postData.put("description", exercise.getDescription());
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL));
 	}
 
 	/**
 	 * Update the workout with the given information. All fields need to be
 	 * provided even if there is no change
 	 * 
-	 * @param wid
-	 *            associated with the workout
-	 * @param name
-	 *            of the workout
-	 * @param username
-	 *            associated with the workout
-	 * @param description
-	 *            of the workout
-	 * @param date
-	 *            that the workout was performed
+	 * @param workout
+	 *            the workout with updated information (must contain wid)
+	 * @return number of rows affected
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void updateWorkout(int wid, String name, String username,
-			String description, String date) throws InterruptedException,
+	public int updateWorkout(Workout workout) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with w_id and all update fields
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("w_id", Integer.toString(wid));
-		postData.put("username", username);
-		postData.put("name", name);
-		postData.put("date", date);
-		postData.put("description", description);
+		postData.put("w_id", Integer.toString(workout.getWid()));
+		postData.put("username", workout.getUsername());
+		postData.put("name", workout.getName());
+		postData.put("date", workout.getDate());
+		postData.put("description", workout.getDescription());
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL));
 	}
 
 	/**
@@ -378,8 +401,6 @@ public class AsyncHttpPostWrapper {
 
 		this.makeRequest(postData, URL);
 	}
-	
-	
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
 
