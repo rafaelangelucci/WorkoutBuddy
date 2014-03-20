@@ -94,7 +94,26 @@ public class LoginActivityTest extends
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
 		
 		Boolean success = wrapper.userLogin("u", "p");
-		
 		Assert.assertTrue(success);
+		
+		success = wrapper.userLogin("fake", "fake");
+		Assert.assertFalse(success);
+	}
+	
+	public void testUserSignupAndDelete() throws InterruptedException, ExecutionException {
+		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
+		
+		String username = "a8fs7dgsfdu";
+		String password = "abc";
+		
+		wrapper.addUser(username, password);
+		
+		Boolean success = wrapper.userLogin(username, password);
+		Assert.assertTrue(success);
+		
+		wrapper.deleteUser(username, password);
+		
+		success = wrapper.userLogin(username, password);
+		Assert.assertFalse(success);
 	}
 }
