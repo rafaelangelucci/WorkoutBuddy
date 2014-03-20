@@ -51,7 +51,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	}
 	
 	@UiThreadTest
-	public void testgetWorkoutList() throws InterruptedException, ExecutionException
+	public void testAddGetModifyGetDeleteWorkout() throws InterruptedException, ExecutionException
 	{
 		Workout[] responses = wrapper.getWorkoutList("usernameA");
 		signal.await(1, TimeUnit.SECONDS);

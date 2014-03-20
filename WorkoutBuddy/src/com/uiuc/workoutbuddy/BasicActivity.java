@@ -1,6 +1,7 @@
 package com.uiuc.workoutbuddy;
 
 import helperClasses.Exercise;
+import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
@@ -103,8 +104,9 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			signal = new CountDownLatch(1);
 			try {
-				wrapper.addWorkout("usernameA", createDate, name, descript);
-				signal.await(5, TimeUnit.SECONDS);
+				Workout workout = new Workout(name, createDate, descript, "usernameA", null);
+				wrapper.addWorkout(workout);
+				signal.await(1, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {

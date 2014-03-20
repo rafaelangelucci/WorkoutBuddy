@@ -79,7 +79,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 			Workout[] responses = wrapper.getWorkoutList("usernameA");
 			if(responses.length == 0)
 				Log.i("Asyn Task", "0 workouts");
-			signal.await(5, TimeUnit.SECONDS);
+			signal.await(1, TimeUnit.SECONDS);
 			for(int i = 0; i < responses.length; i++)
 			{
 				workouts.add(new Workout(responses[i].getName(), responses[i].getDate(), responses[i].getDescription(), responses[i].getUsername(),
