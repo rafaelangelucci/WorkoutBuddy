@@ -23,7 +23,6 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener
 {
-	CountDownLatch signal;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -73,7 +72,6 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		else
 		{
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-			signal = new CountDownLatch(1);
 			try {
 				 boolean success = wrapper.userLogin(username, password);
 				
@@ -110,10 +108,8 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		else
 		{
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-			signal = new CountDownLatch(1);
 			try {
 				wrapper.addUser(username, password);
-				signal.await(1, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {

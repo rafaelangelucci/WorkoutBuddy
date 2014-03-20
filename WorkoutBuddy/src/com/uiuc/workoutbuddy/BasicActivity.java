@@ -29,7 +29,6 @@ import android.widget.Toast;
 public class BasicActivity extends Activity implements OnClickListener, HttpRequestListener
 {
 
-	CountDownLatch signal;
 	public int numExercises = 0;
 	public Exercise[] exerciseList;
 
@@ -106,11 +105,9 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		else
 		{
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-			signal = new CountDownLatch(1);
 			try {
 				Workout workout = new Workout(name, createDate, descript, "usernameA", null);
 				wrapper.addWorkout(workout);
-				signal.await(1, TimeUnit.SECONDS);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
@@ -139,7 +136,6 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 	@Override
 	public void requestComplete() {
 		Log.i( "requestComplete()", "Request Completed countDown()");
-		signal.countDown();
 	}
 	
 	private void addExerciseSpinner()

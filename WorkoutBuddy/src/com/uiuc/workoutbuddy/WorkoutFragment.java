@@ -36,7 +36,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 {
     View view;
     Context c;
-	CountDownLatch signal;
+	
 	static ArrayList<Workout> workouts = new ArrayList<Workout>();
 
     /**
@@ -74,12 +74,12 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
         new_workout.setOnClickListener(this);
         
         AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-        signal = new CountDownLatch(1);
+        
         try {
 			Workout[] responses = wrapper.getWorkoutList("usernameA");
 			if(responses.length == 0)
 				Log.i("Asyn Task", "0 workouts");
-			signal.await(1, TimeUnit.SECONDS);
+			
 			for(int i = 0; i < responses.length; i++)
 			{
 				workouts.add(new Workout(responses[i].getName(), responses[i].getDate(), responses[i].getDescription(), responses[i].getUsername(),
@@ -123,6 +123,6 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 	public void requestComplete() 
 	{
         Log.i( "requestComplete()", "Request Completed countDown()");
-		signal.countDown();
+		
 	}
 }

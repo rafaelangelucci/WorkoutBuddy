@@ -37,7 +37,6 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 {
 	View view;
 	Context c;
-	CountDownLatch signal;
 	static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
 	/**
@@ -77,10 +76,8 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 				
 		// Set up text view from database pull
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-        signal = new CountDownLatch(1);
         try {
 			Exercise[] responses = wrapper.getExerciseList("usernameA");
-			signal.await(5, TimeUnit.SECONDS);
 			for(int i = 0; i < responses.length; i++)
 			{
 				exercises.add(new Exercise(responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
@@ -121,7 +118,6 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 	public void requestComplete() 
 	{
         Log.i( "requestComplete()", "Request Completed countDown()");
-		signal.countDown();
 	}
 
 	public ArrayList<Exercise> getExercises() {
