@@ -208,6 +208,25 @@ public class AsyncHttpPostWrapper {
 	}
 	
 	/**
+	 * Takes in all parameters and deletes the account in the database
+	 * 
+	 * @param username
+	 *            username to delete
+	 * @param password
+	 *            password for the account
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void deleteUser(String username, String password) throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+		this.makeRequest(postData, URL);
+	}
+	
+	/**
 	 * Takes in all parameters and checks for the user in the db to login
 	 * 
 	 * @param username
