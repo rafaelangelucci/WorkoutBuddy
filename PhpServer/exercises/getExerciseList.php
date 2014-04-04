@@ -6,7 +6,7 @@
 	
 	if(isset($_POST['username'])){		
 		$username = $_POST['username'];
-		$data = array('name', 'username', 'type', 'description');
+		$data = array('name', 'username', 'type', 'description', 'e_id');
 		$where = array('username' => $username);
 		$result = $database->select('Exercise', $data, $where);
 		

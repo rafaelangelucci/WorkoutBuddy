@@ -1,14 +1,28 @@
 package com.uiuc.workoutbuddy;
+import httpRequests.AsyncHttpPostWrapper;
+import httpRequests.HttpRequestListener;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.concurrent.CountDownLatch;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.TimeUnit;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity implements OnClickListener{
+public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener
+{
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -30,10 +44,10 @@ public class LoginActivity extends Activity implements OnClickListener{
 		switch(v.getId())
 		{
 		case R.id.login_button:
-			Toast.makeText(this.getApplicationContext(), "Login Clicked", Toast.LENGTH_SHORT).show();
+			login(v);
 			break;
 		case R.id.signup_button:
-			Toast.makeText(this.getApplicationContext(), "Sign Up Clicked", Toast.LENGTH_SHORT).show();
+			signup(v);
 			break;
 		case R.id.skip_button:
 			Intent intent = new Intent(this, MainActivity.class);
@@ -41,6 +55,79 @@ public class LoginActivity extends Activity implements OnClickListener{
 			break;
 		default:
 		}
+	}
+	
+	private void login(View v)
+	{
+		// Get user password and username
+		EditText et = (EditText)findViewById(R.id.inputUsername);
+		String username = et.getText().toString();
+		
+		et = (EditText)findViewById(R.id.inputPassword);
+		String password = et.getText().toString();
+	
+		// Call userlogin() in the wrapper class to check is the user exists and the password is correct
+		if(username.equals("") || password.equals(""))
+			Toast.makeText(this.getApplicationContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+		else
+		{
+			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+			try {
+				 boolean success = wrapper.userLogin(username, password);
+				
+				 if (success) {
+						Toast.makeText(this.getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+						
+						Intent intent = new Intent(this, MainActivity.class);
+				    	startActivity(intent);
+					} else {
+						Toast.makeText(this.getApplicationContext(), "Login information incorrect. Try again.", Toast.LENGTH_SHORT).show();
+					}
+				//signal.await(1, TimeUnit.SECONDS);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		}
+	}
+	
+	private void signup(View v)
+	{
+		// Get user password and username
+		EditText et = (EditText)findViewById(R.id.inputUsername);
+		String username = et.getText().toString();
+		
+		et = (EditText)findViewById(R.id.inputPassword);
+		String password = et.getText().toString();
+	
+	
+		// Call the wrapper class to create the account
+		if(username.equals("") || password.equals(""))
+			Toast.makeText(this.getApplicationContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+		else
+		{
+			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+			try {
+				wrapper.addUser(username, password);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+			
+			Toast.makeText(this.getApplicationContext(), "Registration Complete", Toast.LENGTH_SHORT).show();
+			
+			Intent intent = new Intent(this, MainActivity.class);
+	    	startActivity(intent);
+		}
+	}
+
+	@Override
+	public void requestComplete() {
+		Log.i( "requestComplete()", "Request Completed countDown()");
+		//signal.countDown();
+		
 	}
 
 }

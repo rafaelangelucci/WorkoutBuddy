@@ -18,7 +18,7 @@ public class TimerActivity extends Activity {
 	}
 
 	public void startAlert(View view) {
-		EditText text = (EditText) findViewById(R.id.time);
+		EditText text = (EditText) findViewById(R.id.time_input);
 		
 		int i = Integer.parseInt(text.getText().toString());
 		

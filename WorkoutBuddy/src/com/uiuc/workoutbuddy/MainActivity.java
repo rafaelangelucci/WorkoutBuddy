@@ -1,5 +1,4 @@
 package com.uiuc.workoutbuddy;
-import android.widget.TabHost;
 import java.util.Locale;
 import com.uiuc.workoutbuddy.R;
 import android.app.ActionBar;
@@ -213,4 +212,5 @@ public class MainActivity extends FragmentActivity implements
     	Intent intent = new Intent(this, TimerActivity.class);
     	startActivity(intent);
     }
+    
 }

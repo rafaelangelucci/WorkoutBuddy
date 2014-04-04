@@ -12,8 +12,7 @@
 			'date' => $_POST['date'], 
 			'description' => $_POST['description']);
 		$where = array('w_id' => $wid);
-		$response = $database->update('Workout', $data, $where);
-		echo json_encode($response);
+		echo $database->update('Workout', $data, $where);
 	}
 	else{
 		echo 'fail';

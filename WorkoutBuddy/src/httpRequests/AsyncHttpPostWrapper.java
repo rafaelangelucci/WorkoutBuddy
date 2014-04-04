@@ -1,5 +1,8 @@
 package httpRequests;
 
+import helperClasses.Exercise;
+import helperClasses.Workout;
+
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -65,7 +68,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getWorkoutList(String username)
+	public Workout[] getWorkoutList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkoutList.php";
@@ -73,29 +76,27 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", username);
 		String response = this.makeRequest(postData, URL);
 
-		// get response and parse it into an array
-		String[] names = {};
-		String[] dates = {};
-		String[] descriptions = {};
-
 		// take JSON format and put into array
+		Workout[] workouts = {};
 		try {
 			JSONArray jArray = new JSONArray(response);
 			int arrayLength = jArray.length();
-			names = new String[arrayLength];
-			dates = new String[arrayLength];
-			descriptions = new String[arrayLength];
+			workouts = new Workout[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				names[i] = json_data.getString("name");
-				dates[i] = json_data.getString("date");
-				descriptions[i] = json_data.getString("description");
+				String name = json_data.getString("name");
+				String date = json_data.getString("date");
+				String desc = json_data.getString("description");
+				int wid = Integer.parseInt(json_data.getString("w_id"));
+				Workout workout = new Workout(wid, name, date, desc, username,
+						null);
+				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String[][] returnArray = { names, dates, descriptions };
-		return returnArray;
+		// TODO uncomment this
+		return workouts;
 	}
 
 	/**
@@ -106,7 +107,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[][] getExerciseList(String username)
+	public Exercise[] getExerciseList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExerciseList.php";
@@ -115,80 +116,134 @@ public class AsyncHttpPostWrapper {
 		String response = this.makeRequest(postData, URL);
 
 		// get response and parse it into an array
-		String[] names = {};
-		String[] types = {};
-		String[] descriptions = {};
-
+		Exercise[] exercises = {};
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
 			int arrayLength = jArray.length();
-			names = new String[arrayLength];
-			types = new String[arrayLength];
-			descriptions = new String[arrayLength];
+			exercises = new Exercise[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject json_data = jArray.getJSONObject(i);
-				names[i] = json_data.getString("name");
-				types[i] = json_data.getString("type");
-				descriptions[i] = json_data.getString("description");
+				String name = json_data.getString("name");
+				String type = json_data.getString("type");
+				String desc = json_data.getString("description");
+				int eid = Integer.parseInt(json_data.getString("e_id"));
+				Exercise exercise = new Exercise(eid, name, type, desc,
+						username, null);
+				exercises[i] = exercise;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		String[][] returnArray = { names, types, descriptions };
-		return returnArray;
+		return exercises;
 	}
 
 	/**
-	 * Takes in all parameters and creates the exercise in the database
+	 * Takes in an exercise object, adds it to the database, then sets its eid
 	 * 
-	 * @param username
-	 *            username associated with the exercise
-	 * @param type
-	 *            the type definition of the exercise
-	 * @param name
-	 *            name of the exercise
-	 * @param desc
-	 *            the description of how to do the exercise
+	 * @param exercise
+	 *            the exercise to be added
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addExercise(String username, String type, String name,
-			String desc) throws InterruptedException, ExecutionException {
+	public void addExercise(Exercise exercise) throws InterruptedException,
+			ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", exercise.getUsername());
+		postData.put("type", exercise.getType());
+		postData.put("name", exercise.getName());
+		postData.put("description", exercise.getDescription());
+		int eid = Integer.parseInt(this.makeRequest(postData, URL).trim());
+		exercise.setEid(eid);
+	}
+
+	/**
+	 * Takes in a workout object, adds it to the database, then sets its wid
+	 * 
+	 * @param workout
+	 *            the workout to be added
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void addWorkout(Workout workout) throws InterruptedException,
+			ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addWorkout.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", workout.getUsername());
+		postData.put("date", workout.getDate());
+		postData.put("name", workout.getName());
+		postData.put("description", workout.getDescription());
+		int wid = Integer.parseInt(this.makeRequest(postData, URL).trim());
+		workout.setWid(wid);
+	}
+
+	/**
+	 * Takes in all parameters and creates the account in the database
+	 * 
+	 * @param username
+	 *            username to name the account
+	 * @param password
+	 *            password for the account
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void addUser(String username, String password)
+			throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
-		postData.put("type", type);
-		postData.put("name", name);
-		postData.put("description", desc);
+		postData.put("password", password);
 		this.makeRequest(postData, URL);
 	}
 
 	/**
-	 * Takes in all parameters and creates the workout in the database
+	 * Takes in all parameters and deletes the account in the database
 	 * 
 	 * @param username
-	 *            associated with the workout
-	 * @param date
-	 *            date the workout is performed
-	 * @param name
-	 *            of the workout
-	 * @param desc
-	 *            the description of the workout
+	 *            username to delete
+	 * @param password
+	 *            password for the account
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addWorkout(String username, String date, String name,
-			String desc) throws InterruptedException, ExecutionException {
+	public void deleteUser(String username, String password)
+			throws InterruptedException, ExecutionException {
 		// make the post request to URL with username of the workout
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addWorkout.php";
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
-		postData.put("date", date);
-		postData.put("name", name);
-		postData.put("description", desc);
+		postData.put("password", password);
 		this.makeRequest(postData, URL);
+	}
+
+	/**
+	 * Takes in all parameters and checks for the user in the db to login
+	 * 
+	 * @param username
+	 *            username to login
+	 * @param password
+	 *            password for the user
+	 * @return true if user exists and the password is correct
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public boolean userLogin(String username, String password)
+			throws InterruptedException, ExecutionException {
+		// make the post request to URL with username of the workout
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		postData.put("password", password);
+
+		String response = this.makeRequest(postData, URL);
+		if (response.equals("success"))
+			return true;
+		else
+			return false;
 	}
 
 	/**
@@ -202,24 +257,25 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public String[] getExercise(int eid) throws InterruptedException,
+	public Exercise getExercise(int eid) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("e_id", Integer.toString(eid));
 		String response = this.makeRequest(postData, URL);
-		String[] exercise = new String[4];
 
 		// parse JSON
 		// take JSON format and put into array
+		Exercise exercise = null;
 		try {
 			JSONArray jArray = new JSONArray(response);
 			JSONObject json_data = jArray.getJSONObject(0);
-			exercise[0] = json_data.getString("username");
-			exercise[1] = json_data.getString("name");
-			exercise[2] = json_data.getString("type");
-			exercise[3] = json_data.getString("description");
+			String username = json_data.getString("username");
+			String name = json_data.getString("name");
+			String type = json_data.getString("type");
+			String desc = json_data.getString("description");
+			exercise = new Exercise(eid, name, type, desc, username, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -238,24 +294,25 @@ public class AsyncHttpPostWrapper {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	public String[] getWorkout(int wid) throws InterruptedException,
+	public Workout getWorkout(int wid) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("w_id", Integer.toString(wid));
 		String response = this.makeRequest(postData, URL);
-		String[] workout = new String[4];
+		Workout workout = null;
 
 		// parse JSON
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
 			JSONObject json_data = jArray.getJSONObject(0);
-			workout[0] = json_data.getString("username");
-			workout[1] = json_data.getString("name");
-			workout[2] = json_data.getString("date");
-			workout[3] = json_data.getString("description");
+			String username = json_data.getString("username");
+			String name = json_data.getString("name");
+			String date = json_data.getString("date");
+			String desc = json_data.getString("description");
+			workout = new Workout(wid, name, date, desc, username, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -267,64 +324,48 @@ public class AsyncHttpPostWrapper {
 	 * Updates the exercise with the given information. All fields need to be
 	 * provided even if there is no change
 	 * 
-	 * @param eid
-	 *            the id associated with the exercise
-	 * @param username
-	 *            username associated with the exercise
-	 * @param type
-	 *            the type definition of the exercise
-	 * @param name
-	 *            name of the exercise
-	 * @param desc
-	 *            the description of how to do the exercise
+	 * @param exercise
+	 *            the exercise to be changed (must contain eid field)
+	 * @return the number of rows affected
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void updateExercise(int eid, String name, String username,
-			String description, String type) throws InterruptedException,
+	public int updateExercise(Exercise exercise) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id and all update fields
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("e_id", Integer.toString(eid));
-		postData.put("username", username);
-		postData.put("name", name);
-		postData.put("type", type);
-		postData.put("description", description);
+		postData.put("e_id", Integer.toString(exercise.getEid()));
+		postData.put("username", exercise.getUsername());
+		postData.put("name", exercise.getName());
+		postData.put("type", exercise.getType());
+		postData.put("description", exercise.getDescription());
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
 	 * Update the workout with the given information. All fields need to be
 	 * provided even if there is no change
 	 * 
-	 * @param wid
-	 *            associated with the workout
-	 * @param name
-	 *            of the workout
-	 * @param username
-	 *            associated with the workout
-	 * @param description
-	 *            of the workout
-	 * @param date
-	 *            that the workout was performed
+	 * @param workout
+	 *            the workout with updated information (must contain wid)
+	 * @return number of rows affected
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void updateWorkout(int wid, String name, String username,
-			String description, String date) throws InterruptedException,
+	public int updateWorkout(Workout workout) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with w_id and all update fields
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
-		postData.put("w_id", Integer.toString(wid));
-		postData.put("username", username);
-		postData.put("name", name);
-		postData.put("date", date);
-		postData.put("description", description);
+		postData.put("w_id", Integer.toString(workout.getWid()));
+		postData.put("username", workout.getUsername());
+		postData.put("name", workout.getName());
+		postData.put("date", workout.getDate());
+		postData.put("description", workout.getDescription());
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
@@ -335,13 +376,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void deleteExercise(int eid) throws InterruptedException,
+	public int deleteExercise(int eid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteExercise.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("e_id", Integer.toString(eid));
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	/**
@@ -352,13 +393,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void deleteWorkout(int wid) throws InterruptedException,
+	public int deleteWorkout(int wid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteWorkout.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("w_id", Integer.toString(wid));
 
-		this.makeRequest(postData, URL);
+		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
