@@ -14,20 +14,8 @@ import java.util.concurrent.ExecutionException;
 import junit.framework.TestCase;
 
 
-import com.uiuc.workoutbuddy.MainActivity;
-import com.uiuc.workoutbuddy.MyWorkoutsListFragment;
 import com.uiuc.workoutbuddy.Schedule;
-import com.uiuc.workoutbuddy.WorkoutFragment;
-
 import junit.framework.Assert;
-import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
-import android.test.ActivityInstrumentationTestCase2;
-import android.test.ViewAsserts;
-import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 
 public class ScheduleTest extends TestCase implements HttpRequestListener{
