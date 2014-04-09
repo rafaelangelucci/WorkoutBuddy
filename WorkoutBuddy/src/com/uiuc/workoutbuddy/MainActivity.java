@@ -123,9 +123,8 @@ public class MainActivity extends FragmentActivity implements
                 return new WorkoutFragment(c);
             case 1:
                 return new ExerciseFragment(c);
-            //TODO: Implement HistoryFragment as case 3
             default:
-                return new Fragment();
+                return new HistoryFragment();
             }
         }
 
