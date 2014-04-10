@@ -37,6 +37,34 @@
 			$this->assertEquals($responseArray[0]->{'e_id'}, 1);
 			$this->assertEquals($responseArray[0]->{'w_id'}, 1);
 		}
+		 
+		/**
+		 * @depends testAddSet
+		 */
+		 public function testUpdateSet($sid){
+		 	global $url;
+			$data = array('operation' => 'update',
+				's_id' => $sid,
+				'reps' => '11',
+				'weight' => '136',
+				'priority' => '2',
+				'e_id' => '1',
+				'w_id' => '1');
+			$response = curlHelper($url, $data);
+			$this->assertTrue($response == 1);
+			
+			//check changes were made
+			$data = array('operation' => 'get', 's_id' => $sid);
+			
+			$response = curlHelper($url, $data);
+			$responseArray = json_decode($response);
+
+			$this->assertEquals($responseArray[0]->{'reps'}, 11);
+			$this->assertEquals($responseArray[0]->{'weight'}, 136);
+			$this->assertEquals($responseArray[0]->{'priority'}, 2);
+			$this->assertEquals($responseArray[0]->{'e_id'}, 1);
+			$this->assertEquals($responseArray[0]->{'w_id'}, 1);
+		 }
 		
 		/**
 		 * @depends testAddSet
