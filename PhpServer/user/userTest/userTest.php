@@ -4,104 +4,88 @@ require_once '../../helperFunctions.php';
 
 class MySQLConnectTest extends PHPUnit_Framework_TestCase
 {
-    public function testBasic(){
+    private function addUser($username, $password){
         //Curl for adding User
         $url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php';
         $data = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $response = curlHelper($url, $data);
-        $this->assertEquals($response, 'success');
+            'username' => $username,
+            'password' => $password);
+        return curlHelper($url, $data);
+    }
 
+    private function login($username, $password){
         //Curl for login user
         $getUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php';
-        $getData = array('username' => 'validUser',
-            'password' => 'validPassword');
-        $getResponse = curlHelper($getUrl, $getData);
-        $this->assertEquals($getResponse, 'success');
+        $getData = array(
+            'username' => $username,
+            'password' => $password);
+        return curlHelper($getUrl, $getData);
+    }
 
+    private function deleteUser($username, $password){
         //Curl for deleting user
         $deleteUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php';
         $deleteData = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $deleteResponse = curlHelper($deleteUrl, $deleteData);
+            'username' => $username,
+            'password' => $password);
+        return curlHelper($deleteUrl, $deleteData);
+    }
+
+    public function testBasic(){
+        $response = $this->addUser('validUser','validPassword');
+        $this->assertEquals($response, 'success');
+
+        $getResponse = $this->login('validUser','validPassword');
+        $this->assertEquals($getResponse, 'success');
+
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
         $this->assertEquals($deleteResponse, 'successfully deleted');
     }
 
     public function testInvalidPasswordLogin(){
-        //Curl for adding User
-        $url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php';
-        $data = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $response = curlHelper($url, $data);
+        $response = $this->addUser('validUser','validPassword');
         $this->assertEquals($response, 'success');
 
-        //Curl for login user
-        $getUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php';
-        $getData = array('username' => 'validUser',
-            'password' => 'invalidPassword');
-        $getResponse = curlHelper($getUrl, $getData);
+        $getResponse = $this->login('validUser','invalidPassword');
         $this->assertEquals($getResponse, 'fail');
 
-        //Curl for deleting user
-        $deleteUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php';
-        $deleteData = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $deleteResponse = curlHelper($deleteUrl, $deleteData);
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
         $this->assertEquals($deleteResponse, 'successfully deleted');
     }
 
     public function testInvalidUserLogin(){
-        //Curl for adding User
-        $url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php';
-        $data = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $response = curlHelper($url, $data);
+        $response = $this->addUser('validUser','validPassword');
         $this->assertEquals($response, 'success');
 
-        //Curl for login user
-        $getUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php';
-        $getData = array('username' => 'invalidUser',
-            'password' => 'validPassword');
-        $getResponse = curlHelper($getUrl, $getData);
+        $getResponse = $this->login('invalidUser','invalidPassword');
         $this->assertEquals($getResponse, 'fail');
 
-        //Curl for deleting user
-        $deleteUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php';
-        $deleteData = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $deleteResponse = curlHelper($deleteUrl, $deleteData);
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
         $this->assertEquals($deleteResponse, 'successfully deleted');
     }
 
     public function testInvalidUserAdd(){
-        //Curl for adding User
-        $url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php';
-        $data = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $response = curlHelper($url, $data);
+        $response = $this->addUser('validUser','validPassword');
         $this->assertEquals($response, 'success');
 
-        //Curl for adding User
-        $url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php';
-        $data = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $response = curlHelper($url, $data);
+        $response = $this->addUser('validUser','validPassword');
         $this->assertEquals($response, 'username already exists');
 
-        //Curl for deleting user
-        $deleteUrl = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php';
-        $deleteData = array(
-            'username' => 'validUser',
-            'password' => 'validPassword');
-        $deleteResponse = curlHelper($deleteUrl, $deleteData);
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
+        $this->assertEquals($deleteResponse, 'successfully deleted');
+    }
+
+    public function testDeleteUser(){
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
+        $this->assertEquals($deleteResponse, 'username is not in the database');
+
+        $response = $this->addUser('validUser','validPassword');
+        $this->assertEquals($response, 'success');
+
+        $deleteResponse = $this->deleteUser('validUser','invalidPassword');
+        $this->assertEquals($deleteResponse, 'password is not correct');
+
+        $deleteResponse = $this->deleteUser('validUser','validPassword');
         $this->assertEquals($deleteResponse, 'successfully deleted');
     }
 
