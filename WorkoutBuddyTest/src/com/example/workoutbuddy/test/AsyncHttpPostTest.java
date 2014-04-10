@@ -1,5 +1,6 @@
 package com.example.workoutbuddy.test;
 
+import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -50,41 +51,52 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	}
 	
 	@UiThreadTest
-	public void testgetWorkoutList() throws InterruptedException, ExecutionException
+	public void testAddGetModifyGetDeleteWorkout() throws InterruptedException, ExecutionException
 	{
-		Workout[] responses = wrapper.getWorkoutList("usernameA");
-		signal.await(1, TimeUnit.SECONDS);
+		Workout workout = new Workout("TestWorkout", "03/20/2014", "testdesc", "usernameA", null);
+		wrapper.addWorkout(workout);
 		
-		assertEquals(responses[0].getName(), "WorkoutA");
-		assertEquals(responses[1].getName(), "WorkoutB");
-		assertEquals(responses[0].getDate(), "03-4-2014");
-		assertEquals(responses[0].getDescription(), "desc");
+		Workout dbworkout = wrapper.getWorkout(workout.getWid());
+		
+		assertEquals(dbworkout.getName(), workout.getName());
+		assertEquals(dbworkout.getUsername(), workout.getUsername());
+		assertEquals(dbworkout.getDate(), workout.getDate());
+		assertEquals(dbworkout.getDescription(), workout.getDescription());
+		
+		workout.setName("Modified Name");
+		wrapper.updateWorkout(workout);
+		
+		dbworkout = wrapper.getWorkout(workout.getWid());
+		assertEquals(dbworkout.getName(), workout.getName());
+		
+		int del = wrapper.deleteWorkout(workout.getWid());
+		assertEquals(1, del);
+		
+		
 		
 	}
 	
 	@UiThreadTest
-	public void testgetExerciseList() throws InterruptedException, ExecutionException
+	public void testAddGetModifyGetDeleteExercise() throws InterruptedException, ExecutionException
 	{
-		String[][] responses = wrapper.getExerciseList("usernameA");
-		signal.await(1, TimeUnit.SECONDS);
+		Exercise exercise = new Exercise("TestExercise", "strength", "testdesc", "usernameA", null);
+		wrapper.addExercise(exercise);
 		
-		assertEquals(responses[0][0], "ExerciseA");
-		assertEquals(responses[0][1], "ExerciseB");
-		assertEquals(responses[1][0], "strength");
-		assertEquals(responses[2][0], "desc");
+		Exercise dbworkout = wrapper.getExercise(exercise.getEid());
+		assertEquals(dbworkout.getName(), exercise.getName());
+		assertEquals(dbworkout.getUsername(), exercise.getUsername());
+		assertEquals(dbworkout.getType(), exercise.getType());
+		assertEquals(dbworkout.getDescription(), exercise.getDescription());
 		
-	}
-	
-	@UiThreadTest
-	public void testgetExercise() throws InterruptedException, ExecutionException 
-	{
-		String[] response = wrapper.getExercise(2);
-		signal.await(1, TimeUnit.SECONDS);
+		exercise.setName("Modified Name");
+		wrapper.updateExercise(exercise);
 		
-		assertEquals(response[0], "usernameA");
-		assertEquals(response[1], "ExerciseA");
-		assertEquals(response[2], "strength");
-		assertEquals(response[3], "desc");
+		dbworkout = wrapper.getExercise(exercise.getEid());
+		assertEquals(dbworkout.getName(), exercise.getName());
+		
+		int del = wrapper.deleteExercise(exercise.getEid());
+		assertEquals(1, del);
+		
 	}
 	
 

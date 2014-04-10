@@ -1,5 +1,7 @@
 package com.uiuc.workoutbuddy;
 
+import helperClasses.Exercise;
+import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
@@ -27,9 +29,8 @@ import android.widget.Toast;
 public class BasicActivity extends Activity implements OnClickListener, HttpRequestListener
 {
 
-	CountDownLatch signal;
 	public int numExercises = 0;
-	public String[][] exerciseList;
+	public Exercise[] exerciseList;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -44,17 +45,21 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		plus.setOnClickListener(this);
 		minus.setOnClickListener(this);
 
-
-		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-		signal = new CountDownLatch(1);
-		try {
-			exerciseList = wrapper.getExerciseList("usernameA");
-			signal.await(5, TimeUnit.SECONDS);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
-			e.printStackTrace();
+		exerciseList = new Exercise[ExerciseFragment.exercises.size()];
+		for(int i = 0; i < ExerciseFragment.exercises.size(); i++)
+		{
+			exerciseList[i] = ExerciseFragment.exercises.get(i);
 		}
+//		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+//		signal = new CountDownLatch(1);
+//		try {
+//			exerciseList = wrapper.getExerciseList("usernameA");
+//			signal.await(1, TimeUnit.SECONDS);
+//		} catch (InterruptedException e) {
+//			e.printStackTrace();
+//		} catch (ExecutionException e) {
+//			e.printStackTrace();
+//		}
 		addExerciseSpinner();
 	}
 
@@ -100,10 +105,9 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		else
 		{
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-			signal = new CountDownLatch(1);
 			try {
-				wrapper.addWorkout("usernameA", createDate, name, descript);
-				signal.await(5, TimeUnit.SECONDS);
+				Workout workout = new Workout(name, createDate, descript, "usernameA", null);
+				wrapper.addWorkout(workout);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			} catch (ExecutionException e) {
@@ -132,7 +136,6 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 	@Override
 	public void requestComplete() {
 		Log.i( "requestComplete()", "Request Completed countDown()");
-		signal.countDown();
 	}
 	
 	private void addExerciseSpinner()
@@ -142,8 +145,11 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		
 
 		Spinner spinner = new Spinner(this);
-		
-		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseList[0]);
+		String[] exerciseNames = new String[exerciseList.length];
+		for(int i = 0; i < exerciseNames.length; i++){
+			exerciseNames[i] = exerciseList[i].getName();
+		}
+		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseNames);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Specify the layout to use when the list of choices appears
 		spinner.setAdapter(adapter);
 		ll.addView(spinner, this.numExercises);

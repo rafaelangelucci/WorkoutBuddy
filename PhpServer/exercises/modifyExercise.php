@@ -12,8 +12,7 @@
 			'type' => $_POST['type'], 
 			'description' => $_POST['description']);
 		$where = array('e_id' => $eid);
-		$response = $database->update('Exercise', $data, $where);
-		echo json_encode($response);
+		echo $database->update('Exercise', $data, $where);
 	}
 	else{
 		echo 'fail';

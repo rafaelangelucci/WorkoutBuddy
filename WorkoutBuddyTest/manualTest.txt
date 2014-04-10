@@ -1,0 +1,13 @@
+Manual Test for Android List Activities
+
+1. Plug android phone into computer with eclipse and the application
+2. Run the program from eclipse on the selected phone
+3. Click skip on the login screen
+4. Click the "My Workouts" button
+5. Click one of the text boxes
+6. Verify on the computer LogCat screen that a log message in green reads "OnCheckChanged Checked ___", where ___ is the name of the selected item
+7. Unselect that same item
+8. Verify LogCat shows "OnCheckChanged Unchecked ___"
+9. Press the back button then select the Exercises tab
+10. Press the "My Exercises" button
+11. Execute steps 5 through 8 here and verify the results
