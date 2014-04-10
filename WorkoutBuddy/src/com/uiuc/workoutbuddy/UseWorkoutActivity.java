@@ -31,11 +31,19 @@ public class UseWorkoutActivity extends Activity //implements OnClickListener, H
 
 	public int numExercises = 0;
 	public Exercise[] exerciseList;
+	Workout wo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_use_workout);
+		
+		Intent i = getIntent();
+		int wid = i.getExtras().getInt("wid");
+		Log.i("UseWorkoutActivity", "onCreate: intent wid = " + wid);
+		wo = WorkoutFragment.getWorkoutById(wid);
+		Log.i("UseWorkoutActivity", "wo name: " + wo.getName());
+		
 
 //		Button done = (Button)findViewById(R.id.btn_done);
 //		Button minus = (Button)findViewById(R.id.btn_minus);

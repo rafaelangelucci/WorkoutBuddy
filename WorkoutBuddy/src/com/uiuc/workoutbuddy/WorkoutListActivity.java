@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import helperClasses.Workout;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -55,11 +56,14 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		String name = WorkoutFragment.workouts.get(position).getName();
+		Workout wo = WorkoutFragment.workouts.get(position);
+		String name = wo.getName();
 		Log.i("WorkoutListActivity", "onItemClick : " + name);
+		Log.i("WorkoutListActivity", name + " wid : " + wo.getWid());
 
 		// Spawn new workout activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
+		intent.putExtra("wid", wo.getWid());
     	startActivity(intent);
 	}
 
