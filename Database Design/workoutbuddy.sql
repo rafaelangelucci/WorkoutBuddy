@@ -1,6 +1,6 @@
 CREATE TABLE User(
        username char(50) PRIMARY KEY,
-       password char(50)
+       password char(200)
 );
 
 CREATE TABLE Exercise(
