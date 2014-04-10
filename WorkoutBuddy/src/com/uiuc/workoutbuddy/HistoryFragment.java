@@ -75,7 +75,7 @@ public class HistoryFragment extends Fragment implements OnClickListener, HttpRe
         switch(v.getId())
         {
         case R.id.btn_graph:
-        	Intent intent = new Intent(getActivity(), GraphActivity.class);
+        	Intent intent = new Intent(getActivity(), ExerciseGraphListActivity.class);
 	    	startActivity(intent);
             break;
         default:
