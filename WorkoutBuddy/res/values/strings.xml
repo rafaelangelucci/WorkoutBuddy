@@ -41,4 +41,6 @@
     <string name="title_activity_schedule">ScheduleActivity</string>
     <string name="Select_Workout">Select Workout</string>
     <string name="Cancel">Cancel</string>
+    <string name="title_activity_view_schedule">ViewScheduleActivity</string>
+
 </resources>
