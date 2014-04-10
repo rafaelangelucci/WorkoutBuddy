@@ -1,6 +1,7 @@
 package com.uiuc.workoutbuddy;
 
 import android.app.ListActivity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.ActionMode;
@@ -10,8 +11,15 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.Toast;
-
+/**
+ * 
+ * @author tmadigan7
+ *
+ * Some code borrowed from: http://www.vogella.com/tutorials/AndroidListView/article.html#listactivity
+ * 
+ */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
 	protected Object mActionMode;
@@ -28,26 +36,31 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener()
+		{
+			@Override
+			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+				if (mActionMode != null) {
+					return false;
+				}
+				selectedItem = position;
+
+				// start the CAB using the ActionMode.Callback defined above
+				mActionMode = WorkoutListActivity.this.startActionMode(mActionModeCallback);
+				view.setSelected(true);
+				return true;
+			}
+		});
 	}
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		String name = WorkoutFragment.workouts.get(position).getName();
 		Log.i("WorkoutListActivity", "onItemClick : " + name);
-		Toast.makeText(this.getApplicationContext(), name, Toast.LENGTH_SHORT).show();
 
-		/** TEST FOR CONTEXTUAL ACTION BAR **/
-		if (mActionMode != null) {
-			return ;
-		}
-
-		selectedItem = position;
-
-		// start the CAB using the ActionMode.Callback defined above
-		mActionMode = WorkoutListActivity.this
-				.startActionMode(mActionModeCallback);
-		view.setSelected(true);
-		return ;
+		// Spawn new workout activity
+		Intent intent = new Intent(this, UseWorkoutActivity.class);
+    	startActivity(intent);
 	}
 
 	@Override
@@ -77,15 +90,15 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//			switch (item.getItemId()) {
-//			case R.id.menuitem1_show:
-//				show();
-//				// the Action was executed, close the CAB
-//				mode.finish();
-//				return true;
-//			default:
-//				return false;
-//			}
+			//			switch (item.getItemId()) {
+			//			case R.id.menuitem1_show:
+			//				show();
+			//				// the Action was executed, close the CAB
+			//				mode.finish();
+			//				return true;
+			//			default:
+			//				return false;
+			//			}
 			return true;
 		}
 
