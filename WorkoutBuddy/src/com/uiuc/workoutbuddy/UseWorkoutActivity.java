@@ -24,6 +24,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class UseWorkoutActivity extends Activity //implements OnClickListener, HttpRequestListener
@@ -44,6 +45,11 @@ public class UseWorkoutActivity extends Activity //implements OnClickListener, H
 		wo = WorkoutFragment.getWorkoutById(wid);
 		Log.i("UseWorkoutActivity", "wo name: " + wo.getName());
 		
+		TextView woName = (TextView)findViewById(R.id.workout_name);
+		TextView woDesc = (TextView)findViewById(R.id.workout_description);
+		
+		woName.setText(wo.getName());
+		woDesc.setText(wo.getDescription());
 
 //		Button done = (Button)findViewById(R.id.btn_done);
 //		Button minus = (Button)findViewById(R.id.btn_minus);

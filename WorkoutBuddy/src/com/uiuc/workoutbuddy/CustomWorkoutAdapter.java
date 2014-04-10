@@ -1,34 +1,19 @@
 package com.uiuc.workoutbuddy;
 
 import helperClasses.Workout;
-
 import java.util.ArrayList;
-
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class CustomWorkoutAdapter extends ArrayAdapter<Workout> //implements OnItemClickListener//implements OnCheckedChangeListener
+public class CustomWorkoutAdapter extends ArrayAdapter<Workout>
 {
 	private final Context context;
-	private final ArrayList<Workout> workoutList;
-	//private ArrayList<Workout> workoutsChecked;
-	private ArrayList<Boolean> positionArray;
-	
+	private final ArrayList<Workout> workoutList;	
 
 	/**
 	 * Constructor
@@ -41,12 +26,7 @@ public class CustomWorkoutAdapter extends ArrayAdapter<Workout> //implements OnI
 	public CustomWorkoutAdapter(Context context, ArrayList<Workout> workouts) {
 		super(context, NO_SELECTION);
 		this.context = context;
-		this.workoutList = workouts;
-//		this.workoutsChecked = new ArrayList<Workout>();
-		positionArray = new ArrayList<Boolean>(workoutList.size());
-	    for(int i = 0; i < workoutList.size(); i++){
-	        positionArray.add(false);
-	    }
+		this.workoutList = workouts;		
 	}
 
 	@Override
@@ -86,23 +66,12 @@ public class CustomWorkoutAdapter extends ArrayAdapter<Workout> //implements OnI
 		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
 		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getDescription());
 
-//        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
-//        tvMail.setText(entry.getDescription());
-
 		return convertView;
 	}
 	
 	static class Holder
 	{
 	    TextView name;
-//	    TextView desc;
-//	    CheckBox ckbox;
 	}
-
-//	@Override
-//	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-//		Log.i("CustomWorkoutAdapter", "onItemClick");
-//		Toast.makeText(this.context, "Click ListItem Number " + position, Toast.LENGTH_LONG).show();
-//	}
 	
 }
