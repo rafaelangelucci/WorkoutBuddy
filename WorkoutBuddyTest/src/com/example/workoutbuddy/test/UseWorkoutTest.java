@@ -8,6 +8,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.uiuc.workoutbuddy.UseWorkoutActivity;
@@ -18,6 +19,7 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 	private UseWorkoutActivity myActivity;
 	private TextView name;
 	private TextView desc;
+	private ListView list;
 
 
 	public UseWorkoutTest(){
@@ -28,7 +30,7 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		Intent intent = new Intent(Intent.ACTION_MAIN);
+		Intent intent = new Intent();
 		intent.setClassName("com.uiuc.workoutbuddy", "com.uiuc.workoutbuddy.UseWorkoutActivity");
 		intent.putExtra("wid", 1);
 
@@ -37,6 +39,7 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 		myActivity = getActivity();
 		name = (TextView)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.workout_name);
 		desc = (TextView)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.workout_description);
+		list = (ListView)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.list);
 	}
 
 	/**
@@ -56,12 +59,20 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 		assertNotNull(getActivity());
 		assertNotNull(name);
 		assertNotNull(desc);
+		assertNotNull(list);
 	}
 
 	public void testViewsVisible() {
 		ViewAsserts.assertOnScreen(name.getRootView(), desc);
 		ViewAsserts.assertOnScreen(desc.getRootView(), name);
+		ViewAsserts.assertOnScreen(name.getRootView(), list);
 	}
+	
+	public void testList()
+	{
+		assertTrue(list.getCount() > 0);
+	}
+	
 	
 //	public void testStartingEmpty() {
 //		assertTrue("Kilos field is empty", "".equals(editKilos.getText().toString()));
