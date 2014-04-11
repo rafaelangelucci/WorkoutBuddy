@@ -3,7 +3,10 @@ package com.uiuc.workoutbuddy;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.ActionMode;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -12,6 +15,8 @@ import android.widget.Toast;
 
 public class ExerciseListActivity extends ListActivity implements OnItemClickListener
 {
+//	static Object mActionMode;
+//	static int selectedItem = -1;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,5 +45,32 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-	
+
+//	 /**
+//	  *  Action mode call back that inflates CAB layout and registers on click functionality
+//	  */
+//	public static ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
+//
+//		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
+//			MenuInflater inflater = mode.getMenuInflater();
+//			inflater.inflate(R.menu.context_menu, menu);
+//			return true;
+//		}
+//
+//		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
+//			return false; // Return false if nothing is done
+//		}
+//
+//		// called when the user selects a contextual menu item
+//		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+//			//TODO: implement button clicks
+//			return true;
+//		}
+//
+//		// called when the user exits the action mode
+//		public void onDestroyActionMode(ActionMode mode) {
+//			mActionMode = null;
+//			selectedItem = -1;
+//		}
+//	};
 }
