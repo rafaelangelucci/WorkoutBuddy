@@ -31,15 +31,13 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
+
 		
-		//SharedPreferences un= this.getSharedPreferences("username", Context.MODE_PRIVATE);
-		
-		
-		String username = "vicky";
-		ArrayList<Workout> tempWks = null;
+		String username = "usernameA"; //TODO: Change this to the login user
+		Workout[] tempWks = null;
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
-			tempWks = wrapper.getTemplateWorkouts(username);
+			tempWks = wrapper.getWorkoutList(username); //TODO: Change this to getWorkoutTemplate
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -47,9 +45,9 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 			e.printStackTrace();
 		}
 
-		String[] workoutNames = new String[tempWks.size()];
+		String[] workoutNames = new String[tempWks.length];
 		for(int idx=0; idx < workoutNames.length; idx++)
-			workoutNames[idx] = tempWks.get(idx).getName();
+			workoutNames[idx] = tempWks[idx].getName();
 		if(workoutNames.length==0)
 		{
 			Toast.makeText(this.getApplicationContext(), "You do not have any workout templates saved.  You must save a template workout before scheduling a workout.", Toast.LENGTH_SHORT).show();
