@@ -34,6 +34,11 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 		this.context = context;
 		this.exerciseList = exercises;
 	}
+	
+	public CustomGraphListAdapter(ArrayList<Exercise> exercises) {
+		this.context = null;
+		this.exerciseList = exercises;
+	}
 
 	@Override
 	public int getCount() {

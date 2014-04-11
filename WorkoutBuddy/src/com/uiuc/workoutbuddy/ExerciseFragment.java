@@ -37,7 +37,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 {
 	View view;
 	Context c;
-	static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+	public static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
 
 	/**
 	 * Default Constructor
