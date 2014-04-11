@@ -11,13 +11,15 @@ import android.widget.LinearLayout;
 
 public class GraphActivity extends Activity 
 {
+	public GraphViewSeries exampleSeries;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         
 		// example series data
-		GraphViewSeries exampleSeries = new GraphViewSeries(new GraphViewData[] {
+		exampleSeries = new GraphViewSeries(new GraphViewData[] {
 		      new GraphViewData(1, 150.0d)
 		      , new GraphViewData(2, 155.0d)
 		      , new GraphViewData(3, 160.0d)
@@ -41,8 +43,8 @@ public class GraphActivity extends Activity
 		graphView.setScalable(true);
 		
 		// Background color
-		//((LineGraphView) graphView).setDrawBackground(true);
-        //((LineGraphView) graphView).setBackgroundColor(Color.rgb(00, 30, 90));
+		((LineGraphView) graphView).setDrawBackground(true);
+        ((LineGraphView) graphView).setBackgroundColor(Color.rgb(00, 30, 90));
         
         // custom static labels
         //graphView.setHorizontalLabels(new String[] {"4/1", "4/3", "4/5", "4/7", "4/9", "4/11", "4/13"});
