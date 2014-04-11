@@ -31,6 +31,14 @@ ActivityInstrumentationTestCase2<ScheduleActivity> {
 		View v;
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.spnr_workouts);
 		Assert.assertTrue(v.isShown());
+		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.et_date);
+		Assert.assertTrue(v.isShown());
+		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.cb_repeat);
+		Assert.assertTrue(v.isShown());
+		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.et_numbetween);
+		Assert.assertTrue(v.isShown());
+		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.et_numtimes);
+		Assert.assertTrue(v.isShown());
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done);
 		Assert.assertTrue(v.isShown());
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_cancel);
