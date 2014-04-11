@@ -98,6 +98,7 @@ public class AsyncHttpPostWrapper {
 				Workout workout = new Workout(wid, name, date, desc, username,
 						null);
 				ArrayList<Exercise> exercises = getExercisesAndSets(wid);
+				workout.setExercises(exercises);
 				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
@@ -106,6 +107,13 @@ public class AsyncHttpPostWrapper {
 		return workouts;
 	}
 	
+	/**
+	 * Returns an exercise list that contains all exercises and sets in a given workout
+	 * @param wid id of the workout we want to query
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	private ArrayList<Exercise> getExercisesAndSets(int wid) throws InterruptedException, ExecutionException{
 		ArrayList<Set> sets = getSetList(wid);
 		ArrayList<Integer> eids = new ArrayList<Integer>();
