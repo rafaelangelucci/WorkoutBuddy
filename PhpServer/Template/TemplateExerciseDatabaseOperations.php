@@ -38,7 +38,7 @@
 	//Performs the getlist operation
 	elseif($operation === 'getlist'){
 		$columns = array('te_id', 't_id', 'priority', 'e_id', 'numSets', 'reps');
-		$where = array('t_id' => $tid);
+		$where = array('t_id' => $tid, 'ORDER' => 'priority');
 		$response = $database->select('Template_Exercise', $columns, $where);
 		echo json_encode($response);
 	}

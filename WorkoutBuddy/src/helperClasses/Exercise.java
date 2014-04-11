@@ -8,6 +8,7 @@ public class Exercise {
 	private String name;
 	private String type;
 	private String description;
+	private int priority;
 	private ArrayList<Set> sets;
 
 	/**
