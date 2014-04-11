@@ -94,8 +94,8 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 			}
 		});
 
-		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
-		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getType());
+		Log.i( "ExerciseListAdapter", "Name : " + entry.getName());
+		Log.i( "ExerciseListAdapter", "Type : " + entry.getType());
 
 		return convertView;
 	}

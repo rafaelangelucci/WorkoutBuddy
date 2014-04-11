@@ -99,11 +99,8 @@ public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements O
 	        }
 	    });
 		
-		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
-		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getType());
-
-//        TextView tvMail = (TextView) convertView.findViewById(R.id.tvMail);
-//        tvMail.setText(entry.getDescription());
+		Log.i( "CustomExerciseAdapter", entry.getName());
+		Log.i( "CustomExerciseAdapter", entry.getType());
 
 		return convertView;
 	}

@@ -63,8 +63,8 @@ public class WorkoutListAdapter extends ArrayAdapter<Workout>
 		holder.name.setText(entry.getName());
 		
 		
-		Log.i( "CustomListAdapter", "Set text for entry name : " + entry.getName());
-		Log.i( "CustomListAdapter", "Set text for entry type : " + entry.getDescription());
+		Log.i( "WorkoutListAdapter", "Name : " + entry.getName());
+		Log.i( "WorkoutListAdapter", "Description : " + entry.getDescription());
 
 		return convertView;
 	}
