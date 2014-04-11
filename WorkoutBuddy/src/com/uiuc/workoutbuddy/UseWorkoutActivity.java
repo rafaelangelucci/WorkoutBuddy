@@ -41,13 +41,16 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener/
 		ListView list = (ListView)findViewById(R.id.list);
 		
 		UseWorkoutAdapter adapter;
-		if(wo.getExercises() == null)
-		{
-			Log.i("UseWorkoutActivity", "ERROR. EXERCISE LIST IS NULL");
+//		if(wo.getExercises() == null)
+//		{
+//			Log.i("UseWorkoutActivity", "ERROR. EXERCISE LIST IS NULL");
 			adapter = new UseWorkoutAdapter(this, ExerciseFragment.exercises);
-		}
-		else
-			adapter = new UseWorkoutAdapter(this, wo.getExercises());
+//		}
+//		else
+//		{
+//			Log.i("UseWorkoutActivity", "Using workout's exercises");
+//			adapter = new UseWorkoutAdapter(this, wo.getExercises());
+//		}
 		//TODO: fix
 
 		list.setAdapter(adapter);

@@ -7,15 +7,12 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
-import org.junit.runner.RunWith;
 
 import junit.framework.Assert;
 
 import com.uiuc.workoutbuddy.ScheduleActivity;
 
 import android.test.ActivityInstrumentationTestCase2;
-import org.junit.runners.Parameterized;
-import org.junit.runners.Parameterized.Parameters;
 import android.view.View;
 
 public class ScheduleActivityTest extends

@@ -2,95 +2,69 @@ package com.example.workoutbuddy.test;
 
 import junit.framework.Assert;
 import android.annotation.SuppressLint;
+import android.app.Activity;
+import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ViewAsserts;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
+
 import com.uiuc.workoutbuddy.UseWorkoutActivity;
 
 public class UseWorkoutTest extends
-	ActivityInstrumentationTestCase2<UseWorkoutActivity> {
+ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 
 	private UseWorkoutActivity myActivity;
+	private TextView name;
+	private TextView desc;
 
-	
+
 	public UseWorkoutTest(){
 		super(UseWorkoutActivity.class);
 	}
 
 	@Override
-	  protected void setUp() throws Exception {
-	    super.setUp();
+	protected void setUp() throws Exception {
+		super.setUp();
 
-	    setActivityInitialTouchMode(false);
-	    
-	    myActivity = getActivity();
+		Intent intent = new Intent(Intent.ACTION_MAIN);
+		intent.setClassName("com.uiuc.workoutbuddy", "com.uiuc.workoutbuddy.UseWorkoutActivity");
+		intent.putExtra("wid", 1);
+
+		setActivityIntent(intent);
+
+		myActivity = getActivity();
+		name = (TextView)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.workout_name);
+		desc = (TextView)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.workout_description);
 	}
-	
+
 	/**
 	 * Test successful start up of NewWorkoutActivity aka UseWorkoutActivity
 	 */
 	public void testActivityStartup()
 	{
-		final String expected = myActivity.getString(com.uiuc.workoutbuddy.R.string.title_activity_new_workout);
-		assertEquals(expected, "NewWorkoutActivity");
+		final String expected = myActivity.getString(com.uiuc.workoutbuddy.R.string.app_name);
+		assertEquals(expected, "Workout\nBuddy");
 	}
-	
+
 	/**
-	 * Test proper activity layout with all the necessary buttons
-	 */
-	public void testLayout(){
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_plus));
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done));
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_minus));
-	}
-	
-	/**
-	 * Test all button clicks and verify they work as designed
+	 * Test all text views and verify they work as designed
 	 * @param view
 	 */
-	public void testButtonLayout(View view)
-	{
-		Assert.assertNotNull(view);
-		Assert.assertTrue(view.isShown());
-		Assert.assertTrue(view.isClickable());
+	public void testViewsCreated() {
+		assertNotNull(getActivity());
+		assertNotNull(name);
+		assertNotNull(desc);
 	}
-	
-	@SuppressLint("NewApi")
-	public void testbuttonDoneClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done);
-		Assert.assertTrue(button.callOnClick());
-	}
-	
-	@SuppressLint("NewApi")
-	public void testbuttonPlusClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_plus);
-		Assert.assertTrue(button.callOnClick());
-	}
-	
-	@SuppressLint("NewApi")
-	public void testbuttonMinusClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_minus);
-		Assert.assertTrue(button.callOnClick());
-	}
-	
 
-	public void testExerciseAdded()
-	{
-		Assert.fail();
+	public void testViewsVisible() {
+		ViewAsserts.assertOnScreen(name.getRootView(), desc);
+		ViewAsserts.assertOnScreen(desc.getRootView(), name);
 	}
 	
-	public void testExerciseRemoved()
-	{
-		Assert.fail();
-	}
-	
-	public void testWorkoutAdded()
-	{
-		Assert.fail();
-	}
-	
-	public void testWorkoutNotAdded()
-	{
-		Assert.fail();
-	}
+//	public void testStartingEmpty() {
+//		assertTrue("Kilos field is empty", "".equals(editKilos.getText().toString()));
+//		assertTrue("Pounds field is empty", "".equals(editPounds.getText().toString()));
+//	}
 }
