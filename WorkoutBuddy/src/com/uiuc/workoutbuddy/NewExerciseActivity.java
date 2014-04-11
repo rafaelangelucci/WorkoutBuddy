@@ -1,6 +1,12 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
+
+import helperClasses.Exercise;
+import helperClasses.Set;
 import httpRequests.AsyncHttpPostWrapper;
+import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,9 +16,11 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
+import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
-public class NewExerciseActivity extends Activity {
+public class NewExerciseActivity extends Activity implements HttpRequestListener {
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -23,11 +31,16 @@ public class NewExerciseActivity extends Activity {
 		final Button button = (Button) findViewById(R.id.buttonNewExerciseOK);
         button.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
-            	EditText editTextDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
-            	EditText editTextName = (EditText) findViewById(R.id.editTextExerciseName);
-            	//Not sure about connection information, is it created on the login page?
-            	//AsyncHttpPostWrapper.addExercise("TestUser", "TestType", editTextName.getText().toString(), editTextDescription.getText().toString());
-            	finish();
+            	try {
+					saveExercise();
+	            	finish();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ExecutionException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
             }
         });
 	}
@@ -36,9 +49,7 @@ public class NewExerciseActivity extends Activity {
 	 * Set up the {@link android.app.ActionBar}.
 	 */
 	private void setupActionBar() {
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-
 	}
 
 	@Override
@@ -63,6 +74,23 @@ public class NewExerciseActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	private void saveExercise() throws InterruptedException, ExecutionException {
+    	EditText editTextExerciseDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
+    	EditText editTextExerciseName = (EditText) findViewById(R.id.editTextExerciseName);
+    	Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinnerExerciseType);
+    	Exercise e = new Exercise(editTextExerciseName.getText().toString(),
+    						      spinnerExerciseType.getSelectedItem().toString(),
+    							  editTextExerciseDescription.getText().toString(),
+    							  "usernameA", //Where should this be coming from?
+    							  null); //sets
+    	new AsyncHttpPostWrapper(this).addExercise(e);
+	}
+
+	@Override
+	public void requestComplete() {
+		// TODO Auto-generated method stub
 	}
 
 }

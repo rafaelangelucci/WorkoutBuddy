@@ -53,7 +53,8 @@
         android:layout_height="wrap_content"
         android:layout_above="@+id/buttonNewExerciseOK"
         android:layout_alignLeft="@+id/editTextExerciseDescription"
-        android:layout_alignParentRight="true" />
+        android:layout_alignParentRight="true"
+        android:entries="@array/exercise_types" />
 
     <TextView
         android:id="@+id/textView2"
