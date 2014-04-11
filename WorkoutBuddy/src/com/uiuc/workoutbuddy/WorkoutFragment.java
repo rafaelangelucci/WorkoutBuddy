@@ -1,17 +1,11 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
-
 import com.uiuc.workoutbuddy.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -69,9 +63,10 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
         
         Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
         Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
-
+        Button schedule = (Button)view.findViewById(R.id.btn_schedule);
         my_workouts.setOnClickListener(this);
         new_workout.setOnClickListener(this);
+        schedule.setOnClickListener(this);
         
         AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
         
@@ -82,8 +77,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 			
 			for(int i = 0; i < responses.length; i++)
 			{
-				workouts.add(new Workout(responses[i].getName(), responses[i].getDate(), responses[i].getDescription(), responses[i].getUsername(),
-						responses[i].getExercises()));
+				workouts.add(responses[i]);
 				Log.i("Workout Added", responses[i].getName());
 			}
 		} catch (InterruptedException e) {
@@ -113,10 +107,30 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
             startActivity(i);
             Log.i( "WorkoutFragment", "OnClick : New Workout");
             break;
+        case R.id.btn_schedule:
+        	Intent i2 = new Intent(c, ScheduleActivity.class);
+        	startActivity(i2);
+        	Log.i("ScheduleActivity", "OnClick : Schedule");
+        	break;
         default:
             Log.i( "WorkoutFragment", "OnClick : No ID matched");
         }
-
+    }
+    
+    
+    public static Workout getWorkoutById(int id)
+    {
+    	Workout tmp;
+    	for(int i = 0; i < workouts.size(); i++)
+    	{
+    		tmp = workouts.get(i);
+    		if(tmp.getWid() == id)
+    		{
+    			return tmp;
+    		}
+    	}
+    	
+    	return null;
     }
 
 	@Override

@@ -11,22 +11,17 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
-import android.widget.BaseAdapter;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
-import android.widget.CompoundButton.OnCheckedChangeListener;
-import android.widget.RadioButton;
 import android.widget.TextView;
-import android.widget.Toast;
 
-public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements OnCheckedChangeListener
+public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnCheckedChangeListener
 {
 	private final Context context;
 	private final ArrayList<Exercise> exerciseList;
 	private ArrayList<Exercise> exercisesChecked;
-	private ArrayList<Boolean> positionArray;
-	
+	private boolean [] itemChecked;
+	private int checked = 0;
+
 
 	/**
 	 * Constructor
@@ -36,15 +31,12 @@ public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements O
 	 * @param exercises
 	 * 				list of exercises to put in list view
 	 */
-	public CustomExerciseAdapter(Context context, ArrayList<Exercise> exercises) {
+	public ExerciseListAdapter(Context context, ArrayList<Exercise> exercises) {
 		super(context, NO_SELECTION);
 		this.context = context;
 		this.exerciseList = exercises;
 		this.exercisesChecked = new ArrayList<Exercise>();
-		positionArray = new ArrayList<Boolean>(exerciseList.size());
-	    for(int i = 0; i < exerciseList.size(); i++){
-	        positionArray.add(false);
-	    }
+		itemChecked = new boolean[exerciseList.size()];
 	}
 
 	@Override
@@ -59,57 +51,78 @@ public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements O
 
 	@Override
 	public long getItemId(int position) {
-		return position;
+		return 0;
 	}
 
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
-		Holder holder = null;
-		final Exercise entry = exerciseList.get(position);
+		final Holder holder;
+		final Exercise entry = getItem(position);
+		
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.row_layout, null);
-			
+			convertView = inflater.inflate(R.layout.row_layout_exercises, null);
+
 			holder = new Holder();
 			holder.ckbox = (CheckBox) convertView.findViewById(R.id.btn_check_box);
 			holder.name = (TextView) convertView.findViewById(R.id.row_name);
 			holder.desc = (TextView) convertView.findViewById(R.id.row_type);
+			
 			convertView.setTag(holder);
 		}
-		else{
+		else {
 			holder = (Holder)convertView.getTag();
 		}
 		
-		holder.ckbox.setFocusable(false);
-		holder.ckbox.setChecked(positionArray.get(position));
 		holder.name.setText(entry.getName());
 		holder.desc.setText(entry.getDescription());
-		holder.ckbox.setOnCheckedChangeListener(new OnCheckedChangeListener() {
-
-	        @Override
-	        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-	            if(isChecked ){
-	            	Log.i( "OnCheckChanged", "Checked " + entry.getName());
-	                positionArray.add(position, true);
-	            }else
-	            {
-	            	Log.i( "OnCheckChanged", "Unchecked " + entry.getName());
-	            	positionArray.add(position, false);
-	            }
-	        }
-	    });
+		holder.ckbox.setChecked(false);
+		if(itemChecked[position])
+		{
+			holder.ckbox.setChecked(true);
+		}
+		else {
+			holder.ckbox.setChecked(false);
+		}
 		
-		Log.i( "CustomExerciseAdapter", entry.getName());
-		Log.i( "CustomExerciseAdapter", entry.getType());
+		holder.ckbox.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if(holder.ckbox.isChecked())
+				{
+					itemChecked[position] = true;
+					Log.i( "ExerciseListAdapter", "checked : " + entry.getName());
+					checked++;
+				}
+				else {
+					itemChecked[position] = false;
+					checked--;
+					if(checked == 0)
+					{
+						//TODO: remove CAB
+						Log.i( "ExerciseListAdapter", "unchecked : " + entry.getName());
+					}
+				}
+			}			
+		});
+
+		Log.i( "ExerciseListAdapter", "Name : " + entry.getName());
+		Log.i( "ExerciseListAdapter", "Type : " + entry.getType());
 
 		return convertView;
 	}
-	
+
+	/**
+	 * Static class to hold info for each list entry
+	 * 
+	 * @author tmadigan7
+	 *
+	 */
 	static class Holder
 	{
-	    TextView name;
-	    TextView desc;
-	    CheckBox ckbox;
+		TextView name;
+		TextView desc;
+		CheckBox ckbox;
 	}
 
 	public ArrayList<Exercise> getExercisesChecked() {
@@ -120,5 +133,5 @@ public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements O
 		this.exercisesChecked = exercisesChecked;
 	}
 
-	
+
 }
