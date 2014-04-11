@@ -1,17 +1,11 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
-
 import com.uiuc.workoutbuddy.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;

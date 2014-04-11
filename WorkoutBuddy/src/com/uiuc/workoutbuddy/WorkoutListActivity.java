@@ -13,7 +13,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
-import android.widget.Toast;
+
 /**
  * 
  * @author tmadigan7
@@ -112,9 +112,4 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			selectedItem = -1;
 		}
 	};
-
-	private void show() {
-		Toast.makeText(WorkoutListActivity.this,
-				String.valueOf(selectedItem), Toast.LENGTH_LONG).show();
-	}
 }
