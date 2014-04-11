@@ -36,6 +36,7 @@ public class UseWorkoutActivity extends Activity //implements OnClickListener, H
 		
 		// Populate list view of exercises
 		ListView list = (ListView)findViewById(R.id.list);
+		
 	}
 
 	@Override

@@ -10,7 +10,7 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class CustomWorkoutAdapter extends ArrayAdapter<Workout>
+public class WorkoutListAdapter extends ArrayAdapter<Workout>
 {
 	private final Context context;
 	private final ArrayList<Workout> workoutList;	
@@ -23,7 +23,7 @@ public class CustomWorkoutAdapter extends ArrayAdapter<Workout>
 	 * @param workouts
 	 * 				list of workouts to put in list view
 	 */
-	public CustomWorkoutAdapter(Context context, ArrayList<Workout> workouts) {
+	public WorkoutListAdapter(Context context, ArrayList<Workout> workouts) {
 		super(context, NO_SELECTION);
 		this.context = context;
 		this.workoutList = workouts;		

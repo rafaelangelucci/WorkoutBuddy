@@ -15,7 +15,7 @@ import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.TextView;
 
-public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements OnCheckedChangeListener
+public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnCheckedChangeListener
 {
 	private final Context context;
 	private final ArrayList<Exercise> exerciseList;
@@ -31,7 +31,7 @@ public class CustomExerciseAdapter extends ArrayAdapter<Exercise> //implements O
 	 * @param exercises
 	 * 				list of exercises to put in list view
 	 */
-	public CustomExerciseAdapter(Context context, ArrayList<Exercise> exercises) {
+	public ExerciseListAdapter(Context context, ArrayList<Exercise> exercises) {
 		super(context, NO_SELECTION);
 		this.context = context;
 		this.exerciseList = exercises;

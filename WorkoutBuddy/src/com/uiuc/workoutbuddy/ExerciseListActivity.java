@@ -26,7 +26,7 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
 		
 		
 		
-        CustomExerciseAdapter adapter = new CustomExerciseAdapter(this, ExerciseFragment.exercises);
+        ExerciseListAdapter adapter = new ExerciseListAdapter(this, ExerciseFragment.exercises);
 
         setListAdapter(adapter);
 	}
