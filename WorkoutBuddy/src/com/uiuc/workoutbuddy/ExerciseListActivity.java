@@ -3,17 +3,11 @@ package com.uiuc.workoutbuddy;
 import android.app.ListActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.SparseBooleanArray;
-import android.view.ActionMode;
 import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
-import android.widget.AbsListView.MultiChoiceModeListener;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
+import android.widget.CheckBox;
 import android.widget.Toast;
 
 public class ExerciseListActivity extends ListActivity implements OnItemClickListener
@@ -24,8 +18,6 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_exercise_list);
 		
-		
-		
         ExerciseListAdapter adapter = new ExerciseListAdapter(this, ExerciseFragment.exercises);
 
         setListAdapter(adapter);
@@ -33,8 +25,14 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		String name = ExerciseFragment.exercises.get(position).getName();
-		Toast.makeText(this.getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+		CheckBox cb = (CheckBox)view.findViewById(R.id.btn_check_box);
+		cb.performClick();
+		if(cb.isChecked())
+		{
+			String name = ExerciseFragment.exercises.get(position).getName();
+			Toast.makeText(this.getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+			Log.i("ExerciseListActivity", "onItemClick : cb is checked");
+		}
 	}
 	
 	@Override
