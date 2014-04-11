@@ -37,7 +37,7 @@ public class NewExerciseTest extends ActivityInstrumentationTestCase2<NewExercis
         mButton = (Button) mActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonNewExerciseOK);
 	}
 	
-	public void testStaysOpen() throws Throwable {
+	public void testStaysOpen() {
         assertFalse(getActivity().isFinishing());
 	}
 	
@@ -46,6 +46,32 @@ public class NewExerciseTest extends ActivityInstrumentationTestCase2<NewExercis
 	 		mButton.performClick();
 	    }});
         assertFalse(getActivity().isFinishing());
+	}
+	
+	public void testSpinnerValues() throws Throwable {
+		assertEquals("Reps", mSpinType.getSelectedItem().toString());
+		runTestOnUiThread(new Runnable() {public void run() {mSpinType.setSelection(2);}});
+		assertEquals("Time", mSpinType.getSelectedItem().toString());
+		runTestOnUiThread(new Runnable() {public void run() {mSpinType.setSelection(1);}});
+		assertEquals("Weight", mSpinType.getSelectedItem().toString());
+		runTestOnUiThread(new Runnable() {public void run() {mSpinType.setSelection(0);}});
+		assertEquals("Reps", mSpinType.getSelectedItem().toString());
+	}
+	
+	public void testNameBox() throws Throwable {
+		assertEquals("",mTextName.getText().toString());
+		runTestOnUiThread(new Runnable() {public void run() {
+			mTextName.setText("Unit Test Name");
+		}});
+		assertEquals("Unit Test Name", mTextName.getText().toString());
+	}
+	
+	public void testDescBox() throws Throwable {
+		assertEquals("",mTextDesc.getText().toString());
+		runTestOnUiThread(new Runnable() {public void run() {
+			mTextDesc.setText("Testing the description box...");
+		}});
+		assertEquals("Testing the description box...", mTextDesc.getText().toString());
 	}
 	
 	public void testCreation() throws Throwable {
