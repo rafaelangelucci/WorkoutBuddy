@@ -416,13 +416,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public ArrayList<Workout> getTemplateWorkouts(String username)
+	public ArrayList<Workout> getTemplateWorkoutList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
-		postData.put("opertion", GET_LIST);
+		postData.put("operation", GET_LIST);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -446,6 +446,32 @@ public class AsyncHttpPostWrapper {
 		}
 		return tworkouts;
 	}
+	public Workout getTemplateWorkout(int tid) throws InterruptedException, ExecutionException{
+		// Make the post request to URL with username in postdata
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("t_id", Integer.toString(tid));
+		postData.put("operation", GET);
+		String response = this.makeRequest(postData, URL);
+		
+		// take JSON format and put into array
+		Workout workout = null;
+		try {
+			JSONArray jArray = new JSONArray(response);
+			JSONObject json_data = jArray.getJSONObject(0);
+			//Get info from t-workout
+			String name = json_data.getString("name");
+			String desc = json_data.getString("description");
+			String username = json_data.getString("username");
+			//Gets the template exercise list associated with this template workout
+			ArrayList<Exercise> texercises = getTemplateExercises(tid);
+			workout = new Workout(tid, name, "", desc, username,
+						texercises);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return workout;
+	}
 	
 	/**
 	 * Adds template workout along with their exercises
@@ -453,7 +479,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addTemplateWorkout(Workout tworkout) throws InterruptedException, ExecutionException{
+	public int addTemplateWorkout(Workout tworkout) throws InterruptedException, ExecutionException{
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
@@ -463,12 +489,13 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", tworkout.getUsername());
 		
 		//add workout
-		this.makeRequest(postData, URL);
+		int tid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		
 		//add exercises
 		for(int i = 0; i < tworkout.getExercises().size(); i++){
-			addTemplateExercise(tworkout.getWid(), tworkout.getExercises().get(i));
+			addTemplateExercise(tid, tworkout.getExercises().get(i));
 		}
+		return tid;
 	}
 
 	/**
@@ -499,6 +526,9 @@ public class AsyncHttpPostWrapper {
 				int eid = Integer.parseInt(json_data.getString("e_id").trim());
 				// query db for exercise corresponding to e_id
 				Exercise e = getExercise(eid);
+				e.setPriority(Integer.parseInt(json_data.getString("priority").trim()));
+				e.setNumSets(Integer.parseInt(json_data.getString("numSets").trim()));
+				e.setReps(Integer.parseInt(json_data.getString("reps").trim()));
 				texercises.add(e);
 			}
 		} catch (JSONException e) {

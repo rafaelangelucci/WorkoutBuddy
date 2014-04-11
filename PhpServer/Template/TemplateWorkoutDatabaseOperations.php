@@ -22,7 +22,7 @@
 	}
 	
 	//Performs the get operation
-	if($operation === 'get'){
+	if($operation == 'get'){
 		$columns = array('t_id', 'name', 'description', 'username');
 		$where = array('t_id' => $tid);
 		$response = $database->select('Template_Workout', $columns, $where);
