@@ -407,6 +407,80 @@ public class AsyncHttpPostWrapper {
 		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
+	// *************************************ITERATION 5 BELOW*************
+	
+	/**
+	 * Returns list of fully built workout objects representing template workouts
+	 * @param username associated with the template workouts
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public ArrayList<Workout> getTemplateWorkouts(String username)
+			throws InterruptedException, ExecutionException {
+		// Make the post request to URL with username in postdata
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("username", username);
+		String response = this.makeRequest(postData, URL);
+
+		// take JSON format and put into array
+		ArrayList<Workout> tworkouts = new ArrayList<Workout>();
+		try {
+			JSONArray jArray = new JSONArray(response);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				//Get info from t-workout
+				String name = json_data.getString("name");
+				String desc = json_data.getString("description");
+				int tid = Integer.parseInt(json_data.getString("t_id").trim());
+				//Gets the template exercise list associated with this template workout
+				ArrayList<Exercise> texercises = getTemplateExercises(tid);
+				Workout workout = new Workout(tid, name, "", desc, username,
+						texercises);
+				tworkouts.add(workout);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return tworkouts;
+	}
+
+	/**
+	 * Gets a list of template exercises to build template workout
+	 * 
+	 * @param tid
+	 *            The id corresponding to the template workout
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public ArrayList<Exercise> getTemplateExercises(int tid)
+			throws InterruptedException, ExecutionException {
+		// Make the post request to URL with templateid in postdata
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("t_id", Integer.toString(tid));
+		String response = this.makeRequest(postData, URL);
+
+		// take JSON format and put into array
+		ArrayList<Exercise> texercises = new ArrayList<Exercise>();
+		try {
+			JSONArray jArray = new JSONArray(response);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject json_data = jArray.getJSONObject(i);
+				// get e_id form template
+				int eid = Integer.parseInt(json_data.getString("e_id").trim());
+				// query db for exercise corresponding to e_id
+				Exercise e = getExercise(eid);
+				texercises.add(e);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return texercises;
+	}
+
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
 
 		String TAG = "WorkoutBuddy";
