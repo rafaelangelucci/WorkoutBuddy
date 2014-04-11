@@ -354,6 +354,8 @@ public class AsyncHttpPostWrapper {
 			String date = json_data.getString("date");
 			String desc = json_data.getString("description");
 			workout = new Workout(wid, name, date, desc, username, null);
+			ArrayList<Exercise> exercises = getExercisesAndSets(wid);
+			workout.setExercises(exercises);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
