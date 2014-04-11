@@ -68,28 +68,28 @@ public class LoginActivityTest extends
 	
 	public void testLoginResponse() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
-		HashMap<String, String> postData = new HashMap<String, String>();
 		
-		wrapper.addUser("u", "p");
 		
-		postData.put("username", "u");
-		postData.put("password", "p");
-		String response = wrapper.makeRequest(postData, URL);
-		Assert.assertEquals("success", response);
+		String username = "newUser";
+		String password = "newPassword";
 		
-		Boolean success = wrapper.userLogin("u", "p");
+		wrapper.addUser(username, password);
+		
+		// Correct user and password
+		Boolean success = wrapper.userLogin(username, password);
 		Assert.assertTrue(success);
 		
-		//Testing for a nonexistent user and password
+		// Incorrect user and password
 		success = wrapper.userLogin("fake", "fake");
 		Assert.assertFalse(success);
 		
-		postData.put("username", "fake");
-		postData.put("password", "fake");
-		response = wrapper.makeRequest(postData, URL);
+		// Correct user and incorrect password
+		success = wrapper.userLogin(username, "fake");
+		Assert.assertFalse(success);
 		
-		Assert.assertEquals("fail", response);
+		// Incorrect user and password that exists in the db
+		success = wrapper.userLogin("fake", password);
+		Assert.assertFalse(success);
 	}
 	
 	public void testLoginResponseBad() throws InterruptedException, ExecutionException {
