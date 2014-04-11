@@ -407,7 +407,7 @@ public class AsyncHttpPostWrapper {
 		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
 
-	// *************************************ITERATION 5 BELOW*************
+	// *****************************ITERATION 5 BELOW*************
 	
 	/**
 	 * Returns list of fully built workout objects representing template workouts
@@ -422,6 +422,7 @@ public class AsyncHttpPostWrapper {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
+		postData.put("opertion", GET_LIST);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -461,6 +462,7 @@ public class AsyncHttpPostWrapper {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("t_id", Integer.toString(tid));
+		postData.put("operation", GET_LIST);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
