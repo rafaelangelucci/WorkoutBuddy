@@ -52,11 +52,11 @@ public class UseWorkoutAdapter extends ArrayAdapter<Exercise>
 		final Exercise entry = exerciseList.get(position);
 		if (convertView == null) {
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			convertView = inflater.inflate(R.layout.row_layout_exercises, null);
+			convertView = inflater.inflate(R.layout.row_layout_use_wo, null);
 
 			holder = new Holder();
-			holder.name = (TextView) convertView.findViewById(R.id.row_name);
-			holder.desc = (TextView) convertView.findViewById(R.id.row_type);
+			holder.name = (TextView) convertView.findViewById(R.id.exercise_name);
+			holder.desc = (TextView) convertView.findViewById(R.id.exercise_desc);
 			convertView.setTag(holder);
 		}
 		else{

@@ -7,10 +7,13 @@ import android.app.Activity;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UseWorkoutActivity extends Activity //implements OnClickListener, HttpRequestListener
+public class UseWorkoutActivity extends Activity implements OnItemClickListener//implements OnClickListener, HttpRequestListener
 {
 
 	public Exercise[] exerciseList;
@@ -36,6 +39,10 @@ public class UseWorkoutActivity extends Activity //implements OnClickListener, H
 		
 		// Populate list view of exercises
 		ListView list = (ListView)findViewById(R.id.list);
+		UseWorkoutAdapter adapter = new UseWorkoutAdapter(this, ExerciseFragment.exercises);
+
+		list.setAdapter(adapter);
+		list.setOnItemClickListener(this);
 		
 	}
 
@@ -44,5 +51,12 @@ public class UseWorkoutActivity extends Activity //implements OnClickListener, H
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.new_workout, menu);
 		return true;
+	}
+
+	@Override
+	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+		Exercise e = ExerciseFragment.exercises.get(position);
+		String name = e.getName();
+		Log.i("UseWorkoutActivity", "onItemClick : " + name);
 	}
 }
