@@ -3,6 +3,7 @@ package com.uiuc.workoutbuddy;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
@@ -11,7 +12,9 @@ import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -28,23 +31,37 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
+		
+		//SharedPreferences un= this.getSharedPreferences("username", Context.MODE_PRIVATE);
+		
+		
+		String username = "vicky";
+		ArrayList<Workout> tempWks = null;
+		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+		try {
+			tempWks = wrapper.getTemplateWorkouts(username);
+		}
+		catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
 
-		String[] workoutNames = new String[WorkoutFragment.workouts.size()];
+		String[] workoutNames = new String[tempWks.size()];
+		for(int idx=0; idx < workoutNames.length; idx++)
+			workoutNames[idx] = tempWks.get(idx).getName();
 		if(workoutNames.length==0)
 		{
 			Toast.makeText(this.getApplicationContext(), "You do not have any workout templates saved.  You must save a template workout before scheduling a workout.", Toast.LENGTH_SHORT).show();
 			Intent i1 = new Intent(this, MainActivity.class);
 			startActivity(i1);
 		}
-		for(int idx=0; idx < workoutNames.length; idx++)
-			workoutNames[idx] = WorkoutFragment.workouts.get(idx).getName();
-		
-		
+
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, workoutNames);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Specify the layout to use when the list of choices appears4
 		Spinner s = (Spinner)findViewById(R.id.spnr_workouts);
 		s.setAdapter(adapter);
-		
+
 		findViewById(R.id.et_numtimes).setVisibility(4);
 		findViewById(R.id.et_numbetween).setVisibility(4);
 
