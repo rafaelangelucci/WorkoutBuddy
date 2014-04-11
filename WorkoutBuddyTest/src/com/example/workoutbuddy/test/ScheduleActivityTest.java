@@ -31,14 +31,6 @@ ActivityInstrumentationTestCase2<ScheduleActivity> {
 		View v;
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.spnr_workouts);
 		Assert.assertTrue(v.isShown());
-		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.dp_start);
-		Assert.assertTrue(v.isShown());
-//		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.chkbx_onetime);
-//		Assert.assertTrue(v.isShown());
-		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.spnr_numbers);
-		Assert.assertTrue(v.isShown());
-		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.spnr_dayweek);
-		Assert.assertTrue(v.isShown());
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done);
 		Assert.assertTrue(v.isShown());
 		v = myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_cancel);

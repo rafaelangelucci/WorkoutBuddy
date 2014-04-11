@@ -58,18 +58,15 @@
             android:name="com.uiuc.workoutbuddy.TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-<<<<<<< HEAD
-
-        <receiver android:name="com.uiuc.workoutbuddy.TimerReceiver" >
-=======
+        
+            <receiver 
+            android:name="com.uiuc.workoutbuddy.TimerReceiver" >
+        </receiver>
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        <receiver 
-            android:name="com.uiuc.workoutbuddy.TimerReceiver" >
->>>>>>> master
-        </receiver>
+        
 
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
