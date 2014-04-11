@@ -29,11 +29,10 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		// Show the Up button in the action bar.
 		setupActionBar();
 		final Button button = (Button) findViewById(R.id.buttonNewExerciseOK);
-        button.setOnClickListener(new View.OnClickListener() {
-            public void onClick(View v) {
-            	try {
-					saveExercise();
-	            	finish();
+		button.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				try {
+					saveAndClose();
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -41,8 +40,8 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
-            }
-        });
+			}
+		});
 	}
 
 	/**
@@ -75,17 +74,22 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		}
 		return super.onOptionsItemSelected(item);
 	}
-	
-	private void saveExercise() throws InterruptedException, ExecutionException {
-    	EditText editTextExerciseDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
-    	EditText editTextExerciseName = (EditText) findViewById(R.id.editTextExerciseName);
-    	Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinnerExerciseType);
-    	Exercise e = new Exercise(editTextExerciseName.getText().toString(),
-    						      spinnerExerciseType.getSelectedItem().toString(),
-    							  editTextExerciseDescription.getText().toString(),
-    							  "usernameA", //Where should this be coming from?
-    							  null); //sets
-    	new AsyncHttpPostWrapper(this).addExercise(e);
+
+	private void saveAndClose() throws InterruptedException, ExecutionException {
+		if (((EditText) findViewById(R.id.editTextExerciseName)).getText().toString().isEmpty()) {
+			Toast.makeText(this.getApplicationContext(), "Please enter an exercise name.", Toast.LENGTH_SHORT).show();
+			return;
+		}
+		EditText editTextExerciseDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
+		EditText editTextExerciseName = (EditText) findViewById(R.id.editTextExerciseName);
+		Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinnerExerciseType);
+		Exercise e = new Exercise(editTextExerciseName.getText().toString(),
+				spinnerExerciseType.getSelectedItem().toString(),
+				editTextExerciseDescription.getText().toString(),
+				"usernameA", //Where should this be coming from?
+				null); //sets
+		new AsyncHttpPostWrapper(this).addExercise(e);
+		finish();
 	}
 
 	@Override
