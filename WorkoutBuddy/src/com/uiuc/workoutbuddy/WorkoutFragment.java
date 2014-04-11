@@ -63,9 +63,10 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
         
         Button my_workouts = (Button)view.findViewById(R.id.btn_my_workouts);
         Button new_workout = (Button)view.findViewById(R.id.btn_new_workout);
-
+        Button schedule = (Button)view.findViewById(R.id.btn_schedule);
         my_workouts.setOnClickListener(this);
         new_workout.setOnClickListener(this);
+        schedule.setOnClickListener(this);
         
         AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
         
@@ -106,10 +107,14 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
             startActivity(i);
             Log.i( "WorkoutFragment", "OnClick : New Workout");
             break;
+        case R.id.btn_schedule:
+        	Intent i2 = new Intent(c, ScheduleActivity.class);
+        	startActivity(i2);
+        	Log.i("ScheduleActivity", "OnClick : Schedule");
+        	break;
         default:
             Log.i( "WorkoutFragment", "OnClick : No ID matched");
         }
-
     }
     
     
