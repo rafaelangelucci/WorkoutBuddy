@@ -446,6 +446,30 @@ public class AsyncHttpPostWrapper {
 		}
 		return tworkouts;
 	}
+	
+	/**
+	 * Adds template workout along with their exercises
+	 * @param tworkout workout to add
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public void addTemplateWorkout(Workout tworkout) throws InterruptedException, ExecutionException{
+		// Make the post request to URL with username in postdata
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("operation", ADD);
+		postData.put("name", tworkout.getName());
+		postData.put("description", tworkout.getDescription());
+		postData.put("username", tworkout.getUsername());
+		
+		//add workout
+		this.makeRequest(postData, URL);
+		
+		//add exercises
+		for(int i = 0; i < tworkout.getExercises().size(); i++){
+			addTemplateExercise(tworkout.getWid(), tworkout.getExercises().get(i));
+		}
+	}
 
 	/**
 	 * Gets a list of template exercises to build template workout
@@ -481,6 +505,27 @@ public class AsyncHttpPostWrapper {
 			e.printStackTrace();
 		}
 		return texercises;
+	}
+	
+	/**
+	 * Adds template exercise to the database 
+	 * @param tid	id that corresponds to template workout
+	 * @param exercise exercise to be added
+	 * @throws ExecutionException 
+	 * @throws InterruptedException 
+	 */
+	private void addTemplateExercise(int tid, Exercise exercise) throws InterruptedException, ExecutionException{
+		//Make post request with template exercise info
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
+		HashMap<String, String> postData = new HashMap<String, String>();
+		postData.put("operation", ADD);
+		postData.put("t_id", Integer.toString(tid));
+		postData.put("priority", Integer.toString(exercise.getPriority()));
+		postData.put("e_id", Integer.toString(exercise.getEid()));
+		postData.put("numSets", Integer.toString(exercise.getNumSets()));
+		postData.put("reps", Integer.toString(exercise.getReps()));
+		
+		this.makeRequest(postData, URL);
 	}
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
