@@ -20,6 +20,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 	private final ArrayList<Exercise> exerciseList;
 	private ArrayList<Exercise> exercisesChecked;
 	private boolean [] itemChecked;
+	private int checked = 0;
 
 
 	/**
@@ -90,9 +91,17 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 				if(holder.ckbox.isChecked())
 				{
 					itemChecked[position] = true;
+					Log.i( "ExerciseListAdapter", "checked : " + entry.getName());
+					checked++;
 				}
 				else {
 					itemChecked[position] = false;
+					checked--;
+					if(checked == 0)
+					{
+						//TODO: remove CAB
+						Log.i( "ExerciseListAdapter", "unchecked : " + entry.getName());
+					}
 				}
 			}			
 		});
