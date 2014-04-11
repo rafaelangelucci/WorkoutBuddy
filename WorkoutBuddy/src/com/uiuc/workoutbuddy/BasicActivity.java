@@ -7,7 +7,9 @@ import httpRequests.HttpRequestListener;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -100,13 +102,27 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		Calendar rightNow = Calendar.getInstance();
 		String createDate = df.format(rightNow.getTime());
 		
+		LinearLayout ll = (LinearLayout)findViewById(R.id.linearLayout);
+		if(ll==null) return;
+		
+		
+		
+		ArrayList<Exercise> selectedExerc = new ArrayList<Exercise>();
+		
+		for(int idx=0; idx < this.numExercises; idx++)
+		{
+			Spinner s = (Spinner)	ll.getChildAt(idx);
+			Exercise e = ExerciseFragment.exercises.get(s.getSelectedItemPosition());
+			selectedExerc.add(e);
+		}
+		
 		if(name.equals(""))
 			Toast.makeText(this.getApplicationContext(), "The name textbox must be filled.", Toast.LENGTH_SHORT).show();
 		else
-		{
+		{	
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			try {
-				Workout workout = new Workout(name, createDate, descript, "usernameA", null);
+				Workout workout = new Workout(name, createDate, descript, "usernameA", selectedExerc);
 				wrapper.addWorkout(workout);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

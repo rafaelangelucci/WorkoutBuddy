@@ -39,9 +39,9 @@ public class BasicActivityTest extends
 	 * Test proper activity layout with all the necessary buttons
 	 */
 	public void testLayout(){
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus));
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonPlus));
-		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonDone));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_plus));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done));
+		testButtonLayout(myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_minus));
 	}
 	
 	/**
@@ -57,45 +57,30 @@ public class BasicActivityTest extends
 	
 	@SuppressLint("NewApi")
 	public void testbuttonDoneClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonDone);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done);
 		Assert.assertTrue(button.callOnClick());
 	}
 	
 	@SuppressLint("NewApi")
 	public void testbuttonPlusClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonPlus);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_plus);
 		Assert.assertTrue(button.callOnClick());
 	}
 	
 	@SuppressLint("NewApi")
 	public void testbuttonMinusClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.buttonMinus);
+		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_minus);
 		Assert.assertTrue(button.callOnClick());
 	}
 	
 
 	public void testExerciseAdded()
 	{
-		//get list of exercise inputs
-		//check list is 1
-		//btn_PlusClicked()
-		//get list of exercise inputs
-		//check list is 2
 		Assert.fail();
 	}
 	
 	public void testExerciseRemoved()
 	{
-//		//btn_PlusClicked()
-//		List<View> exercisesInputs = myActivity.getExerciseInputs();
-//		//get list of exercise inputs
-//		//check list is 2
-//		//btn_MinusClicked()
-//		List<View> exercisesInputs = myActivity.getExerciseInputs();
-//		//check list is 1
-//		//btn_MinusClicked()
-//		List<View> exercisesInputs = myActivity.getExerciseInputs();
-//		//check list is 1
 		Assert.fail();
 	}
 	
