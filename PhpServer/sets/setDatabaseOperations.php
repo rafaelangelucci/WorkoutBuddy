@@ -41,7 +41,7 @@
 	//Performs the getlist operation
 	elseif($operation === 'getlist'){
 		$columns = array('s_id', 'reps', 'weight', 'time', 'priority', 'e_id', 'w_id');
-		$where = array('AND'=> array('w_id' => $wid, 'e_id' => $eid));
+		$where = array('w_id' => $wid);
 		$response = $database->select('Sets', $columns, $where);
 		echo json_encode($response);
 	}
