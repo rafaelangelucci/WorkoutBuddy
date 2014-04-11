@@ -12,7 +12,9 @@ import java.util.concurrent.TimeUnit;
 
 import android.os.Bundle;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -77,6 +79,9 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 				
 				 if (success) {
 						Toast.makeText(this.getApplicationContext(), "Login Successful", Toast.LENGTH_SHORT).show();
+
+						SharedPreferences un= this.getSharedPreferences("username", Context.MODE_PRIVATE);
+						un.edit().putString("username",username).commit();
 						
 						Intent intent = new Intent(this, MainActivity.class);
 				    	startActivity(intent);

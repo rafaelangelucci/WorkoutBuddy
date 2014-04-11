@@ -32,6 +32,11 @@ import android.util.Log;
  * 
  */
 public class AsyncHttpPostWrapper {
+	private static final String GET = "get";
+	private static final String ADD = "add";
+	private static final String GET_LIST = "getlist";
+	private static final String DELETE = "delete";
+	private static final String UPDATE = "update";
 	private HttpRequestListener requestListener;
 
 	/**
