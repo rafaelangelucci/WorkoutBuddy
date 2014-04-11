@@ -66,16 +66,30 @@ public class LoginActivityTest extends
 		Assert.assertTrue(view.isClickable());
 	}
 	
-	public void testLoginResponseGood() throws InterruptedException, ExecutionException {
+	public void testLoginResponse() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
-		
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
+		
+		wrapper.addUser("u", "p");
+		
 		postData.put("username", "u");
 		postData.put("password", "p");
 		String response = wrapper.makeRequest(postData, URL);
-		
 		Assert.assertEquals("success", response);
+		
+		Boolean success = wrapper.userLogin("u", "p");
+		Assert.assertTrue(success);
+		
+		//Testing for a nonexistent user and password
+		success = wrapper.userLogin("fake", "fake");
+		Assert.assertFalse(success);
+		
+		postData.put("username", "fake");
+		postData.put("password", "fake");
+		response = wrapper.makeRequest(postData, URL);
+		
+		Assert.assertEquals("fail", response);
 	}
 	
 	public void testLoginResponseBad() throws InterruptedException, ExecutionException {
@@ -90,15 +104,6 @@ public class LoginActivityTest extends
 		Assert.assertEquals("fail", response);
 	}
 	
-	public void testUserLogin() throws InterruptedException, ExecutionException {
-		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
-		
-		Boolean success = wrapper.userLogin("u", "p");
-		Assert.assertTrue(success);
-		
-		success = wrapper.userLogin("fake", "fake");
-		Assert.assertFalse(success);
-	}
 	
 	public void testUserSignupAndDelete() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
