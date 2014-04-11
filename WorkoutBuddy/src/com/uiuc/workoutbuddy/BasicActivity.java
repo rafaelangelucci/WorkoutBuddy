@@ -105,12 +105,15 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		LinearLayout ll = (LinearLayout)findViewById(R.id.linearLayout);
 		if(ll==null) return;
 		
-		List<String> selectedExerc = new ArrayList<String>();
+		
+		
+		ArrayList<Exercise> selectedExerc = new ArrayList<Exercise>();
 		
 		for(int idx=0; idx < this.numExercises; idx++)
 		{
-			Spinner currSpinner = (Spinner)	ll.getChildAt(idx);
-			selectedExerc.add(currSpinner.getSelectedItem().toString());
+			Spinner s = (Spinner)	ll.getChildAt(idx);
+			Exercise e = ExerciseFragment.exercises.get(s.getSelectedItemPosition());
+			selectedExerc.add(e);
 		}
 		
 		if(name.equals(""))
@@ -119,7 +122,7 @@ public class BasicActivity extends Activity implements OnClickListener, HttpRequ
 		{	
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			try {
-				Workout workout = new Workout(name, createDate, descript, "usernameA", null);
+				Workout workout = new Workout(name, createDate, descript, "usernameA", selectedExerc);
 				wrapper.addWorkout(workout);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
