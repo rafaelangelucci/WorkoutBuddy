@@ -62,6 +62,10 @@
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
             android:label="@string/title_activity_schedule" >
         </activity>
+        <activity
+            android:name="com.uiuc.workoutbuddy.ViewScheduleActivity"
+            android:label="@string/title_activity_view_schedule" >
+        </activity>
     </application>
 
 </manifest>
