@@ -1,17 +1,11 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
-import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
-
 import com.uiuc.workoutbuddy.R;
-
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
@@ -82,8 +76,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 			
 			for(int i = 0; i < responses.length; i++)
 			{
-				workouts.add(new Workout(responses[i].getName(), responses[i].getDate(), responses[i].getDescription(), responses[i].getUsername(),
-						responses[i].getExercises()));
+				workouts.add(responses[i]);
 				Log.i("Workout Added", responses[i].getName());
 			}
 		} catch (InterruptedException e) {
@@ -117,6 +110,22 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
             Log.i( "WorkoutFragment", "OnClick : No ID matched");
         }
 
+    }
+    
+    
+    public static Workout getWorkoutById(int id)
+    {
+    	Workout tmp;
+    	for(int i = 0; i < workouts.size(); i++)
+    	{
+    		tmp = workouts.get(i);
+    		if(tmp.getWid() == id)
+    		{
+    			return tmp;
+    		}
+    	}
+    	
+    	return null;
     }
 
 	@Override
