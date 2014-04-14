@@ -651,12 +651,8 @@ public class AsyncHttpPostWrapper {
 
 				// iterates through post data and creates a request entity
 				ArrayList<NameValuePair> requestData = new ArrayList<NameValuePair>();
-				Iterator<String> it = postData.keySet().iterator();
-
-				while (it.hasNext()) {
-					String key = it.next();
-					requestData.add(new BasicNameValuePair(key, postData
-							.get(key)));
+				for (HashMap.Entry<String, String> e: postData.entrySet()) {
+					requestData.add(new BasicNameValuePair(e.getKey(), e.getValue()));
 				}
 				post.setEntity(new UrlEncodedFormEntity(requestData));
 
