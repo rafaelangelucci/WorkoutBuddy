@@ -25,6 +25,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener
 {
+	public static String userName = "";
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -43,6 +44,7 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	@Override
 	public void onClick(View v) 
 	{
+		userName = getUsername();
 		switch(v.getId())
 		{
 		case R.id.login_button:

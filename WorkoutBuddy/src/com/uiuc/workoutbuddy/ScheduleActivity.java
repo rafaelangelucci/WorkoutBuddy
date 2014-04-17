@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 public class ScheduleActivity extends Activity implements OnClickListener, HttpRequestListener{
 
+	ArrayList<Workout> templateWks = new ArrayList<Workout>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +34,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		setContentView(R.layout.activity_schedule);
 
 		
-		String username = "usernameA"; //TODO: Change this to the login user
-		Workout[] tempWks = null;
+		
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
-			tempWks = wrapper.getWorkoutList(username); //TODO: Change this to getWorkoutTemplate
+			templateWks = wrapper.getTemplateWorkoutList(LoginActivity.userName);
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -45,12 +45,14 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 			e.printStackTrace();
 		}
 
-		String[] workoutNames = new String[tempWks.length];
+		String[] workoutNames = new String[templateWks.size()];
 		for(int idx=0; idx < workoutNames.length; idx++)
-			workoutNames[idx] = tempWks[idx].getName();
+			workoutNames[idx] = templateWks.get(idx).getName();
 		if(workoutNames.length==0)
 		{
 			Toast.makeText(this.getApplicationContext(), "You do not have any workout templates saved.  You must save a template workout before scheduling a workout.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.getApplicationContext(), "Username: " + LoginActivity.userName, Toast.LENGTH_SHORT).show();
+			
 			Intent i1 = new Intent(this, MainActivity.class);
 			startActivity(i1);
 		}
@@ -109,8 +111,8 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 
 	private boolean btn_doneClicked() {
 		Spinner wspnr = (Spinner)findViewById(R.id.spnr_workouts);
-		int selectedIdx = wspnr.getSelectedItemPosition();	
-		Workout w = WorkoutFragment.workouts.get(selectedIdx);
+		int selectedIdx = wspnr.getSelectedItemPosition();
+		Workout w = templateWks.get(selectedIdx);
 		EditText et = (EditText)findViewById(R.id.et_date);
 		String dateStr = et.getText().toString();
 
