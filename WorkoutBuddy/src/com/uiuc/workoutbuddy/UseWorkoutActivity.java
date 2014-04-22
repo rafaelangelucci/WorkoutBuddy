@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import customListAdapter.UseWorkoutAdapter;
 import helperClasses.Exercise;
 import helperClasses.Workout;
 import android.os.Bundle;

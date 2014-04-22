@@ -1,7 +1,13 @@
-package com.uiuc.workoutbuddy;
+package customListAdapter;
 
 import helperClasses.Workout;
+
 import java.util.ArrayList;
+
+import com.uiuc.workoutbuddy.R;
+import com.uiuc.workoutbuddy.R.id;
+import com.uiuc.workoutbuddy.R.layout;
+
 import android.content.Context;
 import android.util.Log;
 import android.view.LayoutInflater;
