@@ -8,6 +8,9 @@ public class Exercise {
 	private String name;
 	private String type;
 	private String description;
+	private int priority;
+	private int reps;
+	private int numSets;
 	private ArrayList<Set> sets;
 
 	/**
@@ -19,6 +22,9 @@ public class Exercise {
 		this.username = "";
 		this.description = "";
 		this.eid = -1;
+		this.priority = 0;
+		this.reps = 0;
+		this.numSets = 1;
 		this.sets = new ArrayList<Set>();
 	}
 
@@ -38,11 +44,15 @@ public class Exercise {
 	 */
 	public Exercise(String name, String type, String desc, String username,
 			ArrayList<Set> sets) {
+		this.eid = -1;
 		this.name = name;
 		this.username = username;
 		this.type = type;
 		this.description = desc;
 		this.sets = sets;
+		this.priority = 0;
+		this.reps = 0;
+		this.numSets = 1;
 	}
 
 	/**
@@ -115,6 +125,30 @@ public class Exercise {
 
 	public void setSets(ArrayList<Set> sets) {
 		this.sets = sets;
+	}
+
+	public int getPriority() {
+		return priority;
+	}
+
+	public void setPriority(int priority) {
+		this.priority = priority;
+	}
+
+	public int getReps() {
+		return reps;
+	}
+
+	public void setReps(int reps) {
+		this.reps = reps;
+	}
+
+	public int getNumSets() {
+		return numSets;
+	}
+
+	public void setNumSets(int numSets) {
+		this.numSets = numSets;
 	}
 	
 

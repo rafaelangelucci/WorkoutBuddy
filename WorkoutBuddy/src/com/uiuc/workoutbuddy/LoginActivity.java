@@ -61,12 +61,8 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	
 	private void login(View v)
 	{
-		// Get user password and username
-		EditText et = (EditText)findViewById(R.id.inputUsername);
-		String username = et.getText().toString();
-		
-		et = (EditText)findViewById(R.id.inputPassword);
-		String password = et.getText().toString();
+		String username = getUsername();
+		String password = getPassword();
 	
 		// Call userlogin() in the wrapper class to check is the user exists and the password is correct
 		if(username.equals("") || password.equals(""))
@@ -99,13 +95,8 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	
 	private void signup(View v)
 	{
-		// Get user password and username
-		EditText et = (EditText)findViewById(R.id.inputUsername);
-		String username = et.getText().toString();
-		
-		et = (EditText)findViewById(R.id.inputPassword);
-		String password = et.getText().toString();
-	
+		String username = getUsername();
+		String password = getPassword();
 	
 		// Call the wrapper class to create the account
 		if(username.equals("") || password.equals(""))
@@ -127,7 +118,17 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	    	startActivity(intent);
 		}
 	}
+	
+	public String getUsername() {
+		EditText et = (EditText)findViewById(R.id.inputUsername);
+		return et.getText().toString();
+	}
 
+	public String getPassword() {
+		EditText et = (EditText)findViewById(R.id.inputPassword);
+		return et.getText().toString();
+	}
+	
 	@Override
 	public void requestComplete() {
 		Log.i( "requestComplete()", "Request Completed countDown()");

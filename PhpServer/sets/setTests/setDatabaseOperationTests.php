@@ -1,13 +1,14 @@
 <?php
 	// Include Medoo
 	require_once '../../helperFunctions.php';
-	
+
 	$url = 'http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php';
+	
 	class MySQLConnectTest extends PHPUnit_Framework_TestCase
 	{
-		public function testAddGetDeleteSet(){
+		
+		public function testAddSet(){
 			global $url;
-			//test add set
 			$data = array('operation' => 'add',
 				'reps' => '10',
 				'weight' => '135',
@@ -16,27 +17,65 @@
 				'w_id' => '1');
  
 			$response = curlHelper($url, $data);
-			$sid = $response;
 			$this->assertTrue($response>0);
-		
-			//test getset
-			$data = array('s_id' => $sid, 'operation' => 'get');
+			return $response;
+		}
 			
+		/**
+		 * @depends testAddSet
+		 */
+		 public function testGetSet($sid){
+		 	global $url;
+			$data = array('s_id' => $sid, 'operation' => 'get');
+
 			$response = curlHelper($url, $data);
 			$responseArray = json_decode($response);
-			
+
 			$this->assertEquals($responseArray[0]->{'reps'}, 10);
 			$this->assertEquals($responseArray[0]->{'weight'}, 135);
 			$this->assertEquals($responseArray[0]->{'priority'}, 1);
 			$this->assertEquals($responseArray[0]->{'e_id'}, 1);
 			$this->assertEquals($responseArray[0]->{'w_id'}, 1);
+		}
+		 
+		/**
+		 * @depends testAddSet
+		 */
+		 public function testUpdateSet($sid){
+		 	global $url;
+			$data = array('operation' => 'update',
+				's_id' => $sid,
+				'reps' => '11',
+				'weight' => '136',
+				'priority' => '2',
+				'e_id' => '1',
+				'w_id' => '1');
+			$response = curlHelper($url, $data);
+			$this->assertTrue($response == 1);
+			
+			//check changes were made
+			$data = array('operation' => 'get', 's_id' => $sid);
+			
+			$response = curlHelper($url, $data);
+			$responseArray = json_decode($response);
+
+			$this->assertEquals($responseArray[0]->{'reps'}, 11);
+			$this->assertEquals($responseArray[0]->{'weight'}, 136);
+			$this->assertEquals($responseArray[0]->{'priority'}, 2);
+			$this->assertEquals($responseArray[0]->{'e_id'}, 1);
+			$this->assertEquals($responseArray[0]->{'w_id'}, 1);
+		 }
 		
-			//Test delete set
+		/**
+		 * @depends testAddSet
+		 */
+		 public function testDeleteSet($sid){
+		 	global $url;
 		 	$data = array('operation' => 'delete', 's_id' => $sid);
 			$response = curlHelper($url, $data);
 			$this->assertTrue($response == 1);
 		 }
-	
+
 	}
 
 
