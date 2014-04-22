@@ -24,9 +24,30 @@ public class LoginActivity extends Activity implements OnClickListener,
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		String username = pref.getString(PREF_USERNAME, null);
 		String password = pref.getString(PREF_PASSWORD, null);
+		if (username != null && password != null) {
+			// Prompt for username and password
+			/*EditText editUserText = (EditText) findViewById(R.id.inputUsername);
+			editUserText.setText(username);
+			EditText editPassText = (EditText) findViewById(R.id.inputPassword);
+			editPassText.setText(password);*/
+			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
+			try {
+				String result = wrapper.userLogin(username, password);
+				if(result.equals("success")){
+					Intent intent = new Intent(this, MainActivity.class);
+					startActivity(intent);
+					return;
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				e.printStackTrace();
+			}
+		}
 		
 		setContentView(R.layout.activity_login);
 
@@ -35,14 +56,6 @@ public class LoginActivity extends Activity implements OnClickListener,
 
 		login.setOnClickListener(this);
 		signup.setOnClickListener(this);
-
-		if (username != null && password != null) {
-			// Prompt for username and password
-			EditText editUserText = (EditText) findViewById(R.id.inputUsername);
-			editUserText.setText(username);
-			EditText editPassText = (EditText) findViewById(R.id.inputPassword);
-			editPassText.setText(password);
-		}
 	}
 
 	@Override
