@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import customListAdapter.WorkoutListAdapter;
 import helperClasses.Workout;
 import android.app.ListActivity;
 import android.content.Intent;
