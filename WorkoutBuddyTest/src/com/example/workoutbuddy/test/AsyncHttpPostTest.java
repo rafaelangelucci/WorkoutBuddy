@@ -45,7 +45,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 	public void testMakeEmptyRequest() throws InterruptedException, ExecutionException
 	{
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/emptyPostRequestTest.php";
-		String response = wrapper.makeRequest(new HashMap<String,String>(), URL);
+		String response = wrapper.makeRequest(new HashMap<String,Object>(), URL);
 		signal.await(1, TimeUnit.SECONDS);
 
 		assertEquals(response, "success");
