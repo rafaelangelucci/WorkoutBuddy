@@ -110,7 +110,7 @@ public class AsyncHttpPostWrapper {
 		}
 		return workouts;
 	}
-	
+
 	/**
 	 * Query the database and return the workout
 	 * 
@@ -172,7 +172,7 @@ public class AsyncHttpPostWrapper {
 		int wid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		workout.setWid(wid);
 	}
-	
+
 	/**
 	 * Update the workout with the given information. All fields need to be
 	 * provided even if there is no change
@@ -197,7 +197,7 @@ public class AsyncHttpPostWrapper {
 
 		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
-	
+
 	/**
 	 * Deletes the workout from the database
 	 * 
@@ -214,7 +214,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("w_id", wid);
 
 		String response = this.makeRequest(postData, URL);
-		if(toInt(response) == 1){
+		if (toInt(response) == 1) {
 			return true;
 		}
 		return false;
@@ -315,7 +315,7 @@ public class AsyncHttpPostWrapper {
 		int eid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		exercise.setEid(eid);
 	}
-	
+
 	/**
 	 * Query the database and return the exercise
 	 * 
@@ -352,7 +352,7 @@ public class AsyncHttpPostWrapper {
 
 		return exercise;
 	}
-	
+
 	/**
 	 * Updates the exercise with the given information. All fields need to be
 	 * provided even if there is no change
@@ -392,12 +392,12 @@ public class AsyncHttpPostWrapper {
 		postData.put("e_id", eid);
 
 		String response = this.makeRequest(postData, URL);
-		if(toInt(response) == 0){
+		if (toInt(response) == 0) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	// *************Sets******************************
 	private ArrayList<Set> getSetList(int wid) throws InterruptedException,
 			ExecutionException {
@@ -474,6 +474,13 @@ public class AsyncHttpPostWrapper {
 		return tworkouts;
 	}
 
+	/**
+	 * Gets templateWorkout given by id
+	 * @param tid id of templateWorkout
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public TemplateWorkout getTemplateWorkout(int tid)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
@@ -511,7 +518,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public int addTemplateWorkout(Workout tworkout)
+	public void addTemplateWorkout(TemplateWorkout tworkout)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
@@ -528,9 +535,67 @@ public class AsyncHttpPostWrapper {
 		for (int i = 0; i < tworkout.getExercises().size(); i++) {
 			addTemplateExercise(tid, tworkout.getExercises().get(i));
 		}
-		return tid;
+		tworkout.setTid(tid);
 	}
-	
+
+	/**
+	 * Deletes TemplateWorkout and its tempalteExercises
+	 * @param tid
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public boolean deleteTemplateWorkout(int tid) throws InterruptedException,
+			ExecutionException {
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
+		HashMap<String, Object> postData = new HashMap<String, Object>();
+		postData.put("operation", DELETE);
+		postData.put("t_id", tid);
+		String response = this.makeRequest(postData, URL);
+		
+		ArrayList<TemplateExercise> tExercises = getTemplateExerciseList(tid);
+		for(int i = 0; i < tExercises.size(); i++){
+			deleteTemplateExercise(tExercises.get(i).getTeid());
+		}
+		
+		if (toInt(response) == 1) {
+			return true;
+		}
+		return false;
+	}
+
+	/**
+	 * Updates TemplateWorkout and TemplateExercises contained by it
+	 * @param tWorkout templateWorkout to delete
+	 * @return
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
+	public boolean updateTemplateWorkout(TemplateWorkout tWorkout)
+			throws InterruptedException, ExecutionException {
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
+		HashMap<String, Object> postData = new HashMap<String, Object>();
+		postData.put("operation", UPDATE);
+		postData.put("name", tWorkout.getName());
+		postData.put("description", tWorkout.getDescription());
+		String response = this.makeRequest(postData, URL);
+		boolean success = true;
+		if (toInt(response) != 1) {
+			return false;
+		}
+		// Loop through and update all templateExercises
+		ArrayList<TemplateExercise> tExercises = tWorkout.getExercises();
+		for (int i = 0; i < tExercises.size(); i++) {
+			if (tExercises.get(i).getTeid() == -1) {
+				// add
+				addTemplateExercise(tWorkout.getTid(), tExercises.get(i));
+			} else {
+				success = success && updateTemplateExercise(tExercises.get(i));
+			}
+		}
+		return success;
+	}
+
 	// *************TemplateExercises*****************
 	/**
 	 * Gets a list of template exercises to build template workout
@@ -541,7 +606,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public ArrayList<TemplateExercise> getTemplateExerciseList(int tid)
+	private ArrayList<TemplateExercise> getTemplateExerciseList(int tid)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with templateid in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
@@ -567,8 +632,8 @@ public class AsyncHttpPostWrapper {
 				int numSets = Integer.parseInt(json_data.getString("numSets")
 						.trim());
 				int reps = Integer.parseInt(json_data.getString("reps").trim());
-				TemplateExercise te = new TemplateExercise(teid, tid, priority, eid,
-						numSets, reps, e);
+				TemplateExercise te = new TemplateExercise(teid, tid, priority,
+						eid, numSets, reps, e);
 				texercises.add(te);
 			}
 		} catch (JSONException e) {
@@ -587,7 +652,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	private void addTemplateExercise(int tid, Exercise exercise)
+	private void addTemplateExercise(int tid, TemplateExercise exercise)
 			throws InterruptedException, ExecutionException {
 		// Make post request with template exercise info
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
@@ -599,17 +664,19 @@ public class AsyncHttpPostWrapper {
 		postData.put("numSets", exercise.getNumSets());
 		postData.put("reps", exercise.getReps());
 
-		this.makeRequest(postData, URL);
-	}	
-	
+		exercise.setTeid(toInt(this.makeRequest(postData, URL)));
+	}
+
 	/**
 	 * Returns single template exercise
+	 * 
 	 * @param teid
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private TemplateExercise getTemplateExercise(int teid) throws InterruptedException, ExecutionException{
+	private TemplateExercise getTemplateExercise(int teid)
+			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
 		HashMap<String, Object> postData = new HashMap<String, Object>();
 		postData.put("te_id", teid);
@@ -623,45 +690,51 @@ public class AsyncHttpPostWrapper {
 			int eid = toInt(json_data.getString("e_id"));
 			int numSets = toInt(json_data.getString("numSets"));
 			int reps = toInt(json_data.getString("reps"));
-			
+
 			// query db for exercise corresponding to e_id
 			Exercise e = getExercise(eid);
-			
-			return new TemplateExercise(teid, tid, priority, eid, numSets, reps, e);
+
+			return new TemplateExercise(teid, tid, priority, eid, numSets,
+					reps, e);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
-		return new TemplateExercise();	
+		return new TemplateExercise();
 	}
-	
+
 	/**
 	 * Deletes template exercise
-	 * @param teid id of the template exercise
+	 * 
+	 * @param teid
+	 *            id of the template exercise
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private boolean deleteTemplateExercise(int teid) throws InterruptedException, ExecutionException{
+	private boolean deleteTemplateExercise(int teid)
+			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
 		HashMap<String, Object> postData = new HashMap<String, Object>();
 		postData.put("te_id", teid);
 		postData.put("operation", DELETE);
 		String response = this.makeRequest(postData, URL);
-		if(toInt(response) == 1){
+		if (toInt(response) == 1) {
 			return true;
 		}
 		return false;
 	}
-	
+
 	/**
 	 * Updates the given template exercise
-	 * @param tExercise template exercise to be updated
+	 * 
+	 * @param tExercise
+	 *            template exercise to be updated
 	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
 	private boolean updateTemplateExercise(TemplateExercise tExercise)
-			throws InterruptedException, ExecutionException{
+			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
 		HashMap<String, Object> postData = new HashMap<String, Object>();
 		postData.put("operation", UPDATE);
@@ -671,13 +744,13 @@ public class AsyncHttpPostWrapper {
 		postData.put("e_id", tExercise.getEid());
 		postData.put("numSets", tExercise.getNumSets());
 		postData.put("reps", tExercise.getReps());
-		
+
 		String response = this.makeRequest(postData, URL);
-		if(toInt(response) == 1){
+		if (toInt(response) == 1) {
 			return true;
 		}
 		return false;
-		
+
 	}
 
 	/**
@@ -707,7 +780,7 @@ public class AsyncHttpPostWrapper {
 	 *            username to delete
 	 * @param password
 	 *            password for the account
-	 * @return 
+	 * @return
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
@@ -719,7 +792,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", username);
 		postData.put("password", password);
 		String response = this.makeRequest(postData, URL);
-		if(toInt(response) == 1){
+		if (toInt(response) == 1) {
 			return true;
 		}
 		return false;
@@ -750,9 +823,9 @@ public class AsyncHttpPostWrapper {
 		else
 			return false;
 	}
-	
-	//***************HELPER FUNCTIONS***************
-	private static int toInt(String s){
+
+	// ***************HELPER FUNCTIONS***************
+	private static int toInt(String s) {
 		return Integer.parseInt(s.trim());
 	}
 
