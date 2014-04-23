@@ -2,6 +2,7 @@ package helperClasses;
 
 public class TemplateExercise {
 	private int teid;
+	private int tid;
 	private int priority;
 	private int eid;
 	private int numSets;
@@ -13,6 +14,7 @@ public class TemplateExercise {
 	 */
 	public TemplateExercise(){
 		this.teid = -1;
+		this.tid = -1;
 		this.priority = -1;
 		this.eid = -1;
 		this.numSets = 0;
@@ -34,6 +36,8 @@ public class TemplateExercise {
 		this.numSets = numSets;
 		this.reps = reps;
 		this.exercise = exercise;
+		this.teid = -1;
+		this.tid = -1;
 	}
 	
 	/**
@@ -45,9 +49,10 @@ public class TemplateExercise {
 	 * @param reps how many reps should be done per set
 	 * @param exercise the exercise associated with this templateexercise
 	 */
-	public TemplateExercise(int teid, int priority, int eid, int numSets, int reps, Exercise exercise){
+	public TemplateExercise(int teid, int tid, int priority, int eid, int numSets, int reps, Exercise exercise){
 		this(priority, eid, numSets, reps, exercise);
 		this.teid = teid;
+		this.tid = tid;
 	}
 	
 	//*************GETTERS AND SETTERS****************
@@ -98,4 +103,14 @@ public class TemplateExercise {
 	public void setExercise(Exercise exercise) {
 		this.exercise = exercise;
 	}
+
+	public int getTid() {
+		return tid;
+	}
+
+	public void setTid(int tid) {
+		this.tid = tid;
+	}
+	
+	
 }
