@@ -32,6 +32,7 @@ public class TemplateWorkout {
 	 */
 	public TemplateWorkout(String name, String description, String username,
 			ArrayList<TemplateExercise> exercises) {
+		this.tid = -1;
 		this.name = name;
 		this.description = description;
 		this.username = username;
