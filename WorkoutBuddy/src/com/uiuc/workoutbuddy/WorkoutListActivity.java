@@ -16,11 +16,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
- * 
+ *
  * @author tmadigan7
  *
  * Some code borrowed from: http://www.vogella.com/tutorials/AndroidListView/article.html#listactivity
- * 
+ *
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
@@ -53,6 +53,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				return true;
 			}
 		});
+
 	}
 
 	@Override
@@ -65,7 +66,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// Spawn new work out activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
 		intent.putExtra("wid", wo.getWid());
-    	startActivity(intent);
+		startActivity(intent);
 	}
 
 	@Override
@@ -91,7 +92,23 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			//TODO: implement button clicks
+			switch(item.getItemId())
+			{
+			case R.id.action_settings:
+				Log.i("WorkoutListActivity", "SETTINGS onActionItemClicked");
+				break;
+			case R.id.share:
+				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
+				break;
+			case R.id.edit:
+				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
+				break;
+			case R.id.delete:
+				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
+				break;
+			default:
+				Log.i("WorkoutListActivity", "DEFAULT onActionItemClicked");
+			}
 			return true;
 		}
 
