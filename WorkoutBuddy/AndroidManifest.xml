@@ -58,16 +58,14 @@
             android:name="com.uiuc.workoutbuddy.TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        
-            <receiver 
-            android:name="com.uiuc.workoutbuddy.TimerReceiver" >
+
+        <receiver android:name="com.uiuc.workoutbuddy.TimerReceiver" >
         </receiver>
+
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        
-
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
             android:label="@string/title_activity_schedule" >
@@ -75,6 +73,10 @@
         <activity
             android:name="com.uiuc.workoutbuddy.ViewScheduleActivity"
             android:label="@string/title_activity_view_schedule" >
+        </activity>
+        <activity
+            android:name="com.uiuc.workoutbuddy.EmailActivity"
+            android:label="@string/title_activity_email" >
         </activity>
     </application>
 
