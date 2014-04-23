@@ -48,12 +48,12 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				selectedItem = position;
 
 				// start the CAB using the ActionMode.Callback defined above
+				((ActionMode) mActionMode).setTag(position);
 				mActionMode = WorkoutListActivity.this.startActionMode(mActionModeCallback);
 				view.setSelected(true);
 				return true;
 			}
 		});
-
 	}
 
 	@Override
@@ -79,11 +79,12 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	 * Function to share a work out via email or other methods
 	 * @return true if successfully shared
 	 */
-	public boolean shareWorkout(Object wo) {
+	public boolean shareWorkout(Object obj) {
 		Log.i("WorkoutListActivity", "ERROR : SHARE FAILED");
+		
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
 		sharingIntent.setType("text/plain");
-		String shareBody = "Here is the share content body";
+		String shareBody = "TEST : Here is the share content body";
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
@@ -114,7 +115,9 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				break;
 			case R.id.share:
 				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
-				//shareWorkout(mode.getTag());
+				int item_postion=Integer.parseInt(mode.getTag().toString());
+	            //Workout wo = WorkoutListAdapter.getItem(item_postion);
+				shareWorkout(mode.getTag());
 				break;
 			case R.id.edit:
 				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
