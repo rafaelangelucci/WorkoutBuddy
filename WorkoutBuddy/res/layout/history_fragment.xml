@@ -7,6 +7,13 @@
     android:background="#0099cc">
 
     <Button
+        android:id="@+id/btn_logout"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Logout" />
+
+    <Button
         android:id="@+id/btn_graph"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

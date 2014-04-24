@@ -5,6 +5,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
@@ -16,9 +17,10 @@ import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
-		ActionBar.TabListener {
+ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -56,11 +58,11 @@ public class MainActivity extends FragmentActivity implements
 		// tab. We can also use ActionBar.Tab#select() to do this if we have
 		// a reference to the Tab.
 		mViewPager.setOnPageChangeListener(new ViewPager.SimpleOnPageChangeListener() {
-					@Override
-					public void onPageSelected(int position) {
-						actionBar.setSelectedNavigationItem(position);
-					}
-				});
+			@Override
+			public void onPageSelected(int position) {
+				actionBar.setSelectedNavigationItem(position);
+			}
+		});
 
 		// For each of the sections in the app, add a tab to the action bar.
 		for (int i = 0; i < mSectionsPagerAdapter.getCount(); i++) {
@@ -99,33 +101,33 @@ public class MainActivity extends FragmentActivity implements
 			FragmentTransaction fragmentTransaction) {
 	}
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
-    public class SectionsPagerAdapter extends FragmentPagerAdapter
-    {
-        Context c;
+	/**
+	 * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
+	 * one of the sections/tabs/pages.
+	 */
+	public class SectionsPagerAdapter extends FragmentPagerAdapter
+	{
+		Context c;
 
-        public SectionsPagerAdapter(Context c, FragmentManager fm) {
-            super(fm);
-            this.c = c;
-        }
+		public SectionsPagerAdapter(Context c, FragmentManager fm) {
+			super(fm);
+			this.c = c;
+		}
 
-        @Override
-        public Fragment getItem(int position) {
-            // getItem is called to instantiate the fragment for the given page.
-            // Return a DummySectionFragment (defined as a static inner class
-            // below) with the page number as its lone argument.
-            switch (position) {
-            case 0:
-                return new WorkoutFragment(c);
-            case 1:
-                return new ExerciseFragment(c);
-            default:
-                return new HistoryFragment();
-            }
-        }
+		@Override
+		public Fragment getItem(int position) {
+			// getItem is called to instantiate the fragment for the given page.
+			// Return a DummySectionFragment (defined as a static inner class
+			// below) with the page number as its lone argument.
+			switch (position) {
+			case 0:
+				return new WorkoutFragment(c);
+			case 1:
+				return new ExerciseFragment(c);
+			default:
+				return new HistoryFragment();
+			}
+		}
 
 		@Override
 		public int getCount() {
@@ -138,14 +140,32 @@ public class MainActivity extends FragmentActivity implements
 			Locale l = Locale.getDefault();
 			switch (position) {
 			case 0:
-                return getString(R.string.workouts).toUpperCase(l);
-            case 1:
-                return getString(R.string.exercises).toUpperCase(l);
-            case 2:
-                return getString(R.string.history).toUpperCase(l);
+				return getString(R.string.workouts).toUpperCase(l);
+			case 1:
+				return getString(R.string.exercises).toUpperCase(l);
+			case 2:
+				return getString(R.string.history).toUpperCase(l);
 			}
 			return null;
 		}
 	}
+<<<<<<< HEAD
     
+=======
+
+	public void logout() {
+		SharedPreferences un= getSharedPreferences("username", Context.MODE_PRIVATE);
+		boolean success = true;
+		if(un.contains("username"))
+			success = un.edit().remove("username").commit();
+
+		if(success)
+		{
+			Intent goLoginActivity = new Intent(this, LoginActivity.class);
+			startActivity(goLoginActivity);
+		}
+		else
+			Toast.makeText(getApplicationContext(), "Error occurred when removing login data.", Toast.LENGTH_SHORT).show();
+	}
+>>>>>>> liu281
 }

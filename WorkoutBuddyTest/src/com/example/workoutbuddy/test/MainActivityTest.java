@@ -1,18 +1,8 @@
 package com.example.workoutbuddy.test;
-
 import com.uiuc.workoutbuddy.MainActivity;
-import com.uiuc.workoutbuddy.MyWorkoutsListFragment;
-import com.uiuc.workoutbuddy.WorkoutFragment;
-
 import junit.framework.Assert;
-import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ViewAsserts;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 
 public class MainActivityTest extends
@@ -49,7 +39,6 @@ public class MainActivityTest extends
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_workout));
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_my_exercises));
 		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
-		testButtonLayout(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_new_exercise));
 	}
 	
 	/**
@@ -62,9 +51,4 @@ public class MainActivityTest extends
 		Assert.assertTrue(view.isShown());
 		Assert.assertTrue(view.isClickable());
 	}
-	
-//	public void testWorkoutList(){
-//		ViewAsserts.assertOnScreen(mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment).getRootView(),
-//				mActivity.findViewById(com.uiuc.workoutbuddy.R.id.WorkoutsListFragment));
-//	}
 }

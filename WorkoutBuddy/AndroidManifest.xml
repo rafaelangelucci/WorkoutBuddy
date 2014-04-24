@@ -28,7 +28,11 @@
         </activity>
         <activity
             android:name="com.uiuc.workoutbuddy.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"  
+            android:parentActivityName="com.uiuc.workoutbuddy.LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.uiuc.workoutbuddy.LoginActivity" />
         </activity>
         <activity
             android:name="com.uiuc.workoutbuddy.ExerciseListActivity"
@@ -58,16 +62,13 @@
             android:name="com.uiuc.workoutbuddy.TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        
-            <receiver 
-            android:name="com.uiuc.workoutbuddy.TimerReceiver" >
+        <receiver android:name="com.uiuc.workoutbuddy.TimerReceiver" >
         </receiver>
+
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        
-
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
             android:label="@string/title_activity_schedule" >
@@ -75,6 +76,10 @@
         <activity
             android:name="com.uiuc.workoutbuddy.ViewScheduleActivity"
             android:label="@string/title_activity_view_schedule" >
+        </activity>
+        <activity
+            android:name="com.uiuc.workoutbuddy.EmailActivity"
+            android:label="@string/title_activity_email" >
         </activity>
     </application>
 
