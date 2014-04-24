@@ -70,6 +70,7 @@ public class LoginActivity extends Activity implements OnClickListener,
 		default:
 		}
 	}
+<<<<<<< HEAD
 
 	private void login(View v) {
 		String username = getUsername();
@@ -80,6 +81,19 @@ public class LoginActivity extends Activity implements OnClickListener,
 		if (username.equals("") || password.equals(""))
 			Toast.makeText(this.getApplicationContext(),"Please fill in all fields.", Toast.LENGTH_SHORT).show();
 		else {
+=======
+	
+	private void login(View v)
+	{
+		String username = getUsername();
+		String password = getPassword();
+	
+		// Call userlogin() in the wrapper class to check is the user exists and the password is correct
+		if(username.equals("") || password.equals(""))
+			Toast.makeText(this.getApplicationContext(), "Please fill in all fields.", Toast.LENGTH_SHORT).show();
+		else
+		{
+>>>>>>> master
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			try {
 				String result = wrapper.userLogin(username, password);
@@ -98,11 +112,20 @@ public class LoginActivity extends Activity implements OnClickListener,
 			}
 		}
 	}
+<<<<<<< HEAD
 
 	private void signup(View v) {
 		String username = getUsername();
 		String password = getPassword();
 
+=======
+	
+	private void signup(View v)
+	{
+		String username = getUsername();
+		String password = getPassword();
+	
+>>>>>>> master
 		// Call the wrapper class to create the account
 		if (username.equals("") || password.equals(""))
 			Toast.makeText(this.getApplicationContext(),
@@ -126,7 +149,13 @@ public class LoginActivity extends Activity implements OnClickListener,
 			}
 		}
 	}
+	
+	public String getUsername() {
+		EditText et = (EditText)findViewById(R.id.inputUsername);
+		return et.getText().toString();
+	}
 
+<<<<<<< HEAD
 	public String getUsername() {
 		EditText et = (EditText) findViewById(R.id.inputUsername);
 		return et.getText().toString();
@@ -137,6 +166,13 @@ public class LoginActivity extends Activity implements OnClickListener,
 		return et.getText().toString();
 	}
 
+=======
+	public String getPassword() {
+		EditText et = (EditText)findViewById(R.id.inputPassword);
+		return et.getText().toString();
+	}
+	
+>>>>>>> master
 	@Override
 	public void requestComplete() {
 		Log.i("requestComplete()", "Request Completed countDown()");
