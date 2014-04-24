@@ -686,7 +686,7 @@ public class AsyncHttpPostWrapper {
 		}
 
 		protected void onPostExecute(String result) {
-			requestListener.requestComplete();
+			//requestListener.requestComplete();
 		}
 
 	}
