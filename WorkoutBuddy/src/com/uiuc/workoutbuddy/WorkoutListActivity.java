@@ -133,18 +133,18 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			case R.id.action_settings:
 				Log.i("WorkoutListActivity", "SETTINGS onActionItemClicked");
 				break;
-			case R.id.share:
-				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
-				int item_postion=Integer.parseInt(mode.getTag().toString());
-				Workout wo = (Workout)getListView().getAdapter().getItem(item_postion);
-				shareWorkout(wo);
-				break;
+//			case R.id.share:
+//				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
+//				int item_postion=Integer.parseInt(mode.getTag().toString());
+//				Workout wo = (Workout)getListView().getAdapter().getItem(item_postion);
+//				shareWorkout(wo);
+//				break;
 			case R.id.edit:
 				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
 				break;
-			case R.id.delete:
-				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
-				break;
+//			case R.id.delete:
+//				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
+//				break;
 			default:
 				Log.i("WorkoutListActivity", "DEFAULT onActionItemClicked");
 			}

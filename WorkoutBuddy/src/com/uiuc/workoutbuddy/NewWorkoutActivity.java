@@ -93,7 +93,7 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 
 	private void btn_DoneClicked(View v)
 	{
-		EditText et = (EditText)findViewById(R.id.editText1);
+		EditText et = (EditText)findViewById(R.id.editTextExerciseName);
 		String name = et.getText().toString();
 		et = (EditText)findViewById(R.id.EditText01);
 		String descript = et.getText().toString();
