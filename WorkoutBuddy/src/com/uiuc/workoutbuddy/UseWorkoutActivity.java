@@ -28,7 +28,7 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener/
 		// Get passed in variables
 		Intent i = getIntent();
 		int wid = i.getExtras().getInt("wid");
-		wo = WorkoutFragment.getWorkoutById(wid);
+		//wo = WorkoutFragment.getWorkoutById(wid);
 		Log.i("UseWorkoutActivity", "wo : " + wid + " - " + wo.getName());
 		
 		// Grab and set text views of activity

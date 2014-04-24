@@ -26,7 +26,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		
 		Log.i("WorkoutListActivity", "onCreate");
 		
-        CustomWorkoutAdapter adapter = new CustomWorkoutAdapter(this, WorkoutFragment.workouts);
+        WorkoutListAdapter adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
 
         setListAdapter(adapter);
 	}

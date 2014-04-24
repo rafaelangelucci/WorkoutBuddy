@@ -29,7 +29,7 @@ public class GraphActivity extends Activity
 		);
 		
 		graphView.addSeries(exampleSeries); // data
-		 
+		
 		LinearLayout layout = (LinearLayout) findViewById(R.id.graph_main);
 		layout.addView(graphView);
 	}
