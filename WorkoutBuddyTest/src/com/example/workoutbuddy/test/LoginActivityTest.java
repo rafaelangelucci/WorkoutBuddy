@@ -1,23 +1,16 @@
 package com.example.workoutbuddy.test;
 
 import java.util.HashMap;
+
 import java.util.concurrent.ExecutionException;
 
 import httpRequests.AsyncHttpPostWrapper;
 
 import com.uiuc.workoutbuddy.LoginActivity;
-import com.uiuc.workoutbuddy.MyWorkoutsListFragment;
-import com.uiuc.workoutbuddy.WorkoutFragment;
 
 import junit.framework.Assert;
-import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ViewAsserts;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 
 public class LoginActivityTest extends
@@ -52,7 +45,6 @@ public class LoginActivityTest extends
 	public void testLayout(){
 		testButtonLayout(lActivity.findViewById(com.uiuc.workoutbuddy.R.id.login_button));
 		testButtonLayout(lActivity.findViewById(com.uiuc.workoutbuddy.R.id.signup_button));
-		testButtonLayout(lActivity.findViewById(com.uiuc.workoutbuddy.R.id.skip_button));
 	}
 	
 	/**
@@ -76,20 +68,20 @@ public class LoginActivityTest extends
 		wrapper.addUser(username, password);
 		
 		// Correct user and password
-		Boolean success = wrapper.userLogin(username, password);
-		Assert.assertTrue(success);
+		String success = wrapper.userLogin(username, password);
+		Assert.assertTrue(success.equals("success"));
 		
 		// Incorrect user and password
 		success = wrapper.userLogin("fake", "fake");
-		Assert.assertFalse(success);
+		Assert.assertTrue(success.equals("fail"));
 		
 		// Correct user and incorrect password
 		success = wrapper.userLogin(username, "fake");
-		Assert.assertFalse(success);
+		Assert.assertTrue(success.equals("fail"));
 		
 		// Incorrect user and password that exists in the db
 		success = wrapper.userLogin("fake", password);
-		Assert.assertFalse(success);
+		Assert.assertTrue(success.equals("fail"));
 	}
 	
 	public void testLoginResponseBad() throws InterruptedException, ExecutionException {
@@ -113,12 +105,12 @@ public class LoginActivityTest extends
 		
 		wrapper.addUser(username, password);
 		
-		Boolean success = wrapper.userLogin(username, password);
-		Assert.assertTrue(success);
+		String success = wrapper.userLogin(username, password);
+		Assert.assertTrue(success.equals("success"));
 		
 		wrapper.deleteUser(username, password);
 		
 		success = wrapper.userLogin(username, password);
-		Assert.assertFalse(success);
+		Assert.assertTrue(success.equals("fail"));
 	}
 }

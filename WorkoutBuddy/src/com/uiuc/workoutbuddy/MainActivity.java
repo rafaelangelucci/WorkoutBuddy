@@ -146,7 +146,8 @@ ActionBar.TabListener {
 		}
 	}
 
-	public void logout() {
+
+	public void logout(){
 		SharedPreferences un= getSharedPreferences("username", Context.MODE_PRIVATE);
 		boolean success = true;
 		if(un.contains("username"))
