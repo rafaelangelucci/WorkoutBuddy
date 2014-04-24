@@ -18,12 +18,8 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.uiuc.workoutbuddy.LoginActivity"
-<<<<<<< HEAD
-            android:label="@string/app_name">
-=======
             android:label="@string/app_name"
             android:noHistory="true" >
->>>>>>> master
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -66,26 +62,13 @@
             android:name="com.uiuc.workoutbuddy.TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-<<<<<<< HEAD
-
-        <receiver android:name="com.uiuc.workoutbuddy.TimerReceiver" >
-        </receiver>
-
-=======
-        
             <receiver 
             android:name="com.uiuc.workoutbuddy.TimerReceiver" >
         </receiver>
->>>>>>> master
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-<<<<<<< HEAD
-=======
-        
-
->>>>>>> master
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
             android:label="@string/title_activity_schedule" >

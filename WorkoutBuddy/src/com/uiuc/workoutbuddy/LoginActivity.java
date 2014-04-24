@@ -49,6 +49,9 @@ public class LoginActivity extends Activity implements OnClickListener,
 			}
 		}
 		
+		EditText editUserText = (EditText) findViewById(R.id.inputUsername);
+		editUserText.setText(username);
+		
 		setContentView(R.layout.activity_login);
 
 		Button login = (Button) findViewById(R.id.login_button);

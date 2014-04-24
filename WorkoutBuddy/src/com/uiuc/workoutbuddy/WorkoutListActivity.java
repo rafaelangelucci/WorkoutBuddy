@@ -16,17 +16,6 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
-<<<<<<< HEAD
- * 
- * @author tmadigan7
- *
- * Some code borrowed from: http://www.vogella.com/tutorials/AndroidListView/article.html#listactivity
- * 
- */
-public class WorkoutListActivity extends ListActivity implements OnItemClickListener
-{
-	protected Object mActionMode;
-=======
  *
  * @author tmadigan7
  *
@@ -37,7 +26,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 {
 	private static final String SUBJECT = "WorkoutBuddy : A workout has been shared with you!";
 	protected ActionMode mActionMode;
->>>>>>> master
 	public int selectedItem = -1;
 
 	@Override
@@ -58,20 +46,12 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				if (mActionMode != null) {
 					return false;
 				}
-<<<<<<< HEAD
-				selectedItem = position;
-
-				// start the CAB using the ActionMode.Callback defined above
-				mActionMode = WorkoutListActivity.this.startActionMode(mActionModeCallback);
-=======
 				onListItemSelect(position);
->>>>>>> master
 				view.setSelected(true);
 				return true;
 			}
 		});
-<<<<<<< HEAD
-=======
+
 	}
 	
 	/**
@@ -93,7 +73,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			Log.i("WorkoutListActivity", "mActionMode Finish");
 			mActionMode.finish();
 		}
->>>>>>> master
 	}
 
 	@Override
@@ -106,11 +85,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// Spawn new work out activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
 		intent.putExtra("wid", wo.getWid());
-<<<<<<< HEAD
     	startActivity(intent);
-=======
-		startActivity(intent);
->>>>>>> master
 	}
 
 	@Override
@@ -120,11 +95,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	}
 
 	/**
-<<<<<<< HEAD
-	 * Action mode call back that inflates CAB layout and registers on click functionality
-	 */
-	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-=======
 	 * Function to share a work out via email or other methods REFACTORED
 	 * @param wo workout that was selected from the list
 	 * @return true if successful
@@ -146,8 +116,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	 */
 //	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 		private class ActionModeCallback implements ActionMode.Callback {
->>>>>>> master
-
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			MenuInflater inflater = mode.getMenuInflater();
 			inflater.inflate(R.menu.context_menu, menu);
@@ -160,9 +128,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-<<<<<<< HEAD
-			//TODO: implement button clicks
-=======
 			switch(item.getItemId())
 			{
 			case R.id.action_settings:
@@ -183,7 +148,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			default:
 				Log.i("WorkoutListActivity", "DEFAULT onActionItemClicked");
 			}
->>>>>>> master
 			return true;
 		}
 
@@ -193,8 +157,5 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			selectedItem = -1;
 		}
 	};
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> master
+
