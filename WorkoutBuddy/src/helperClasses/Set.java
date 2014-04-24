@@ -70,7 +70,7 @@ public class Set {
 		this(reps, weight, time, priority, eid, wid);
 		this.sid = sid;
 	}
-
+	
 	/*************** GETTERS AND SETTERS ***************/
 
 	public int getSid() {
