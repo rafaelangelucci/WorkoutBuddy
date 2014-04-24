@@ -47,7 +47,7 @@
                 android:value="android.support.v4.app.FragmentActivity" />
         </activity>
         <activity
-            android:name="com.uiuc.workoutbuddy.BasicActivity"
+            android:name="com.uiuc.workoutbuddy.NewWorkoutActivity"
             android:label="@string/app_name" >
         </activity>
         <activity

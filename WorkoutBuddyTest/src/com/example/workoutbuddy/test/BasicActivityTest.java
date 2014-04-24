@@ -5,16 +5,16 @@ import android.annotation.SuppressLint;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
-import com.uiuc.workoutbuddy.BasicActivity;
+import com.uiuc.workoutbuddy.NewWorkoutActivity;
 
 public class BasicActivityTest extends
-	ActivityInstrumentationTestCase2<BasicActivity> {
+	ActivityInstrumentationTestCase2<NewWorkoutActivity> {
 
-	private BasicActivity myActivity;
+	private NewWorkoutActivity myActivity;
 
 	
 	public BasicActivityTest(){
-		super(BasicActivity.class);
+		super(NewWorkoutActivity.class);
 	}
 
 	@Override
