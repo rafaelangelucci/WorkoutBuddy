@@ -24,6 +24,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
+	private static final String SUBJECT = "WorkoutBuddy : A workout has been shared with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 
@@ -93,16 +94,17 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	}
 
 	/**
-	 * Function to share a work out via email or other methods
-	 * @return true if successfully shared
+	 * Function to share a work out via email or other methods REFACTORED
+	 * @param wo workout that was selected from the list
+	 * @return true if successful
 	 */
-	public boolean shareWorkout(Object obj) {
-		Log.i("WorkoutListActivity", "ERROR : SHARE FAILED");
+	public boolean shareWorkout(Workout wo) {
+		Log.i("Share Selected", "Workout Selected : " + wo.getName());
 		
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
 		sharingIntent.setType("text/plain");
-		String shareBody = "TEST : Here is the share content body";
-		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+		String shareBody = wo.toString();
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SUBJECT);
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 		return true;
@@ -135,8 +137,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
 				int item_postion=Integer.parseInt(mode.getTag().toString());
 				Workout wo = (Workout)getListView().getAdapter().getItem(item_postion);
-				Log.i("Share Selected", "Workout Selected : " + wo.getName());
-				//shareWorkout(mode.getTag());
+				shareWorkout(wo);
 				break;
 			case R.id.edit:
 				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
