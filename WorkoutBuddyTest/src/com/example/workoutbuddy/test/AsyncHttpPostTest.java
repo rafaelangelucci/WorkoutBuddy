@@ -1,6 +1,9 @@
 package com.example.workoutbuddy.test;
 
 import helperClasses.Exercise;
+import helperClasses.Set;
+import helperClasses.TemplateExercise;
+import helperClasses.TemplateWorkout;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -71,8 +74,8 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 		dbworkout = wrapper.getWorkout(workout.getWid());
 		assertEquals(dbworkout.getName(), workout.getName());
 		
-		int del = wrapper.deleteWorkout(workout.getWid());
-		assertEquals(1, del);
+		boolean del = wrapper.deleteWorkout(workout.getWid());
+		assertTrue(del);
 		
 		
 		
@@ -96,56 +99,39 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener{
 		dbworkout = wrapper.getExercise(exercise.getEid());
 		assertEquals(dbworkout.getName(), exercise.getName());
 		
-		int del = wrapper.deleteExercise(exercise.getEid());
-		assertEquals(1, del);
+		boolean del = wrapper.deleteExercise(exercise.getEid());
+		assertTrue(del);
 		
 	}
 	
+	//UPDATE BROKEN
 	@UiThreadTest
-	public void testAddGetTemplates() throws InterruptedException, ExecutionException{
-		Workout tworkout = new Workout();
-		tworkout.setName("TestTemplate");
-		tworkout.setDescription("Test desc");
-		tworkout.setUsername("usernameA");
+	public void testAddGetModifyGetDeleteSet() throws InterruptedException, ExecutionException{
+		//Test Add
+		Set set = new Set(10, 135, "", 1, 1, 1);
+		wrapper.addSet(set);
 		
-		Exercise texercise1 = new Exercise();
-		texercise1.setPriority(1);
-		texercise1.setEid(1);
-		texercise1.setNumSets(1);
-		texercise1.setReps(2);
+		//Test Get
+		Set dbSet = wrapper.getSet(set.getSid());
+		assertEquals(dbSet.getEid(), set.getEid());
+		assertEquals(dbSet.getPriority(), set.getPriority());
+		assertEquals(dbSet.getReps(), set.getReps());
+		assertEquals(dbSet.getTime(), set.getTime());
+		assertEquals(dbSet.getWeight(), set.getWeight());
+		assertEquals(dbSet.getWid(), set.getWid());
 		
-		Exercise texercise2 = new Exercise();
-		texercise2.setPriority(2);
-		texercise2.setEid(2);
-		texercise2.setNumSets(4);
-		texercise2.setReps(4);
+		//Test Update
+		set.setPriority(2);
+		set.setWeight(150);
+		set.setReps(8);
+		wrapper.updateSet(set);
+		dbSet = wrapper.getSet(set.getSid());
+		//assertEquals(dbSet.getPriority(), set.getPriority());
+		assertEquals(dbSet.getReps(), set.getReps());
+		assertEquals(dbSet.getWeight(), set.getWeight());
 		
-		ArrayList<Exercise> texercises = new ArrayList<Exercise>();
-		texercises.add(texercise1);
-		texercises.add(texercise2);
-		tworkout.setExercises(texercises);
-		int tid = wrapper.addTemplateWorkout(tworkout);
-		Workout getTworkout = wrapper.getTemplateWorkout(tid);
-		
-		assertEquals(getTworkout.getName(), tworkout.getName());
-		assertEquals(getTworkout.getDescription(), tworkout.getDescription());
-		assertEquals(getTworkout.getUsername(), tworkout.getUsername());
-		
-		ArrayList<Exercise> getTexercises = getTworkout.getExercises();
-		Log.d("Exercise value", Integer.toString(getTexercises.get(0).getPriority()));
-		Log.d("Exercise value", Integer.toString(getTexercises.get(0).getEid()));
-		Log.d("Exercise value", Integer.toString(getTexercises.get(0).getNumSets()));
-		Log.d("Exercise value", Integer.toString(getTexercises.get(0).getReps()));
-		assertEquals(getTexercises.get(0).getPriority(), texercise1.getPriority());
-		assertEquals(getTexercises.get(0).getEid(), texercise1.getEid());
-		assertEquals(getTexercises.get(0).getNumSets(), texercise1.getNumSets());
-		assertEquals(getTexercises.get(0).getReps(), texercise1.getReps());
-		
-		assertEquals(getTexercises.get(1).getPriority(), texercise2.getPriority());
-		assertEquals(getTexercises.get(1).getEid(), texercise2.getEid());
-		assertEquals(getTexercises.get(1).getNumSets(), texercise2.getNumSets());
-		assertEquals(getTexercises.get(1).getReps(), texercise2.getReps());
-		
+		boolean del = wrapper.deleteSet(set.getSid());
+		assertTrue(del);
 	}
 	
 

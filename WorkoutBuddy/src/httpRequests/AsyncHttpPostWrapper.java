@@ -99,10 +99,8 @@ public class AsyncHttpPostWrapper {
 				String date = jsonData.getString("date");
 				String desc = jsonData.getString("description");
 				int wid = Integer.parseInt(jsonData.getString("w_id"));
-				Workout workout = new Workout(wid, name, date, desc, username,
-						null);
 				ArrayList<Exercise> exercises = getExercisesAndSets(wid);
-				workout.setExercises(exercises);
+				Workout workout = new Workout(wid, name, date, desc, username, exercises);
 				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
@@ -392,7 +390,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("e_id", eid);
 
 		String response = this.makeRequest(postData, URL);
-		if (toInt(response) == 0) {
+		if (toInt(response) == 1) {
 			return true;
 		}
 		return false;
@@ -624,7 +622,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addTemplateWorkout(TemplateWorkout tworkout)
+	public int addTemplateWorkout(TemplateWorkout tworkout)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
@@ -635,13 +633,14 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", tworkout.getUsername());
 
 		// add workout
-		int tid = Integer.parseInt(this.makeRequest(postData, URL).trim());
+		int tid = toInt(this.makeRequest(postData, URL));
 
 		// add exercises
 		for (int i = 0; i < tworkout.getExercises().size(); i++) {
 			addTemplateExercise(tid, tworkout.getExercises().get(i));
 		}
 		tworkout.setTid(tid);
+		return tid;
 	}
 
 	/**
