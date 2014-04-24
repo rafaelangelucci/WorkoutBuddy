@@ -149,11 +149,9 @@ ActionBar.TabListener {
 			return null;
 		}
 	}
-<<<<<<< HEAD
-    
-=======
 
-	public void logout() {
+
+	public void logout(){
 		SharedPreferences un= getSharedPreferences("username", Context.MODE_PRIVATE);
 		boolean success = true;
 		if(un.contains("username"))
@@ -167,5 +165,5 @@ ActionBar.TabListener {
 		else
 			Toast.makeText(getApplicationContext(), "Error occurred when removing login data.", Toast.LENGTH_SHORT).show();
 	}
->>>>>>> liu281
+
 }
