@@ -15,7 +15,7 @@
         android:layout_alignParentBottom="true"
         android:layout_alignParentRight="true"
         android:layout_marginBottom="68dp"
-        android:text="" />
+        android:text="@string/Cancel" />
 
     <Button
         android:id="@+id/btn_done"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="" />
+        android:text="@string/Select_Workout" />
 
     <Spinner
         android:id="@+id/spnr_workouts"

@@ -1,8 +1,13 @@
-package com.uiuc.workoutbuddy;
+package customListAdapter;
 
 import helperClasses.Exercise;
 
 import java.util.ArrayList;
+
+import com.uiuc.workoutbuddy.GraphActivity;
+import com.uiuc.workoutbuddy.R;
+import com.uiuc.workoutbuddy.R.id;
+import com.uiuc.workoutbuddy.R.layout;
 
 import android.content.Context;
 import android.content.Intent;
@@ -32,6 +37,11 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 	 */
 	public CustomGraphListAdapter(Context context, ArrayList<Exercise> exercises) {
 		this.context = context;
+		this.exerciseList = exercises;
+	}
+	
+	public CustomGraphListAdapter(ArrayList<Exercise> exercises) {
+		this.context = null;
 		this.exerciseList = exercises;
 	}
 

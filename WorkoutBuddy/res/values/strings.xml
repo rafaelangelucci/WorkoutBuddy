@@ -38,6 +38,11 @@
     <string name="timer_set_button">Set</string>
     <string name="timer_input">Seconds</string>
     <string name="title_activity_timer">Rest Timer</string>
+
+    <string name="title_activity_schedule">ScheduleActivity</string>
+    <string name="Select_Workout">Select Workout</string>
+    <string name="Cancel">Cancel</string>
+    <string name="title_activity_view_schedule">ViewScheduleActivity</string>
     <string name="select_exercise">Select Exercise To Graph</string>
     <string name="title_activity_new_exercise">NewExerciseActivity</string>
     <string-array name="exercise_types">
