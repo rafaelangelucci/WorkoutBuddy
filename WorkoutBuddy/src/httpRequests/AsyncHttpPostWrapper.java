@@ -230,14 +230,14 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void addUser(String username, String password)
+	public String addUser(String username, String password)
 			throws InterruptedException, ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addUser.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
 		postData.put("password", password);
-		this.makeRequest(postData, URL);
+		return this.makeRequest(postData, URL);
 	}
 
 	/**
@@ -250,14 +250,14 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public void deleteUser(String username, String password)
+	public String deleteUser(String username, String password)
 			throws InterruptedException, ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteUser.php";
 		HashMap<String, String> postData = new HashMap<String, String>();
 		postData.put("username", username);
 		postData.put("password", password);
-		this.makeRequest(postData, URL);
+		return this.makeRequest(postData, URL);
 	}
 
 	/**
@@ -271,7 +271,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	public boolean userLogin(String username, String password)
+	public String userLogin(String username, String password)
 			throws InterruptedException, ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
@@ -279,11 +279,7 @@ public class AsyncHttpPostWrapper {
 		postData.put("username", username);
 		postData.put("password", password);
 
-		String response = this.makeRequest(postData, URL);
-		if (response.equals("success"))
-			return true;
-		else
-			return false;
+		return this.makeRequest(postData, URL);
 	}
 
 	/**
