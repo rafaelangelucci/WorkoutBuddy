@@ -97,8 +97,6 @@ public class AsyncHttpPostWrapper {
 				int wid = Integer.parseInt(json_data.getString("w_id"));
 				Workout workout = new Workout(wid, name, date, desc, username,
 						null);
-				ArrayList<Exercise> exercises = getExercisesAndSets(wid);
-				workout.setExercises(exercises);
 				workouts[i] = workout;
 			}
 		} catch (JSONException e) {
