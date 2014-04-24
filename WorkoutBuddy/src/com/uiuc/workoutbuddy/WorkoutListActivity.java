@@ -16,11 +16,11 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
- * 
+ *
  * @author tmadigan7
  *
  * Some code borrowed from: http://www.vogella.com/tutorials/AndroidListView/article.html#listactivity
- * 
+ *
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
@@ -48,6 +48,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				selectedItem = position;
 
 				// start the CAB using the ActionMode.Callback defined above
+				((ActionMode) mActionMode).setTag(position);
 				mActionMode = WorkoutListActivity.this.startActionMode(mActionModeCallback);
 				view.setSelected(true);
 				return true;
@@ -65,12 +66,28 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// Spawn new work out activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
 		intent.putExtra("wid", wo.getWid());
-    	startActivity(intent);
+		startActivity(intent);
 	}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
+
+	/**
+	 * Function to share a work out via email or other methods
+	 * @return true if successfully shared
+	 */
+	public boolean shareWorkout(Object obj) {
+		Log.i("WorkoutListActivity", "ERROR : SHARE FAILED");
+		
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
+		sharingIntent.setType("text/plain");
+		String shareBody = "TEST : Here is the share content body";
+		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Subject Here");
+		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
+		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 		return true;
 	}
 
@@ -91,7 +108,26 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-			//TODO: implement button clicks
+			switch(item.getItemId())
+			{
+			case R.id.action_settings:
+				Log.i("WorkoutListActivity", "SETTINGS onActionItemClicked");
+				break;
+			case R.id.share:
+				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
+				int item_postion=Integer.parseInt(mode.getTag().toString());
+	            //Workout wo = WorkoutListAdapter.getItem(item_postion);
+				shareWorkout(mode.getTag());
+				break;
+			case R.id.edit:
+				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
+				break;
+			case R.id.delete:
+				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
+				break;
+			default:
+				Log.i("WorkoutListActivity", "DEFAULT onActionItemClicked");
+			}
 			return true;
 		}
 
