@@ -2,6 +2,8 @@ package helperClasses;
 
 import java.util.ArrayList;
 
+import android.util.Log;
+
 public class Workout {
 	private String name;
 	private String date;
@@ -64,6 +66,21 @@ public class Workout {
 		this.wid = wid;
 	}
 	
+	/**
+	 * Function to convert a workout to string format
+	 */
+	public String toString()
+	{
+		String ret = "<b>" + this.name + "</b>" + "\n";
+		for(int i = 0; i < this.exercises.size(); i++)
+		{
+			ret = ret + "\t" + this.exercises.get(i).toString();
+		}
+		
+		Log.i("Workout", "toString : " + ret);
+		return ret;
+	}
+	
 	/*************** GETTERS AND SETTERS ***************/
 
 	public String getName() {
@@ -113,7 +130,4 @@ public class Workout {
 	public void setExercises(ArrayList<Exercise> exercises) {
 		this.exercises = exercises;
 	}
-
-	
-
 }

@@ -78,6 +78,18 @@ public class Exercise {
 
 	}
 	
+	/**
+	 * Function to convert an Exercise to string format
+	 */
+	public String toString()
+	{
+		String ret = this.name + " (" + this.type + ")\n";
+		ret += "\t" + "Description : " + this.description + "\n";
+		ret += "\t" + "Num sets: " + this.sets.size() + "\n";
+		
+		return ret;
+	}
+	
 	/*************** GETTERS AND SETTERS ***************/
 	public int getEid() {
 		return eid;
