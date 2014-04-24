@@ -22,7 +22,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_exercise_list);
+		setContentView(R.layout.activity_workout_list);
 		
 		Log.i("WorkoutListActivity", "onCreate");
 		

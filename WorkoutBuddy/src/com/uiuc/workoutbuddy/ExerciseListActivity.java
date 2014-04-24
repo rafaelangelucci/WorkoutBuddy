@@ -42,5 +42,4 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-	
 }
