@@ -72,9 +72,15 @@ public class Workout {
 	public String toString()
 	{
 		String ret = "<b>" + this.name + "</b>" + "\n";
-		for(int i = 0; i < this.exercises.size(); i++)
+		if(this.exercises != null)
 		{
-			ret = ret + "\t" + this.exercises.get(i).toString();
+			for(int i = 0; i < this.exercises.size(); i++)
+			{
+				if(this.exercises.get(i) != null)
+				{	
+					ret = ret + "\t" + this.exercises.get(i).toString();
+				}
+			}
 		}
 		
 		Log.i("Workout", "toString : " + ret);

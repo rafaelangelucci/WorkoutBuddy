@@ -12,11 +12,7 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.view.LayoutInflater;
 import android.view.Menu;
-import android.view.View;
-import android.view.ViewGroup;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends FragmentActivity implements
@@ -149,9 +145,6 @@ ActionBar.TabListener {
 			return null;
 		}
 	}
-<<<<<<< HEAD
-    
-=======
 
 	public void logout() {
 		SharedPreferences un= getSharedPreferences("username", Context.MODE_PRIVATE);
@@ -167,5 +160,4 @@ ActionBar.TabListener {
 		else
 			Toast.makeText(getApplicationContext(), "Error occurred when removing login data.", Toast.LENGTH_SHORT).show();
 	}
->>>>>>> liu281
 }
