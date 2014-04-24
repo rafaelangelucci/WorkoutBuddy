@@ -28,7 +28,7 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-public class BasicActivity extends Activity implements OnClickListener, HttpRequestListener
+public class NewWorkoutActivity extends Activity implements OnClickListener, HttpRequestListener
 {
 
 	public int numExercises = 0;
