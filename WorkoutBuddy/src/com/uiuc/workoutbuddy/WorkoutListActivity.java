@@ -24,7 +24,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
-	private static final String SUBJECT = "WorkoutBuddy : A workout has been shared with you!";
+	private static final String SUBJECT = "WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 

@@ -71,7 +71,7 @@ public class Workout {
 	 */
 	public String toString()
 	{
-		String ret = "<b>" + this.name + "</b>" + "\n";
+		String ret = "~~~~ " + this.name.toUpperCase() + " ~~~~" + "\n";
 		if(this.exercises != null)
 		{
 			for(int i = 0; i < this.exercises.size(); i++)

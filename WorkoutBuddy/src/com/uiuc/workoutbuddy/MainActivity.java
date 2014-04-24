@@ -15,8 +15,7 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.widget.Toast;
 
-public class MainActivity extends FragmentActivity implements
-ActionBar.TabListener {
+public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -146,7 +145,9 @@ ActionBar.TabListener {
 		}
 	}
 
-
+	/**
+	 * Function to logout the user
+	 */
 	public void logout(){
 		SharedPreferences un= getSharedPreferences("username", Context.MODE_PRIVATE);
 		boolean success = true;

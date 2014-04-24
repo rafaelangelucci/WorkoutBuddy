@@ -15,8 +15,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class LoginActivity extends Activity implements OnClickListener,
-		HttpRequestListener {
+public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener {
 	public static final String PREFS_NAME = "username";
 	private static final String PREF_USERNAME = "username";
 	private static final String PREF_PASSWORD = "password";
@@ -28,6 +27,7 @@ public class LoginActivity extends Activity implements OnClickListener,
 		
 		SharedPreferences pref = getSharedPreferences(PREFS_NAME, MODE_PRIVATE);
 		String username = pref.getString(PREF_USERNAME, null);
+		userName = username;
 		String password = pref.getString(PREF_PASSWORD, null);
 		if (username != null && password != null) {
 			// Prompt for username and password
