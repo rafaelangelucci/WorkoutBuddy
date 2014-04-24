@@ -15,11 +15,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+<<<<<<< HEAD
 public class LoginActivity extends Activity implements OnClickListener,
 		HttpRequestListener {
 	public static final String PREFS_NAME = "username";
 	private static final String PREF_USERNAME = "username";
 	private static final String PREF_PASSWORD = "password";
+=======
+public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener
+{
+	public static String userName = "";
+>>>>>>> origin/meyer30
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -59,8 +65,16 @@ public class LoginActivity extends Activity implements OnClickListener,
 	}
 
 	@Override
+<<<<<<< HEAD
 	public void onClick(View v) {
 		switch (v.getId()) {
+=======
+	public void onClick(View v) 
+	{
+		userName = getUsername();
+		switch(v.getId())
+		{
+>>>>>>> origin/meyer30
 		case R.id.login_button:
 			login(v);
 			break;

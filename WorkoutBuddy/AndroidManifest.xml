@@ -62,9 +62,15 @@
             android:name="com.uiuc.workoutbuddy.TimerActivity"
             android:label="@string/title_activity_timer" >
         </activity>
+<<<<<<< HEAD
             <receiver 
             android:name="com.uiuc.workoutbuddy.TimerReceiver" >
+=======
+
+        <receiver android:name="com.uiuc.workoutbuddy.TimerReceiver" >
+>>>>>>> origin/meyer30
         </receiver>
+
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
@@ -76,6 +82,10 @@
         <activity
             android:name="com.uiuc.workoutbuddy.ViewScheduleActivity"
             android:label="@string/title_activity_view_schedule" >
+        </activity>
+        <activity
+            android:name="com.uiuc.workoutbuddy.EmailActivity"
+            android:label="@string/title_activity_email" >
         </activity>
     </application>
 
