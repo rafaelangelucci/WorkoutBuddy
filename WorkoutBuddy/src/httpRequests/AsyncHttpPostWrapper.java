@@ -249,7 +249,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private void updateSetsInWorkout(ArrayList<Exercise> exercises)
+	public void updateSetsInWorkout(ArrayList<Exercise> exercises)
 			throws InterruptedException, ExecutionException {
 		// Loop through exercises to update sets
 		for (int i = 0; i < exercises.size(); i++) {
