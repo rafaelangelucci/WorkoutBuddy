@@ -11,7 +11,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.concurrent.ExecutionException;
 
 import org.apache.http.HttpEntity;
@@ -82,9 +81,9 @@ public class AsyncHttpPostWrapper {
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/WorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("username", username);
-		postData.put("operation", GET_LIST);
+		String[] keys = { "operation", "username" };
+		Object[] values = { GET_LIST, username };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -124,9 +123,9 @@ public class AsyncHttpPostWrapper {
 			ExecutionException {
 		// make the post request to URL with e_id
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/WorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", GET);
-		postData.put("w_id", wid);
+		String[] keys = { "operation", "w_id" };
+		Object[] values = { GET, wid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 		Workout workout = null;
 
@@ -162,12 +161,11 @@ public class AsyncHttpPostWrapper {
 			ExecutionException {
 		// make the post request to URL with username of the workout
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/WorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", ADD);
-		postData.put("username", workout.getUsername());
-		postData.put("date", workout.getDate());
-		postData.put("name", workout.getName());
-		postData.put("description", workout.getDescription());
+		String[] keys = { "operation", "username", "date", "name",
+				"description" };
+		Object[] values = { ADD, workout.getUsername(), workout.getDate(),
+				workout.getName(), workout.getDescription() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		int wid = toInt(this.makeRequest(postData, URL));
 		workout.setWid(wid);
 		if (workout.getExercises() != null) {
@@ -224,13 +222,11 @@ public class AsyncHttpPostWrapper {
 			ExecutionException {
 		// make the post request to URL with w_id and all update fields
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/WorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", UPDATE);
-		postData.put("w_id", workout.getWid());
-		postData.put("username", workout.getUsername());
-		postData.put("name", workout.getName());
-		postData.put("date", workout.getDate());
-		postData.put("description", workout.getDescription());
+		String[] keys = { "operation", "w_id", "username", "name", "date",
+				"description" };
+		Object[] values = { UPDATE, workout.getWid(), workout.getUsername(),
+				workout.getName(), workout.getDate(), workout.getDescription() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		// update sets
 		if (workout.getExercises() != null) {
 			updateSetsInWorkout(workout.getExercises());
@@ -282,10 +278,9 @@ public class AsyncHttpPostWrapper {
 	public boolean deleteWorkout(int wid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/WorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", DELETE);
-		postData.put("w_id", wid);
-
+		String[] keys = { "operation", "w_id" };
+		Object[] values = { DELETE, wid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		// Loop through exercises and delete sets
 		deleteSetsFromWorkout(wid);
 
@@ -363,9 +358,10 @@ public class AsyncHttpPostWrapper {
 	public Exercise[] getExerciseList(String username)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExerciseList.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("username", username);
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
+		String[] keys = { "operation", "username" };
+		Object[] values = { GET_LIST, username };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// get response and parse it into an array
@@ -402,12 +398,12 @@ public class AsyncHttpPostWrapper {
 	public void addExercise(Exercise exercise) throws InterruptedException,
 			ExecutionException {
 		// Make the post request to URL with username in postdata
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/addExercise.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("username", exercise.getUsername());
-		postData.put("type", exercise.getType());
-		postData.put("name", exercise.getName());
-		postData.put("description", exercise.getDescription());
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
+		String[] keys = { "operation", "username", "type", "name",
+				"description" };
+		Object[] values = { ADD, exercise.getUsername(), exercise.getType(),
+				exercise.getName(), exercise.getDescription() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		int eid = Integer.parseInt(this.makeRequest(postData, URL).trim());
 		exercise.setEid(eid);
 	}
@@ -488,9 +484,10 @@ public class AsyncHttpPostWrapper {
 	public Exercise getExercise(int eid) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/getExercise.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("e_id", eid);
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
+		String[] keys = { "operation", "e_id" };
+		Object[] values = { GET, eid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// parse JSON
@@ -525,13 +522,13 @@ public class AsyncHttpPostWrapper {
 	public int updateExercise(Exercise exercise) throws InterruptedException,
 			ExecutionException {
 		// make the post request to URL with e_id and all update fields
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/modifyExercise.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("e_id", exercise.getEid());
-		postData.put("username", exercise.getUsername());
-		postData.put("name", exercise.getName());
-		postData.put("type", exercise.getType());
-		postData.put("description", exercise.getDescription());
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
+		String[] keys = { "operation", "e_id", "username", "name", "type",
+				"description" };
+		Object[] values = { UPDATE, exercise.getEid(), exercise.getUsername(),
+				exercise.getName(), exercise.getType(),
+				exercise.getDescription() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		return Integer.parseInt(this.makeRequest(postData, URL).trim());
 	}
@@ -546,9 +543,10 @@ public class AsyncHttpPostWrapper {
 	 */
 	public boolean deleteExercise(int eid) throws InterruptedException,
 			ExecutionException {
-		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/deleteExercise.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("e_id", eid);
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
+		String[] keys = { "operation", "e_id" };
+		Object[] values = { DELETE, eid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		String response = this.makeRequest(postData, URL);
 		Log.i("Exercise delete response", response);
@@ -572,9 +570,9 @@ public class AsyncHttpPostWrapper {
 			ExecutionException {
 		// Make post request with template exercise info
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("w_id", wid);
-		postData.put("operation", GET_LIST);
+		String[] keys = { "operation", "w_id" };
+		Object[] values = { GET_LIST, wid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -611,9 +609,9 @@ public class AsyncHttpPostWrapper {
 	 */
 	public Set getSet(int sid) throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", GET);
-		postData.put("s_id", sid);
+		String[] keys = { "operation", "s_id" };
+		Object[] values = { GET, sid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and parse
@@ -643,14 +641,11 @@ public class AsyncHttpPostWrapper {
 	 */
 	public void addSet(Set set) throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", ADD);
-		postData.put("reps", set.getReps());
-		postData.put("weight", set.getWeight());
-		postData.put("time", set.getTime());
-		postData.put("priority", set.getPriority());
-		postData.put("e_id", set.getEid());
-		postData.put("w_id", set.getWid());
+		String[] keys = { "operation", "reps", "weight", "time", "priority",
+				"e_id", "w_id" };
+		Object[] values = { ADD, set.getReps(), set.getWeight(), set.getTime(),
+				set.getPriority(), set.getEid(), set.getWid() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		String response = this.makeRequest(postData, URL);
 		set.setSid(toInt(response));
@@ -668,9 +663,9 @@ public class AsyncHttpPostWrapper {
 	public boolean deleteSet(int sid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", DELETE);
-		postData.put("s_id", sid);
+		String[] keys = { "operation", "s_id" };
+		Object[] values = { DELETE, sid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 		if (toInt(response) == 1) {
 			return true;
@@ -689,15 +684,12 @@ public class AsyncHttpPostWrapper {
 	public boolean updateSet(Set set) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", UPDATE);
-		postData.put("s_id", set.getSid());
-		postData.put("reps", set.getReps());
-		postData.put("weight", set.getWeight());
-		postData.put("time", set.getTime());
-		postData.put("priority", set.getPriority());
-		postData.put("e_id", set.getEid());
-		postData.put("w_id", set.getWid());
+		String[] keys = { "operation", "s_id", "reps", "weight", "time",
+				"priority", "e_id", "w_id" };
+		Object[] values = { UPDATE, set.getSid(), set.getReps(),
+				set.getWeight(), set.getTime(), set.getPriority(),
+				set.getEid(), set.getWid() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 		if (toInt(response) == 1) {
 			return true;
@@ -721,9 +713,9 @@ public class AsyncHttpPostWrapper {
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("username", username);
-		postData.put("operation", GET_LIST);
+		String[] keys = { "operation", "username" };
+		Object[] values = { GET_LIST, username };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -762,9 +754,9 @@ public class AsyncHttpPostWrapper {
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("t_id", tid);
-		postData.put("operation", GET);
+		String[] keys = { "t_id", "operation" };
+		Object[] values = { tid, GET };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -799,11 +791,10 @@ public class AsyncHttpPostWrapper {
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with username in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", ADD);
-		postData.put("name", tworkout.getName());
-		postData.put("description", tworkout.getDescription());
-		postData.put("username", tworkout.getUsername());
+		String[] keys = { "operation", "name", "description", "username" };
+		Object[] values = { ADD, tworkout.getName(), tworkout.getDescription(),
+				tworkout.getUsername() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		// add workout
 		int tid = toInt(this.makeRequest(postData, URL));
@@ -827,9 +818,9 @@ public class AsyncHttpPostWrapper {
 	public boolean deleteTemplateWorkout(int tid) throws InterruptedException,
 			ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", DELETE);
-		postData.put("t_id", tid);
+		String[] keys = { "operation", "t_id" };
+		Object[] values = { DELETE, tid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		ArrayList<TemplateExercise> tExercises = getTemplateExerciseList(tid);
@@ -855,10 +846,10 @@ public class AsyncHttpPostWrapper {
 	public boolean updateTemplateWorkout(TemplateWorkout tWorkout)
 			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateWorkoutDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", UPDATE);
-		postData.put("name", tWorkout.getName());
-		postData.put("description", tWorkout.getDescription());
+		String[] keys = { "operation", "name", "description" };
+		Object[] values = { UPDATE, tWorkout.getName(),
+				tWorkout.getDescription() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 		boolean success = true;
 		if (toInt(response) != 1) {
@@ -887,13 +878,13 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private ArrayList<TemplateExercise> getTemplateExerciseList(int tid)
+	public ArrayList<TemplateExercise> getTemplateExerciseList(int tid)
 			throws InterruptedException, ExecutionException {
 		// Make the post request to URL with templateid in postdata
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("t_id", tid);
-		postData.put("operation", GET_LIST);
+		String[] keys = { "operation", "t_id" };
+		Object[] values = { GET_LIST, tid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 
 		// take JSON format and put into array
@@ -932,17 +923,15 @@ public class AsyncHttpPostWrapper {
 	 * @throws ExecutionException
 	 * @throws InterruptedException
 	 */
-	private void addTemplateExercise(int tid, TemplateExercise exercise)
+	public void addTemplateExercise(int tid, TemplateExercise exercise)
 			throws InterruptedException, ExecutionException {
 		// Make post request with template exercise info
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", ADD);
-		postData.put("t_id", tid);
-		postData.put("priority", exercise.getPriority());
-		postData.put("e_id", exercise.getEid());
-		postData.put("numSets", exercise.getNumSets());
-		postData.put("reps", exercise.getReps());
+		String[] keys = { "operation", "t_id", "priority", "e_id", "numSets",
+				"reps" };
+		Object[] values = { ADD, tid, exercise.getPriority(),
+				exercise.getEid(), exercise.getNumSets(), exercise.getReps() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		exercise.setTeid(toInt(this.makeRequest(postData, URL)));
 	}
@@ -955,7 +944,7 @@ public class AsyncHttpPostWrapper {
 	 * @throws InterruptedException
 	 * @throws ExecutionException
 	 */
-	private TemplateExercise getTemplateExercise(int teid)
+	public TemplateExercise getTemplateExercise(int teid)
 			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
 		HashMap<String, Object> postData = new HashMap<String, Object>();
@@ -994,9 +983,9 @@ public class AsyncHttpPostWrapper {
 	private boolean deleteTemplateExercise(int teid)
 			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("te_id", teid);
-		postData.put("operation", DELETE);
+		String[] keys = { "operation", "te_id" };
+		Object[] values = { DELETE, teid };
+		HashMap<String, Object> postData = createPostData(keys, values);
 		String response = this.makeRequest(postData, URL);
 		if (toInt(response) == 1) {
 			return true;
@@ -1016,14 +1005,12 @@ public class AsyncHttpPostWrapper {
 	private boolean updateTemplateExercise(TemplateExercise tExercise)
 			throws InterruptedException, ExecutionException {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/TemplateExerciseDatabaseOperations.php";
-		HashMap<String, Object> postData = new HashMap<String, Object>();
-		postData.put("operation", UPDATE);
-		postData.put("te_id", tExercise.getTeid());
-		postData.put("t_id", tExercise.getTid());
-		postData.put("priority", tExercise.getPriority());
-		postData.put("e_id", tExercise.getEid());
-		postData.put("numSets", tExercise.getNumSets());
-		postData.put("reps", tExercise.getReps());
+		String[] keys = { "operation", "te_id", "t_id", "priority", "e_id",
+				"numSets", "reps" };
+		Object[] values = { UPDATE, tExercise.getTeid(), tExercise.getTid(),
+				tExercise.getPriority(), tExercise.getEid(),
+				tExercise.getNumSets(), tExercise.getReps() };
+		HashMap<String, Object> postData = createPostData(keys, values);
 
 		String response = this.makeRequest(postData, URL);
 		if (toInt(response) == 1) {
@@ -1036,6 +1023,25 @@ public class AsyncHttpPostWrapper {
 	// ***************HELPER FUNCTIONS***************
 	private static int toInt(String s) {
 		return Integer.parseInt(s.trim());
+	}
+
+	/**
+	 * Loops through arrays of keys and values and creates postData hashmap
+	 * 
+	 * @param keys
+	 *            Array of keys
+	 * @param values
+	 *            Array of values
+	 * @return postData item created
+	 */
+	private static HashMap<String, Object> createPostData(String[] keys,
+			Object[] values) {
+		HashMap<String, Object> postData = new HashMap<String, Object>();
+		for (int i = 0; i < keys.length; i++) {
+			postData.put(keys[i], values[i]);
+		}
+
+		return postData;
 	}
 
 	private class AsyncHttpPost extends AsyncTask<String, String, String> {
@@ -1098,7 +1104,7 @@ public class AsyncHttpPostWrapper {
 		}
 
 		protected void onPostExecute(String result) {
-			if(requestListener != null){
+			if (requestListener != null) {
 				requestListener.requestComplete();
 			}
 		}
