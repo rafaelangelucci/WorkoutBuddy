@@ -1,5 +1,6 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 import customListAdapter.UseWorkoutAdapter;
@@ -21,7 +22,7 @@ import android.widget.TextView;
 public class UseWorkoutActivity extends Activity implements OnItemClickListener
 {
 	AsyncHttpPostWrapper postWrapper;
-	public Exercise[] exerciseList;
+	public ArrayList<Exercise> exerciseList;
 	Workout wo;
 
 	@Override
@@ -61,6 +62,7 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener
 		}
 		else
 		{
+			exerciseList = wo.getExercises();
 			Log.i("UseWorkoutActivity", "Using workout's exercises");
 			adapter = new UseWorkoutAdapter(this, wo.getExercises());
 		}
@@ -80,8 +82,12 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		Exercise e = ExerciseFragment.exercises.get(position);
+		Exercise e = exerciseList.get(position);
 		String name = e.getName();
 		Log.i("UseWorkoutActivity", "onItemClick : " + name);
+		
+		Intent i = new Intent(this, PerformExerciseActivity.class);
+		i.putExtra("eid", e.getEid());
+		startActivity(i);
 	}
 }
