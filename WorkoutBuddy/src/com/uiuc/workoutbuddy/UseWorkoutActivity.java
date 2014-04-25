@@ -23,7 +23,7 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener
 {
 	AsyncHttpPostWrapper postWrapper;
 	public ArrayList<Exercise> exerciseList;
-	Workout wo;
+	static Workout wo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

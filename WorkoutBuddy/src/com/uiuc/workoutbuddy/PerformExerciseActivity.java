@@ -20,25 +20,22 @@ import android.widget.TextView;
 
 public class PerformExerciseActivity extends Activity implements OnItemClickListener
 {
-	AsyncHttpPostWrapper postWrapper;
 	Exercise ex;
+	Workout wo;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_perform_exercise);
-		
+		wo = UseWorkoutActivity.wo;
 		Log.i("PerformExerciseActivity", "onCreate");
-		postWrapper = new AsyncHttpPostWrapper(null);
 		
 		// Get passed in variables
-		Intent i = getIntent();
-		int eid = i.getExtras().getInt("eid");
-		try {
-			ex = postWrapper.getExercise(eid);
-		} catch (Exception e) {
-			Log.i("PerformExerciseActivity", "EXCEPTION CAUGHT");
-			e.printStackTrace();
+		Intent intent = getIntent();
+		int eid = intent.getExtras().getInt("eid");
+		for(int i = 0; i < wo.getExercises().size(); i++){
+			if(wo.getExercises().get(i).getEid() == eid)
+				ex = wo.getExercises().get(i);
 		}
 		
 		Log.i("PerformExerciseActivity", "Exercise : " + eid + " - " + ex.getName());
