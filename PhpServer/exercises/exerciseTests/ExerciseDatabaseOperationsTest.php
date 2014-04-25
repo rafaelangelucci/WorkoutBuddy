@@ -71,7 +71,6 @@
 			$response = curlHelper($url, $data);
 			$this->assertTrue($response == 1);
 		 }
-
 	}
 
 
