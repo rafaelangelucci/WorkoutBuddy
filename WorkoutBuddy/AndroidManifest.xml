@@ -39,6 +39,10 @@
             android:label="@string/app_name" >
         </activity>
         <activity
+            android:name="com.uiuc.workoutbuddy.ExerciseGraphListActivity"
+            android:label="@string/app_name" >
+        </activity>
+        <activity
             android:name="com.uiuc.workoutbuddy.WorkoutListActivity"
             android:label="@string/app_name" >
         </activity>
@@ -63,7 +67,7 @@
 
         <activity
             android:name="com.uiuc.workoutbuddy.GraphActivity"
-            android:label="@string/title_activity_timer" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"

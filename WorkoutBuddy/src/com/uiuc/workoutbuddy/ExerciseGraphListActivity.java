@@ -22,11 +22,12 @@ public class ExerciseGraphListActivity extends ListActivity implements OnItemCli
 
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		//String name = ExerciseFragment.exercises.get(position).getName();
-		//Toast.makeText(this.getApplicationContext(), name, Toast.LENGTH_SHORT).show();
-		
 		Toast.makeText(this.getApplicationContext(), "Test", Toast.LENGTH_SHORT).show();
 		Intent intent = new Intent(this, GraphActivity.class);
+		
+		String name = ExerciseFragment.exercises.get(position).getName();
+		intent.putExtra("exercise", "hey");
+		
     	startActivity(intent);
 	}
 	
