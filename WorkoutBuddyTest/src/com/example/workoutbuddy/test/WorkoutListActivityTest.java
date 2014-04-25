@@ -10,6 +10,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
+import android.test.ActivityUnitTestCase;
 import android.test.UiThreadTest;
 import android.test.ViewAsserts;
 import android.view.View;
@@ -22,10 +23,10 @@ import com.uiuc.workoutbuddy.WorkoutListActivity;
 
 import customListAdapter.WorkoutListAdapter;
 
-public class WorkoutListActivityTest extends
-ActivityInstrumentationTestCase2<WorkoutListActivity> {
+//public class WorkoutListActivityTest extends ActivityInstrumentationTestCase2<WorkoutListActivity> {
+public class WorkoutListActivityTest extends ActivityUnitTestCase<WorkoutListActivity> {
 
-	private WorkoutListActivity myActivity;
+	private WorkoutListActivity activity;
 	private TextView name;
 	private TextView desc;
 	private ListView list;
@@ -39,26 +40,15 @@ ActivityInstrumentationTestCase2<WorkoutListActivity> {
 	protected void setUp() throws Exception {
 		super.setUp();
 
-		
+		Intent intent = new Intent(getInstrumentation().getTargetContext(), WorkoutListActivity.class);
+		startActivity(intent, null, null);
+		activity = getActivity();
 	}
 
-	/**
-	 * Test successful start up of NewWorkoutActivity aka UseWorkoutActivity
-	 */
-	public void testActivityStartup()
-	{
-		final String expected = myActivity.getString(com.uiuc.workoutbuddy.R.string.app_name);
-		assertEquals(expected, "Workout\nBuddy");
+	protected void tearDown() throws Exception {
+		super.tearDown();
 	}
 
-	/**
-	 * Test all text views and verify they work as designed
-	 * @param view
-	 */
-	public void testViewsCreated() {
-		assertNotNull(getActivity());
-	}
-	
 	public ArrayList<Workout> mockWorkouts()
 	{
 		ArrayList<Workout> workouts = new ArrayList<Workout>();
@@ -66,28 +56,54 @@ ActivityInstrumentationTestCase2<WorkoutListActivity> {
 			workouts.add(new Workout(500 + i, "Workout " + i.toString(),
 					"date", "desc " + i.toString(), "usernameA", new ArrayList<Exercise>()));
 		}
-		
+
 		return workouts;
 	}
-	
-	@UiThreadTest
-	public void testList()
+
+	public void testViewsCreated() {
+		assertNotNull(getActivity());
+	}
+
+	public void testActivityStartup()
 	{
-		list = myActivity.getListView();
-		assertNotNull(list);
-		assertTrue(list.getCount() > 0);
-		
-		WorkoutListAdapter adapter = 
-				new WorkoutListAdapter(getInstrumentation().getContext(), mockWorkouts());
+		final String expected = activity.getString(com.uiuc.workoutbuddy.R.string.app_name);
+		assertEquals(expected, "Workout\nBuddy");
+	}
+
+	public final void testItemClick() {
+		getInstrumentation().callActivityOnStart(activity);
+		getInstrumentation().callActivityOnResume(activity);
+
+		// Check if list exists
+		ListView list = activity.getListView();
+		assertNotNull("Intent was null", list);
+
+		// Load test data
+		WorkoutListAdapter adapter = new WorkoutListAdapter(getInstrumentation().getContext(), mockWorkouts());
 		list.setAdapter(adapter);
 		adapter.notifyDataSetChanged();
-		assertNotNull(list.getChildAt(0));
-		assertTrue(list.getCount() == 3);
+
+		assertTrue(adapter.getCount() > 0);
+		assertTrue(adapter.getCount() == 3);
+
+		/*
+		// Check if list has at least one item to click
+		View firstItem = list.getAdapter().getView(0, null, null);
+		assertNotNull(firstItem);
+
+		// Perform a click on the first item
+		list.performItemClick(
+				firstItem,
+				0,
+				list.getAdapter().getItemId(0)
+				);
+
+		// Check if the contact details activity got started
+		Intent intent = getStartedActivityIntent();
+		assertNotNull(intent);
+		assertEquals(
+				ContactDetailActivity.class.getName(),
+				intent.getComponent().getClassName()
+				);*/
 	}
-	
-	
-//	public void testStartingEmpty() {
-//		assertTrue("Kilos field is empty", "".equals(editKilos.getText().toString()));
-//		assertTrue("Pounds field is empty", "".equals(editPounds.getText().toString()));
-//	}
 }

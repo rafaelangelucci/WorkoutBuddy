@@ -1,7 +1,5 @@
 package com.uiuc.workoutbuddy;
 
-import java.util.concurrent.ExecutionException;
-
 import customListAdapter.WorkoutListAdapter;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
