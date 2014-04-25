@@ -107,6 +107,7 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 			break;
 		case R.id.btn_new_exercise:
 			Log.i( "ExerciseFragment", "OnClick : Add Exercise");
+			startActivity(new Intent(c, NewExerciseActivity.class));
 			break;
 		default:
 			Log.i( "ExerciseFragment", "OnClick : No ID matched");

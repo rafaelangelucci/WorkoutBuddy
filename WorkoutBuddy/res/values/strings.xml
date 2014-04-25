@@ -44,5 +44,11 @@
     <string name="title_activity_view_schedule">ViewScheduleActivity</string>
     <string name="select_exercise">Select Exercise To Graph</string>
     <string name="title_activity_email">EmailActivity</string>
+    <string name="title_activity_new_exercise">NewExerciseActivity</string>
+    <string-array name="exercise_types">
+        <item >Reps</item>
+        <item >Weight</item>
+        <item >Time</item>
+    </string-array>
 
 </resources>
