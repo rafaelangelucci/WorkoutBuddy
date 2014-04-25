@@ -31,6 +31,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 	AsyncHttpPostWrapper postWrapper;
+	WorkoutListAdapter adapter;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +41,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		Log.i("WorkoutListActivity", "onCreate");
 		postWrapper = new AsyncHttpPostWrapper(null);
 
-		WorkoutListAdapter adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
+		adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
 
 		setListAdapter(adapter);
 		getListView().setOnItemClickListener(this);
@@ -116,13 +117,16 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		return true;
 	}
 	
-	public void deleteWorkout(Workout wo) {
+	public void deleteWorkout(Workout wo, int pos) {
 		Log.i("Delete Selected", "Workout to delete : " + wo.getName());
 		try {
 			postWrapper.deleteWorkout(wo.getWid());
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		WorkoutFragment.workouts.remove(pos);
+		getListView().invalidateViews();
 	}
 
 	/**
@@ -158,12 +162,15 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 			case R.id.share:
 				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
 				shareWorkout(wo);
+				mode.finish();
 				break;
 			case R.id.edit:
 				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
+				mode.finish();
 				break;
 			case R.id.delete:
-				deleteWorkout(wo);
+				deleteWorkout(wo, item_postion);
+				mode.finish();
 				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
 				break;
 			default:
