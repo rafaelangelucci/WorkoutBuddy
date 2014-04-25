@@ -144,6 +144,7 @@ public class AsyncHttpPostWrapper {
 			workout = new Workout(wid, name, date, desc, username, exercises);
 		} catch (JSONException e) {
 			e.printStackTrace();
+			return null;
 		}
 
 		return workout;
@@ -443,6 +444,7 @@ public class AsyncHttpPostWrapper {
 			exercise = new Exercise(eid, name, type, desc, username, null);
 		} catch (JSONException e) {
 			e.printStackTrace();
+			return null;
 		}
 
 		return exercise;
