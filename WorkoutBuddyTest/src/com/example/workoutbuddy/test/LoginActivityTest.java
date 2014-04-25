@@ -1,23 +1,16 @@
 package com.example.workoutbuddy.test;
 
 import java.util.HashMap;
+
 import java.util.concurrent.ExecutionException;
 
 import httpRequests.AsyncHttpPostWrapper;
 
 import com.uiuc.workoutbuddy.LoginActivity;
-import com.uiuc.workoutbuddy.MyWorkoutsListFragment;
-import com.uiuc.workoutbuddy.WorkoutFragment;
 
 import junit.framework.Assert;
-import android.annotation.SuppressLint;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.ListFragment;
 import android.test.ActivityInstrumentationTestCase2;
-import android.test.ViewAsserts;
 import android.view.View;
-import android.widget.Button;
-import android.widget.ListView;
 
 
 public class LoginActivityTest extends

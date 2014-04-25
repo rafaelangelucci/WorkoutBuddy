@@ -51,5 +51,6 @@
         <item >Time</item>
     </string-array>
         <string name="add_to_workout">Add to Workout</string>
+    <string name="title_activity_email">EmailActivity</string>
 
 </resources>

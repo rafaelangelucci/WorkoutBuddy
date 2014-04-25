@@ -1,6 +1,7 @@
 package com.example.workoutbuddy.test;
 
 import junit.framework.Assert;
+
 import android.annotation.SuppressLint;
 import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;

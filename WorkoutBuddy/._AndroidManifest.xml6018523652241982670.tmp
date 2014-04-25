@@ -69,7 +69,6 @@
             android:name="com.uiuc.workoutbuddy.GraphActivity"
             android:label="@string/title_activity_timer" >
         </activity>
-        
         <activity
             android:name="com.uiuc.workoutbuddy.ScheduleActivity"
             android:label="@string/title_activity_schedule" >
@@ -77,15 +76,6 @@
         <activity
             android:name="com.uiuc.workoutbuddy.ViewScheduleActivity"
             android:label="@string/title_activity_view_schedule" >
-        </activity>
-
-        <activity
-            android:name="com.uiuc.workoutbuddy.NewExerciseActivity"
-            android:label="@string/title_activity_new_exercise"
-            android:parentActivityName="com.uiuc.workoutbuddy.MainActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.uiuc.workoutbuddy.MainActivity" />
         </activity>
         <activity
             android:name="com.uiuc.workoutbuddy.EmailActivity"
