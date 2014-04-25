@@ -4,7 +4,6 @@ import com.jjoe64.graphview.GraphViewSeries;
 import com.jjoe64.graphview.GraphView.GraphViewData;
 import com.uiuc.workoutbuddy.ExerciseGraphListActivity;
 import com.uiuc.workoutbuddy.GraphActivity;
-import com.uiuc.workoutbuddy.R;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
@@ -48,7 +47,7 @@ public class GraphActivityTest extends
 			      , new GraphViewData(7, 167.5d)
 			});
 		
-		//GraphViewSeries activitySeries = lActivity.exampleSeries;
+		GraphViewSeries activitySeries = lActivity.exampleSeries;
 		//Assert.assertTrue(series == activitySeries);
 	}
 	

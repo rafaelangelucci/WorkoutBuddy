@@ -1,23 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:paddingLeft="8dp"
-    android:paddingRight="8dp" >
+    android:paddingRight="8dp" 
+    >
 
     <ListView
         android:id="@android:id/list"
         android:layout_width="match_parent"
-        android:layout_height="221dp"
-        android:layout_gravity="top|fill_vertical"
-        android:layout_weight="0.32"
-        android:drawSelectorOnTop="false" />
-
-    <Button
-        android:id="@+id/btn_add_to_workout"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add_to_workout" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:drawSelectorOnTop="false" 
+        />
 
 </LinearLayout>

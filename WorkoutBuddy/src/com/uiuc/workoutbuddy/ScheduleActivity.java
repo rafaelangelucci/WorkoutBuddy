@@ -7,6 +7,9 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.concurrent.ExecutionException;
 
+import helperClasses.Exercise;
+import helperClasses.TemplateExercise;
+import helperClasses.TemplateWorkout;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -26,6 +29,7 @@ import android.widget.Toast;
 
 public class ScheduleActivity extends Activity implements OnClickListener, HttpRequestListener{
 
+	ArrayList<TemplateWorkout> templateWks = new ArrayList<TemplateWorkout>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -33,11 +37,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		setContentView(R.layout.activity_schedule);
 
 		
-		String username = "usernameA"; //TODO: Change this to the login user
-		Workout[] tempWks = null;
+		
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
-			tempWks = wrapper.getWorkoutList(username); //TODO: Change this to getWorkoutTemplate
+			templateWks = wrapper.getTemplateWorkoutList(LoginActivity.userName);
 		}
 		catch (InterruptedException e) {
 			e.printStackTrace();
@@ -45,12 +48,14 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 			e.printStackTrace();
 		}
 
-		String[] workoutNames = new String[tempWks.length];
+		String[] workoutNames = new String[templateWks.size()];
 		for(int idx=0; idx < workoutNames.length; idx++)
-			workoutNames[idx] = tempWks[idx].getName();
+			workoutNames[idx] = templateWks.get(idx).getName();
 		if(workoutNames.length==0)
 		{
 			Toast.makeText(this.getApplicationContext(), "You do not have any workout templates saved.  You must save a template workout before scheduling a workout.", Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.getApplicationContext(), "Username: " + LoginActivity.userName, Toast.LENGTH_SHORT).show();
+			
 			Intent i1 = new Intent(this, MainActivity.class);
 			startActivity(i1);
 		}
@@ -80,10 +85,18 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		switch(v.getId())
 		{
 		case R.id.btn_done:
-			if(btn_doneClicked())
-			{
-				Intent i1 = new Intent(this, MainActivity.class);
-				startActivity(i1);
+			try {
+				if(btn_doneClicked())
+				{
+					Intent i1 = new Intent(this, MainActivity.class);
+					startActivity(i1);
+				}
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ExecutionException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 			break;
 		case R.id.btn_cancel:
@@ -107,10 +120,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		}
 	}
 
-	private boolean btn_doneClicked() {
+	private boolean btn_doneClicked() throws InterruptedException, ExecutionException {
 		Spinner wspnr = (Spinner)findViewById(R.id.spnr_workouts);
-		int selectedIdx = wspnr.getSelectedItemPosition();	
-		Workout w = WorkoutFragment.workouts.get(selectedIdx);
+		int selectedIdx = wspnr.getSelectedItemPosition();
+		TemplateWorkout w = templateWks.get(selectedIdx);
 		EditText et = (EditText)findViewById(R.id.et_date);
 		String dateStr = et.getText().toString();
 
@@ -131,12 +144,17 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 
 
 
-	public boolean repeatWorkout(Workout w1, String dateStr) {
+	public boolean repeatWorkout(TemplateWorkout w, String dateStr) throws InterruptedException, ExecutionException {
+		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		if(isDateStrValid(dateStr))
 		{
-			Workout w2 = new Workout(w1.getName(), dateStr, w1.getDescription(), w1.getUsername(), w1.getExercises());
+			ArrayList<TemplateExercise> Texercises = w.getExercises();
+			ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+			for(int i = 0; i < Texercises.size(); i++){
+				exercises.add(wrapper.getExercise(Texercises.get(i).getEid()));
+			}
+			Workout w2 = new Workout(w.getName(), dateStr, w.getDescription(), w.getUsername(), exercises);
 
-			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			try {
 				wrapper.addWorkout(w2);
 				return true;
@@ -151,7 +169,7 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 
 
 
-	public boolean repeatWorkout(Workout w, String startDateStr, int numTimes, int numBetween) {
+	public boolean repeatWorkout(TemplateWorkout w, String startDateStr, int numTimes, int numBetween) throws InterruptedException, ExecutionException {
 		if(isDateStrValid(startDateStr))
 		{
 			DateFormat df = new SimpleDateFormat("MM/dd/yyyy");

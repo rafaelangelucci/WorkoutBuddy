@@ -68,7 +68,7 @@
 	
 	//no operation defined
 	else{
-		echo 'fail';
+		echo '0';
 	}
 		
 

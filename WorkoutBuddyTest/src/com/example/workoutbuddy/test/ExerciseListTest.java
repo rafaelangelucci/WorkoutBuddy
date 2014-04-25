@@ -7,6 +7,7 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
+
 import com.uiuc.workoutbuddy.ExerciseListActivity;
 
 public class ExerciseListTest extends

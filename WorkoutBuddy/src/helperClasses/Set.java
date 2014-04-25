@@ -4,7 +4,7 @@ public class Set {
 	private int sid;
 	private int reps;
 	private int weight;
-	private double time;
+	private String time;
 	private int priority;
 	private int eid;
 	private int wid;
@@ -16,7 +16,7 @@ public class Set {
 		sid = -1;
 		reps = 0;
 		weight = 0;
-		time = 0;
+		time = "";
 		priority = 0;
 		eid = -1;
 		wid = -1;
@@ -38,13 +38,14 @@ public class Set {
 	 * @param wid
 	 *            the id of the workout associated with it
 	 */
-	public Set(int reps, int weight, double time, int priority, int eid, int wid) {
+	public Set(int reps, int weight, String time, int priority, int eid, int wid) {
 		this.reps = reps;
 		this.weight = weight;
 		this.time = time;
 		this.priority = priority;
 		this.eid = eid;
 		this.wid = wid;
+		this.sid = -1;
 	}
 
 	/**
@@ -65,7 +66,7 @@ public class Set {
 	 * @param wid
 	 *            the id of the workout associated with it
 	 */
-	public Set(int sid, int reps, int weight, double time, int priority,
+	public Set(int sid, int reps, int weight, String time, int priority,
 			int eid, int wid) {
 		this(reps, weight, time, priority, eid, wid);
 		this.sid = sid;
@@ -97,11 +98,11 @@ public class Set {
 		this.weight = weight;
 	}
 
-	public double getTime() {
+	public String getTime() {
 		return time;
 	}
 
-	public void setTime(double time) {
+	public void setTime(String time) {
 		this.time = time;
 	}
 
