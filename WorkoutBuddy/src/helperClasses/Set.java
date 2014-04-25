@@ -45,6 +45,7 @@ public class Set {
 		this.priority = priority;
 		this.eid = eid;
 		this.wid = wid;
+		this.sid = -1;
 	}
 
 	/**

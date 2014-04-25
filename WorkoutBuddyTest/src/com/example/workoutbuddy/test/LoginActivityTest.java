@@ -88,7 +88,7 @@ public class LoginActivityTest extends
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
 		
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/userLogin.php";
-		HashMap<String, String> postData = new HashMap<String, String>();
+		HashMap<String, Object> postData = new HashMap<String, Object>();
 		postData.put("username", "fake");
 		postData.put("password", "fake");
 		String response = wrapper.makeRequest(postData, URL);
