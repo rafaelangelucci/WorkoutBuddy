@@ -1,6 +1,9 @@
 package helperClasses;
 
+import httpRequests.AsyncHttpPostWrapper;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 import android.util.Log;
 
@@ -72,15 +75,27 @@ public class Workout {
 	public String toString()
 	{
 		String ret = "~~~~ " + this.name.toUpperCase() + " ~~~~" + "\n";
-		if(this.exercises != null)
+		AsyncHttpPostWrapper postWrapper = new AsyncHttpPostWrapper(null);
+		Workout wo = null;
+		try {
+			wo = postWrapper.getWorkout(this.wid);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		if(wo.getExercises().size() > 0)
 		{
-			for(int i = 0; i < this.exercises.size(); i++)
+			Log.i("Workout", "exercises not null");
+			for(int i = 0; i < wo.exercises.size(); i++)
 			{
-				if(this.exercises.get(i) != null)
+				if(wo.exercises.get(i) != null)
 				{	
-					ret = ret + "\t" + this.exercises.get(i).toString();
+					Log.i("Workout", "Adding exercise : " + wo.exercises.get(i));
+					ret = ret + "\t" + wo.exercises.get(i).toString();
 				}
 			}
+		}
+		else {
+			Log.i("Workout", "No exercises to be added");
 		}
 		
 		Log.i("Workout", "toString : " + ret);

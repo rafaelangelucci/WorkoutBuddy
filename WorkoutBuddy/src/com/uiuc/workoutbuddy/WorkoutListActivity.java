@@ -1,7 +1,10 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.concurrent.ExecutionException;
+
 import customListAdapter.WorkoutListAdapter;
 import helperClasses.Workout;
+import httpRequests.AsyncHttpPostWrapper;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -27,6 +30,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	private static final String SUBJECT = "WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
+	AsyncHttpPostWrapper postWrapper;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +38,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		setContentView(R.layout.activity_exercise_list);
 
 		Log.i("WorkoutListActivity", "onCreate");
+		postWrapper = new AsyncHttpPostWrapper(null);
 
 		WorkoutListAdapter adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
 
@@ -53,7 +58,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		});
 
 	}
-	
+
 	/**
 	 * Function to handle CAB startup and close REFACTORED
 	 * @param position int for which wo was selected
@@ -85,7 +90,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// Spawn new work out activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
 		intent.putExtra("wid", wo.getWid());
-    	startActivity(intent);
+		startActivity(intent);
 	}
 
 	@Override
@@ -101,7 +106,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	 */
 	public boolean shareWorkout(Workout wo) {
 		Log.i("Share Selected", "Workout Selected : " + wo.getName());
-		
+
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
 		sharingIntent.setType("text/plain");
 		String shareBody = wo.toString();
@@ -110,12 +115,20 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
 		return true;
 	}
+	
+	public void deleteWorkout(Workout wo) {
+		Log.i("Delete Selected", "Workout to delete : " + wo.getName());
+		try {
+			postWrapper.deleteWorkout(wo.getWid());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	/**
 	 * Action mode call back that inflates CAB layout and registers on click functionality
 	 */
-//	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-		private class ActionModeCallback implements ActionMode.Callback {
+	private class ActionModeCallback implements ActionMode.Callback {
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			MenuInflater inflater = mode.getMenuInflater();
 			inflater.inflate(R.menu.context_menu, menu);
@@ -128,6 +141,15 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
+			int item_postion = Integer.parseInt(mode.getTag().toString());
+			int wid = ((Workout)getListView().getAdapter().getItem(item_postion)).getWid();
+			Workout wo = null;
+			try {
+				wo = postWrapper.getWorkout(wid);
+			} catch (Exception e) {
+				Log.i("UseWorkoutActivity", "EXCEPTION CAUGHT");
+				e.printStackTrace();
+			}
 			switch(item.getItemId())
 			{
 			case R.id.action_settings:
@@ -135,14 +157,13 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				break;
 			case R.id.share:
 				Log.i("WorkoutListActivity", "SHARE onActionItemClicked");
-				int item_postion=Integer.parseInt(mode.getTag().toString());
-				Workout wo = (Workout)getListView().getAdapter().getItem(item_postion);
 				shareWorkout(wo);
 				break;
 			case R.id.edit:
 				Log.i("WorkoutListActivity", "EDIT onActionItemClicked");
 				break;
 			case R.id.delete:
+				deleteWorkout(wo);
 				Log.i("WorkoutListActivity", "DELETE onActionItemClicked");
 				break;
 			default:
