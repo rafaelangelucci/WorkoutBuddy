@@ -60,28 +60,23 @@ public class LoginActivityTest extends
 	
 	public void testLoginResponse() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(lActivity);
-		
-		
 		String username = "newUser";
-		String password = "newPassword";
-		
+		String password = "newPassword";		
 		wrapper.addUser(username, password);
 		
-		// Correct user and password
-		String success = wrapper.userLogin(username, password);
-		Assert.assertTrue(success.equals("success"));
+		loginChecker(wrapper,username,password,"success");
+		loginChecker(wrapper,"fake","fake","fail");
+		loginChecker(wrapper,username,"fake","fail");
+		loginChecker(wrapper,"fake",password,"fail");
 		
-		// Incorrect user and password
-		success = wrapper.userLogin("fake", "fake");
-		Assert.assertTrue(success.equals("fail"));
-		
-		// Correct user and incorrect password
-		success = wrapper.userLogin(username, "fake");
-		Assert.assertTrue(success.equals("fail"));
-		
-		// Incorrect user and password that exists in the db
-		success = wrapper.userLogin("fake", password);
-		Assert.assertTrue(success.equals("fail"));
+		wrapper.deleteUser(username, password);
+	}
+
+	private void loginChecker(AsyncHttpPostWrapper wrapper, String username,String password, String expected)
+			throws InterruptedException, ExecutionException {
+		String success;
+		success = wrapper.userLogin(username, password);
+		Assert.assertTrue(success.equals(expected));
 	}
 	
 	public void testLoginResponseBad() throws InterruptedException, ExecutionException {
@@ -103,14 +98,9 @@ public class LoginActivityTest extends
 		String username = "a8fs7dgsfdu";
 		String password = "abc";
 		
-		wrapper.addUser(username, password);
-		
-		String success = wrapper.userLogin(username, password);
-		Assert.assertTrue(success.equals("success"));
-		
+		wrapper.addUser(username, password);	
+		loginChecker(wrapper,username,password,"success");	
 		wrapper.deleteUser(username, password);
-		
-		success = wrapper.userLogin(username, password);
-		Assert.assertTrue(success.equals("fail"));
+		loginChecker(wrapper,username,password,"fail");
 	}
 }
