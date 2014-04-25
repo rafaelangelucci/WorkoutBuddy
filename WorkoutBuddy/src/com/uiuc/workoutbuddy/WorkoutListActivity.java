@@ -24,7 +24,7 @@ import android.widget.AdapterView.OnItemLongClickListener;
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
-	private static final String SUBJECT = "WorkoutBuddy : A workout has been shared with you!";
+	private static final String SUBJECT = "WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 
@@ -51,6 +51,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				return true;
 			}
 		});
+
 	}
 	
 	/**
@@ -84,7 +85,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// Spawn new work out activity
 		Intent intent = new Intent(this, UseWorkoutActivity.class);
 		intent.putExtra("wid", wo.getWid());
-		startActivity(intent);
+    	startActivity(intent);
 	}
 
 	@Override
@@ -115,7 +116,6 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 	 */
 //	private ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
 		private class ActionModeCallback implements ActionMode.Callback {
-
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
 			MenuInflater inflater = mode.getMenuInflater();
 			inflater.inflate(R.menu.context_menu, menu);
@@ -158,3 +158,4 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		}
 	};
 }
+

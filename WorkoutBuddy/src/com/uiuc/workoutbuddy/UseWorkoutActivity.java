@@ -1,8 +1,12 @@
 package com.uiuc.workoutbuddy;
 
+import java.util.concurrent.ExecutionException;
+
 import customListAdapter.UseWorkoutAdapter;
 import helperClasses.Exercise;
 import helperClasses.Workout;
+import httpRequests.AsyncHttpPostWrapper;
+import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -14,9 +18,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UseWorkoutActivity extends Activity implements OnItemClickListener//implements OnClickListener, HttpRequestListener
+public class UseWorkoutActivity extends Activity implements OnItemClickListener
 {
-
+	AsyncHttpPostWrapper postWrapper;
 	public Exercise[] exerciseList;
 	Workout wo;
 
@@ -25,10 +29,18 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener/
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_use_workout);
 		
+		postWrapper = new AsyncHttpPostWrapper(null);
+		
 		// Get passed in variables
 		Intent i = getIntent();
 		int wid = i.getExtras().getInt("wid");
-		wo = WorkoutFragment.getWorkoutById(wid);
+		try {
+			wo = postWrapper.getWorkout(wid);
+		} catch (Exception e) {
+			Log.i("UseWorkoutActivity", "EXCEPTION CAUGHT");
+			e.printStackTrace();
+		}
+		//wo = WorkoutFragment.getWorkoutById(wid);
 		Log.i("UseWorkoutActivity", "wo : " + wid + " - " + wo.getName());
 		
 		// Grab and set text views of activity
@@ -42,16 +54,16 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener/
 		ListView list = (ListView)findViewById(R.id.list);
 		
 		UseWorkoutAdapter adapter;
-//		if(wo.getExercises() == null)
-//		{
-//			Log.i("UseWorkoutActivity", "ERROR. EXERCISE LIST IS NULL");
+		if(wo.getExercises() == null)
+		{
+			Log.i("UseWorkoutActivity", "ERROR. EXERCISE LIST IS NULL");
 			adapter = new UseWorkoutAdapter(this, ExerciseFragment.exercises);
-//		}
-//		else
-//		{
-//			Log.i("UseWorkoutActivity", "Using workout's exercises");
-//			adapter = new UseWorkoutAdapter(this, wo.getExercises());
-//		}
+		}
+		else
+		{
+			Log.i("UseWorkoutActivity", "Using workout's exercises");
+			adapter = new UseWorkoutAdapter(this, wo.getExercises());
+		}
 		//TODO: fix
 
 		list.setAdapter(adapter);
