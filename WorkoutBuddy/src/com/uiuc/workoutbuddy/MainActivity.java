@@ -15,6 +15,11 @@ import android.support.v4.view.ViewPager;
 import android.view.Menu;
 import android.widget.Toast;
 
+/**
+ * The First Activity that user is directed to after loginActivity.
+ * @author Joel
+ *
+ */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
 	/**
@@ -130,6 +135,10 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			return 3;
 		}
 
+		/**
+		 * Returns the name of the individual Fragment names based on position.
+		 * @param position int.  Starts from 0. 
+		 */
 		@Override
 		public CharSequence getPageTitle(int position) {
 			Locale l = Locale.getDefault();

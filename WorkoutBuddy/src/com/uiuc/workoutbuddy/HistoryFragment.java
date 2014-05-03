@@ -71,6 +71,7 @@ public class HistoryFragment extends Fragment implements OnClickListener, HttpRe
 
 	/**
 	 * On click listener for buttons
+	 * @param v View
 	 */
 	@Override
 	public void onClick(View v)

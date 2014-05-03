@@ -27,6 +27,11 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * Class is used to schedule a new workout.
+ * @author Joel
+ *
+ */
 public class ScheduleActivity extends Activity implements OnClickListener, HttpRequestListener{
 
 	ArrayList<TemplateWorkout> templateWks = new ArrayList<TemplateWorkout>();
@@ -36,8 +41,8 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_schedule);
 
-		
-		
+
+
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
 			templateWks = wrapper.getTemplateWorkoutList(LoginActivity.userName);
@@ -55,7 +60,7 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		{
 			Toast.makeText(this.getApplicationContext(), "You do not have any workout templates saved.  You must save a template workout before scheduling a workout.", Toast.LENGTH_SHORT).show();
 			Toast.makeText(this.getApplicationContext(), "Username: " + LoginActivity.userName, Toast.LENGTH_SHORT).show();
-			
+
 			Intent i1 = new Intent(this, MainActivity.class);
 			startActivity(i1);
 		}
@@ -73,6 +78,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		findViewById(R.id.btn_cancel).setOnClickListener(this);
 	}
 
+	/**
+	 * Normally this would inflate the menu, but since there is no menu, this method does nothing.
+	 * @param menu Menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -80,6 +89,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 		return true;
 	}
 
+	/**
+	 * This is the onclicklistener.
+	 * @param v View is the button that is clicked.
+	 */
 	@Override
 	public void onClick(View v) {
 		switch(v.getId())
@@ -92,10 +105,8 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 					startActivity(i1);
 				}
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (ExecutionException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 			break;
@@ -144,6 +155,14 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 
 
 
+	/**
+	 * This creates an new workout and adds it to the database with the specified dateStr
+	 * @param w TemplateWorkout
+	 * @param dateStr String represents the date of the scheduled workout
+	 * @return true if successful, otherwise false.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public boolean repeatWorkout(TemplateWorkout w, String dateStr) throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		if(isDateStrValid(dateStr))
@@ -168,7 +187,16 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 	}
 
 
-
+	/**
+	 * This schedules 1 to many workouts with the given TemplateWorkout.
+	 * @param w TemplateWorkout
+	 * @param startDateStr the first date of the scheduled workout
+	 * @param numTimes the number of workouts to schedule
+	 * @param numBetween the number of days between scheduled workouts of this type.
+	 * @return true if schedule workouts successfully added to database.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public boolean repeatWorkout(TemplateWorkout w, String startDateStr, int numTimes, int numBetween) throws InterruptedException, ExecutionException {
 		if(isDateStrValid(startDateStr))
 		{
@@ -215,8 +243,10 @@ public class ScheduleActivity extends Activity implements OnClickListener, HttpR
 
 
 
+	/**
+	 * Executes after a HTTP Request is finished.
+	 */
 	@Override
 	public void requestComplete() {
-		// TODO Auto-generated method stub	
 	}	
 }
