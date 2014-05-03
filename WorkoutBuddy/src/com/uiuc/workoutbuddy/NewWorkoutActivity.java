@@ -35,8 +35,9 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 	public Exercise[] exerciseList;
 
 	/**
-	 * Sets the onclicklistners for buttons.
+	 * Sets the onclicklisteners for buttons.
 	 * Fills in spinner with available exercises.
+	 * @param savedInstanceState Bundle
 	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +61,10 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		addExerciseSpinner();
 	}
 
+	/**
+	 * Fills in the action bar, but since there isn't an action bar, this will do nothing.
+	 * @param menu Menu
+	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -69,6 +74,7 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 
 	/**
 	 * On click listener for activity page.
+	 * @param v View
 	 */
 	@Override
 	public void onClick(View v) 
@@ -147,6 +153,9 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		addExerciseSpinner();	
 	}
 
+	/**
+	 * Executes after a HTTP Request is completed.
+	 */
 	@Override
 	public void requestComplete() {
 		Log.i( "requestComplete()", "Request Completed countDown()");
@@ -164,7 +173,8 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 			exerciseNames[i] = exerciseList[i].getName();
 		}
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseNames);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); // Specify the layout to use when the list of choices appears
+		// Specify the layout to use when the list of choices appears
+		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item); 
 		spinner.setAdapter(adapter);
 		ll.addView(spinner, this.numExercises);
 		this.numExercises++;

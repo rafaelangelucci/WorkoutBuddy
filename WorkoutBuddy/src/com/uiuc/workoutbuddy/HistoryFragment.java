@@ -91,6 +91,9 @@ public class HistoryFragment extends Fragment implements OnClickListener, HttpRe
 	}
 
 
+	/**
+	 * This is ran when the logout button is executed.  User SharedPreferences are deleted and user is redirected to loginActivity.
+	 */
 	public void logout() {
 		SharedPreferences un= getActivity().getSharedPreferences("username", Context.MODE_PRIVATE);
 		boolean success = true;
@@ -106,6 +109,9 @@ public class HistoryFragment extends Fragment implements OnClickListener, HttpRe
 			Toast.makeText(getActivity().getApplicationContext(), "Error occurred when removing login data.", Toast.LENGTH_SHORT).show();
 	}
 
+	/**
+	 * This executed after a HTTP request is completed. 
+	 */
 	@Override
 	public void requestComplete() 
 	{
