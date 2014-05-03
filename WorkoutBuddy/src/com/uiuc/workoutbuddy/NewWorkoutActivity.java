@@ -4,16 +4,11 @@ import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
-
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.List;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
-
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -28,12 +23,21 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.Toast;
 
+/**
+ * Class is used to create a new scheduled workout.
+ * @author Joel
+ *
+ */
 public class NewWorkoutActivity extends Activity implements OnClickListener, HttpRequestListener
 {
 
 	public int numExercises = 0;
 	public Exercise[] exerciseList;
 
+	/**
+	 * Sets the onclicklistners for buttons.
+	 * Fills in spinner with available exercises.
+	 */
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,16 +56,7 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		{
 			exerciseList[i] = ExerciseFragment.exercises.get(i);
 		}
-//		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-//		signal = new CountDownLatch(1);
-//		try {
-//			exerciseList = wrapper.getExerciseList("usernameA");
-//			signal.await(1, TimeUnit.SECONDS);
-//		} catch (InterruptedException e) {
-//			e.printStackTrace();
-//		} catch (ExecutionException e) {
-//			e.printStackTrace();
-//		}
+		
 		addExerciseSpinner();
 	}
 
@@ -72,6 +67,9 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		return true;
 	}
 
+	/**
+	 * On click listener for activity page.
+	 */
 	@Override
 	public void onClick(View v) 
 	{
