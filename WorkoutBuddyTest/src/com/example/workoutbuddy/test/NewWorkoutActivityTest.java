@@ -7,13 +7,13 @@ import android.view.View;
 import android.widget.Button;
 import com.uiuc.workoutbuddy.NewWorkoutActivity;
 
-public class BasicActivityTest extends
+public class NewWorkoutActivityTest extends
 	ActivityInstrumentationTestCase2<NewWorkoutActivity> {
 
 	private NewWorkoutActivity myActivity;
 
 	
-	public BasicActivityTest(){
+	public NewWorkoutActivityTest(){
 		super(NewWorkoutActivity.class);
 	}
 
