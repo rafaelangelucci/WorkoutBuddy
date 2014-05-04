@@ -1,7 +1,6 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
@@ -57,11 +56,12 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 		try {
 			view = inflater.inflate(R.layout.workout_fragment, container, false);
 		} catch(InflateException e) {
-			//already made
+			e.printStackTrace();
 		}
 
 		workouts.clear();
 
+		// Grab all buttons and set their onClick listeners
 		myWorkouts = (Button)view.findViewById(R.id.btn_my_workouts);
 		newWorkout = (Button)view.findViewById(R.id.btn_new_workout);
 		schedule = (Button)view.findViewById(R.id.btn_schedule);
@@ -69,10 +69,11 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 		newWorkout.setOnClickListener(this);
 		schedule.setOnClickListener(this);
 
+		// Execute database pull to grab all workouts
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 
 		try {
-			Workout[] responses = wrapper.getWorkoutList("usernameA");
+			Workout[] responses = wrapper.getWorkoutList(LoginActivity.userName);
 			if(responses.length == 0)
 				Log.i("Asyn Task", "0 workouts");
 
@@ -81,9 +82,7 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 				workouts.add(responses[i]);
 				Log.i("Workout Added", responses[i].getName());
 			}
-		} catch (InterruptedException e) {
-			e.printStackTrace();
-		} catch (ExecutionException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
@@ -118,7 +117,11 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 		}
 	}
 
-
+	/**
+	 * Function to grab workout from list by its specified id
+	 * @param id workout id of workout object desired
+	 * @return workout with specified id
+	 */
 	public static Workout getWorkoutById(int id)
 	{
 		Workout tmp;

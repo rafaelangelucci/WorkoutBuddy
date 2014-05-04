@@ -50,16 +50,19 @@ public class UseWorkoutAdapter extends ArrayAdapter<Exercise>
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		Holder holder = null;
 		final Exercise entry = exerciseList.get(position);
+		
 		if (convertView == null) {
+			// Inflate row layout with custom layout design
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_layout_use_wo, null);
 
+			// Create new holder for this list entry
 			holder = new Holder();
 			holder.name = (TextView) convertView.findViewById(R.id.exercise_name);
 			holder.desc = (TextView) convertView.findViewById(R.id.exercise_desc);
 			convertView.setTag(holder);
 		}
-		else{
+		else {
 			holder = (Holder)convertView.getTag();
 		}
 
@@ -84,5 +87,4 @@ public class UseWorkoutAdapter extends ArrayAdapter<Exercise>
 		TextView name;
 		TextView desc;
 	}
-
 }
