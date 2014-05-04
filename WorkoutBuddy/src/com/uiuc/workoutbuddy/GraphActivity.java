@@ -1,9 +1,6 @@
 package com.uiuc.workoutbuddy;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 import helperClasses.Exercise;
@@ -21,9 +18,12 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
 import android.util.Log;
-import android.view.View.OnClickListener;
 import android.widget.LinearLayout;
 
+/**
+ * Activity class for holding the user's progress graph
+ *
+ */
 public class GraphActivity extends Activity implements HttpRequestListener
 {
 	public GraphViewSeries exampleSeries;
@@ -209,7 +209,6 @@ public class GraphActivity extends Activity implements HttpRequestListener
 
 	@Override
 	public void requestComplete() {
-		// TODO Auto-generated method stub
-		
+		// TODO Auto-generated method stub	
 	}
 }
