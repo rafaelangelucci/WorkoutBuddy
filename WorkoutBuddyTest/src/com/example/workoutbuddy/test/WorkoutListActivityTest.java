@@ -2,7 +2,6 @@ package com.example.workoutbuddy.test;
 
 import helperClasses.Exercise;
 import helperClasses.Workout;
-
 import java.util.ArrayList;
 import android.content.Intent;
 import android.test.ActivityUnitTestCase;
