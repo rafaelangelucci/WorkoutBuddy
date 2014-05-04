@@ -22,6 +22,10 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * Extending ListAdapator class for the exercise list in the graph activity
+ *
+ */
 public class CustomGraphListAdapter extends BaseAdapter implements OnClickListener {
 
 	private final Context context;
@@ -40,28 +44,50 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 		this.exerciseList = exercises;
 	}
 	
+	/**
+	 * Constructor 
+	 * 
+	 * @param exercises list of exercises to put in list view
+	 */
 	public CustomGraphListAdapter(ArrayList<Exercise> exercises) {
 		this.context = null;
 		this.exerciseList = exercises;
 	}
 
+	/**
+	 * return the exercise list size
+	 */
 	@Override
 	public int getCount() {
 		return exerciseList.size();
 	}
 
+	/**
+	 * Gets the exercise object at the given position
+	 * 
+	 * @param position The position in the exerciseList to return
+	 */
 	@Override
 	public Object getItem(int position) {
 		return exerciseList.get(position);
 	}
 
+	/**
+	 * Gets the exercise's id at the given position
+	 * 
+	 * @param position The position on the exerciseList to look at
+	 */
 	@Override
 	public long getItemId(int position) {
 		return position;
 	}
 
+	/**
+	 * Function to set the behavior of the exercise list's graphical layout
+	 */
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
+		// Get the exercise object
 		Exercise entry = exerciseList.get(position);
 		
 		if (convertView == null) {
@@ -69,7 +95,7 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 			convertView = inflater.inflate(R.layout.graph_list_row_layout, null);
 		}
 
-		// Grab text view
+		// Grab the value in the text view
 		TextView name = (TextView) convertView.findViewById(R.id.row_name);
 		name.setText(entry.getName());
 
@@ -81,6 +107,9 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 		return convertView;
 	}
 
+	/**
+	 * Creates an intent to go to the GraphActivity
+	 */
 	@Override
 	public void onClick(View v) {
 		Exercise selected = (Exercise)v.getTag();
