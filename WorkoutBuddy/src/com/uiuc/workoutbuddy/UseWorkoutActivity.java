@@ -1,13 +1,10 @@
 package com.uiuc.workoutbuddy;
 
 import java.util.ArrayList;
-import java.util.concurrent.ExecutionException;
-
 import customListAdapter.UseWorkoutAdapter;
 import helperClasses.Exercise;
 import helperClasses.Workout;
 import httpRequests.AsyncHttpPostWrapper;
-import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -19,8 +16,8 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ListView;
 import android.widget.TextView;
 
-public class UseWorkoutActivity extends Activity implements OnItemClickListener
-{
+public class UseWorkoutActivity extends Activity implements OnItemClickListener {
+	
 	AsyncHttpPostWrapper postWrapper;
 	public ArrayList<Exercise> exerciseList;
 	static Workout wo;
@@ -32,17 +29,7 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener
 		
 		postWrapper = new AsyncHttpPostWrapper(null);
 		
-		// Get passed in variables
-		Intent i = getIntent();
-		int wid = i.getExtras().getInt("wid");
-		try {
-			wo = postWrapper.getWorkout(wid);
-		} catch (Exception e) {
-			Log.i("UseWorkoutActivity", "EXCEPTION CAUGHT");
-			e.printStackTrace();
-		}
-		//wo = WorkoutFragment.getWorkoutById(wid);
-		Log.i("UseWorkoutActivity", "wo : " + wid + " - " + wo.getName());
+		getIntentParameters();
 		
 		// Grab and set text views of activity
 		TextView woName = (TextView)findViewById(R.id.workout_name);
@@ -57,22 +44,39 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener
 		UseWorkoutAdapter adapter;
 		if(wo.getExercises() == null)
 		{
+			//TODO: this should be removed
 			Log.i("UseWorkoutActivity", "ERROR. EXERCISE LIST IS NULL");
 			adapter = new UseWorkoutAdapter(this, ExerciseFragment.exercises);
 		}
-		else
+		else // Should execute here every time unless an error
 		{
 			exerciseList = wo.getExercises();
 			Log.i("UseWorkoutActivity", "Using workout's exercises");
 			adapter = new UseWorkoutAdapter(this, wo.getExercises());
 		}
-		//TODO: fix
 
 		list.setAdapter(adapter);
 		list.setOnItemClickListener(this);
-		
 	}
 
+	/**
+	 * Function to grab information about the selected workout 
+	 * 	  that was passed in from the previous activity
+	 */
+	public void getIntentParameters()
+	{
+		Log.i("UseWorkoutActivity", "getIntentParameters");
+		Intent i = getIntent();
+		int wid = i.getExtras().getInt("wid");
+		try {
+			wo = postWrapper.getWorkout(wid);
+		} catch (Exception e) {
+			Log.i("UseWorkoutActivity", "EXCEPTION CAUGHT");
+			e.printStackTrace();
+		}
+		Log.i("UseWorkoutActivity", "wo : " + wid + " - " + wo.getName());
+	}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

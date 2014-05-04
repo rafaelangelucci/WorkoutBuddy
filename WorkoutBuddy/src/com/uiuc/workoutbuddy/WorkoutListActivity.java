@@ -25,7 +25,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
  */
 public class WorkoutListActivity extends ListActivity implements OnItemClickListener
 {
-	private static final String SUBJECT = "WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
+	private static final String SUBJECT = 
+			"WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 	AsyncHttpPostWrapper postWrapper;
@@ -39,10 +40,16 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		Log.i("WorkoutListActivity", "onCreate");
 		postWrapper = new AsyncHttpPostWrapper(null);
 
+		// Create custom adapter
+		// TODO: Need to change the workout list that is passed in
 		adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
 
 		setListAdapter(adapter);
+		
+		// Set short on click listener to use workout
 		getListView().setOnItemClickListener(this);
+		
+		// Set long on click listener to bring up the CAB
 		getListView().setOnItemLongClickListener(new OnItemLongClickListener()
 		{
 			@Override
@@ -68,7 +75,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// start the CAB using the ActionMode.Callback defined above
 		if(mActionMode == null)
 		{
-			mActionMode = startActionMode(new ActionModeCallback());//WorkoutListActivity.this.startActionMode(mActionModeCallback);
+			mActionMode = startActionMode(new ActionModeCallback());
 			Log.i("WorkoutListActivity", "mActionMode Started");
 			mActionMode.setTag(position);
 		}
@@ -109,9 +116,11 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
 		sharingIntent.setType("text/plain");
 		String shareBody = wo.toString();
+		
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SUBJECT);
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
+		
 		return true;
 	}
 	

@@ -22,7 +22,6 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 	private boolean [] itemChecked;
 	private int checked = 0;
 
-
 	/**
 	 * Constructor
 	 * 
@@ -63,17 +62,22 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 			LayoutInflater inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 			convertView = inflater.inflate(R.layout.row_layout_exercises, null);
 
+			// View was null -> create new holder object and point it to correct TextViews and CheckBox
 			holder = new Holder();
 			holder.ckbox = (CheckBox) convertView.findViewById(R.id.btn_check_box);
 			holder.name = (TextView) convertView.findViewById(R.id.row_name);
 			holder.desc = (TextView) convertView.findViewById(R.id.row_type);
 			
+			// Set this item as the one that has been selected
 			convertView.setTag(holder);
 		}
 		else {
+			// Grab the item that has been selected
 			holder = (Holder)convertView.getTag();
 		}
 		
+		// Set proper name, description, and check mark for each view
+		//	 Must redraw each when it goes out of scope of the screen
 		holder.name.setText(entry.getName());
 		holder.desc.setText(entry.getDescription());
 		holder.ckbox.setChecked(false);
@@ -85,6 +89,7 @@ public class ExerciseListAdapter extends ArrayAdapter<Exercise> //implements OnC
 			holder.ckbox.setChecked(false);
 		}
 		
+		// OnClickListener for each list item
 		holder.ckbox.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
