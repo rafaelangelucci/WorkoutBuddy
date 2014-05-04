@@ -568,7 +568,7 @@ public class AsyncHttpPostWrapper {
 	 */
 	public ArrayList<Set> getSetList(int wid) throws InterruptedException,
 			ExecutionException {
-		// Make post request with template exercise info
+		// Make post request with wid
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
 		String[] keys = { "operation", "w_id" };
 		Object[] values = { GET_LIST, wid };
@@ -586,6 +586,38 @@ public class AsyncHttpPostWrapper {
 				int weight = Integer.parseInt(jsonData.getString("weight")
 						.trim());
 				int eid = Integer.parseInt(jsonData.getString("e_id").trim());
+				String time = jsonData.getString("time");
+				int priority = Integer.parseInt(jsonData.getString("priority")
+						.trim());
+				Set set = new Set(sid, reps, weight, time, priority, eid, wid);
+				sets.add(set);
+			}
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		return sets;
+	}
+
+	public ArrayList<Set> getSetListByEid(int eid) throws InterruptedException,
+			ExecutionException {
+		// Make post request with eid
+		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/setDatabaseOperations.php";
+		String[] keys = { "operation", "e_id" };
+		Object[] values = { "getEid", eid };
+		HashMap<String, Object> postData = createPostData(keys, values);
+		String response = this.makeRequest(postData, URL);
+
+		// take JSON format and put into array
+		ArrayList<Set> sets = new ArrayList<Set>();
+		try {
+			JSONArray jArray = new JSONArray(response);
+			for (int i = 0; i < jArray.length(); i++) {
+				JSONObject jsonData = jArray.getJSONObject(i);
+				int sid = Integer.parseInt(jsonData.getString("s_id").trim());
+				int reps = Integer.parseInt(jsonData.getString("reps").trim());
+				int weight = Integer.parseInt(jsonData.getString("weight")
+						.trim());
+				int wid = Integer.parseInt(jsonData.getString("wid").trim());
 				String time = jsonData.getString("time");
 				int priority = Integer.parseInt(jsonData.getString("priority")
 						.trim());
