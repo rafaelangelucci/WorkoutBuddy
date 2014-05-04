@@ -5,12 +5,9 @@ import httpRequests.HttpRequestListener;
 import helperClasses.Exercise;
 
 import java.util.ArrayList;
-import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.TimeUnit;
 import com.uiuc.workoutbuddy.R;
 import android.annotation.SuppressLint;
-import android.app.ListFragment;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -21,23 +18,21 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.ListView;
-import android.widget.TextView;
 
 /**
-* Class to contain information for the Workout Fragment tab 
-* 
-* @author tmadigan7
-*
-*/
+ * Class to contain information for the Workout Fragment tab 
+ * 
+ * @author tmadigan7
+ *
+ */
 @SuppressLint("ValidFragment")
 public class ExerciseFragment extends Fragment implements OnClickListener, HttpRequestListener
 {
 	View view;
 	Context c;
 	public static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
+	Button newExercise, myExercises;
 
 	/**
 	 * Default Constructor
@@ -64,32 +59,32 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		} catch(InflateException e) {
 			Log.i( "ExerciseFragment", "InflateException : onCreateView");
 		}
-		
+
 		exercises.clear();
 
 		// Set up all button call backs
-		Button new_exercise = (Button)view.findViewById(R.id.btn_new_exercise);
-		Button my_exercises = (Button)view.findViewById(R.id.btn_my_exercises);
-		
-		new_exercise.setOnClickListener(this);
-		my_exercises.setOnClickListener(this);
-				
+		newExercise = (Button)view.findViewById(R.id.btn_new_exercise);
+		myExercises = (Button)view.findViewById(R.id.btn_my_exercises);
+
+		newExercise.setOnClickListener(this);
+		myExercises.setOnClickListener(this);
+
 		// Set up text view from database pull
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
-        try {
+		try {
 			Exercise[] responses = wrapper.getExerciseList("usernameA");
 			for(int i = 0; i < responses.length; i++)
 			{
 				// NOTE: This Line is modified.
 				exercises.add(new Exercise(responses[i].getEid(), responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
-//				exercises.add(new Exercise(responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
+				//				exercises.add(new Exercise(responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
 			}
-        } catch (InterruptedException e) {
+		} catch (InterruptedException e) {
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
-		
+
 		return view;
 	}
 
@@ -114,20 +109,38 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		default:
 			Log.i( "ExerciseFragment", "OnClick : No ID matched");
 		}
-		
+
 	}
 
 	@Override
 	public void requestComplete() 
 	{
-        Log.i( "requestComplete()", "Request Completed countDown()");
+		Log.i( "requestComplete()", "Request Completed countDown()");
 	}
+	
+/************** GETTERS AND SETTERS **************/
 
 	public ArrayList<Exercise> getExercises() {
 		return exercises;
 	}
 
-	public void setExercises(ArrayList<Exercise> exercises) {
-		this.exercises = exercises;
+	public void setExercises(ArrayList<Exercise> exs) {
+		exercises = exs;
+	}
+
+	public Button getNewExercise() {
+		return newExercise;
+	}
+
+	public void setNewExercise(Button newExercise) {
+		this.newExercise = newExercise;
+	}
+
+	public Button getMyExercises() {
+		return myExercises;
+	}
+
+	public void setMyExercises(Button myExercises) {
+		this.myExercises = myExercises;
 	}
 }
