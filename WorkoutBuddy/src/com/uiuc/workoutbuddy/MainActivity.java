@@ -22,8 +22,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
-	WorkoutFragment woFrag;
-	ExerciseFragment exFrag;
+	public WorkoutFragment woFrag;
+	public ExerciseFragment exFrag;
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
