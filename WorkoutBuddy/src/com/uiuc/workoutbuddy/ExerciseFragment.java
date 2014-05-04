@@ -72,12 +72,12 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		// Set up text view from database pull
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
-			Exercise[] responses = wrapper.getExerciseList("usernameA");
+			Exercise[] responses = wrapper.getExerciseList(LoginActivity.userName);
 			for(int i = 0; i < responses.length; i++)
 			{
 				exercises.add(new Exercise(responses[i].getEid(), 
 						responses[i].getName(), responses[i].getType(), 
-						responses[i].getDescription(), "usernameA", null));
+						responses[i].getDescription(), LoginActivity.userName, null));
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
