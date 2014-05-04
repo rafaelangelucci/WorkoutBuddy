@@ -86,7 +86,7 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		Exercise e = new Exercise(editTextExerciseName.getText().toString(),
 				spinnerExerciseType.getSelectedItem().toString(),
 				editTextExerciseDescription.getText().toString(),
-				"usernameA", //Where should this be coming from?
+				LoginActivity.userName, //Where should this be coming from?
 				null); //sets
 		new AsyncHttpPostWrapper(this).addExercise(e);
 		finish();
