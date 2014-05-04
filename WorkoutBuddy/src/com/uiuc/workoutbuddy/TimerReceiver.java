@@ -6,6 +6,10 @@ import android.content.Intent;
 import android.os.Vibrator;
 import android.widget.Toast;
 
+/**
+ * Class to receive intents sent by TimerActivity and to alert users by vibrating the phone
+ *
+ */
 public class TimerReceiver extends BroadcastReceiver {
 	
 	@Override
