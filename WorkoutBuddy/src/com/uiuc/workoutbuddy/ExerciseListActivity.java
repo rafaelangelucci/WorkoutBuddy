@@ -14,21 +14,21 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class ExerciseListActivity extends ListActivity implements OnItemClickListener
-{
-//	static Object mActionMode;
-//	static int selectedItem = -1;
+public class ExerciseListActivity extends ListActivity implements OnItemClickListener {
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_exercise_list);
-		
-        ExerciseListAdapter adapter = new ExerciseListAdapter(this, ExerciseFragment.exercises);
 
-        setListAdapter(adapter);
+		ExerciseListAdapter adapter = new ExerciseListAdapter(this, ExerciseFragment.exercises);
+
+		setListAdapter(adapter);
 	}
 
+	/**
+	 * Function to handle list item click
+	 */
 	@Override
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		CheckBox cb = (CheckBox)view.findViewById(R.id.btn_check_box);
@@ -40,38 +40,10 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
 			Log.i("ExerciseListActivity", "onItemClick : cb is checked");
 		}
 	}
-	
-	@Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
 
-//	 /**
-//	  *  Action mode call back that inflates CAB layout and registers on click functionality
-//	  */
-//	public static ActionMode.Callback mActionModeCallback = new ActionMode.Callback() {
-//
-//		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
-//			MenuInflater inflater = mode.getMenuInflater();
-//			inflater.inflate(R.menu.context_menu, menu);
-//			return true;
-//		}
-//
-//		public boolean onPrepareActionMode(ActionMode mode, Menu menu) {
-//			return false; // Return false if nothing is done
-//		}
-//
-//		// called when the user selects a contextual menu item
-//		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
-//			//TODO: implement button clicks
-//			return true;
-//		}
-//
-//		// called when the user exits the action mode
-//		public void onDestroyActionMode(ActionMode mode) {
-//			mActionMode = null;
-//			selectedItem = -1;
-//		}
-//	};
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		getMenuInflater().inflate(R.menu.main, menu);
+		return true;
+	}
 }

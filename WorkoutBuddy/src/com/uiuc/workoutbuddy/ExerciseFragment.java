@@ -75,9 +75,9 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 			Exercise[] responses = wrapper.getExerciseList("usernameA");
 			for(int i = 0; i < responses.length; i++)
 			{
-				// NOTE: This Line is modified.
-				exercises.add(new Exercise(responses[i].getEid(), responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
-				//				exercises.add(new Exercise(responses[i].getName(), responses[i].getType(), responses[i].getDescription(), "usernameA", null));
+				exercises.add(new Exercise(responses[i].getEid(), 
+						responses[i].getName(), responses[i].getType(), 
+						responses[i].getDescription(), "usernameA", null));
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
