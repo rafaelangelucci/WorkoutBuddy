@@ -38,6 +38,14 @@ if ($operation === 'get') {
 	echo json_encode($response);
 }
 
+//Performs the get operation by the exercise id
+if ($operation === 'getEid') {
+	$columns = array('s_id', 'reps', 'weight', 'time', 'priority', 'e_id', 'w_id');
+	$where = array('e_id' => $eid);
+	$reponse = $database -> select('Sets', $columns, $where);
+	echo json_encode($reponse);
+}
+
 //Performs the getlist operation
 elseif ($operation === 'getlist') {
 	$columns = array('s_id', 'reps', 'weight', 'time', 'priority', 'e_id', 'w_id');
