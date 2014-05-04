@@ -1,16 +1,10 @@
 package com.example.workoutbuddy.test;
 
-import junit.framework.Assert;
-import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.content.Intent;
 import android.test.ActivityInstrumentationTestCase2;
 import android.test.ViewAsserts;
-import android.view.View;
-import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
-
 import com.uiuc.workoutbuddy.UseWorkoutActivity;
 
 public class UseWorkoutTest extends

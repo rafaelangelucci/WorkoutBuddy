@@ -22,6 +22,8 @@ import android.widget.Toast;
  */
 public class MainActivity extends FragmentActivity implements ActionBar.TabListener {
 
+	public WorkoutFragment woFrag;
+	public ExerciseFragment exFrag;
 	/**
 	 * The {@link android.support.v4.view.PagerAdapter} that will provide
 	 * fragments for each of the sections. We use a
@@ -42,6 +44,8 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 
+		woFrag = new WorkoutFragment(this);
+		exFrag = new ExerciseFragment(this);
 		// Set up the action bar.
 		final ActionBar actionBar = getActionBar();
 		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
@@ -121,9 +125,9 @@ public class MainActivity extends FragmentActivity implements ActionBar.TabListe
 			// below) with the page number as its lone argument.
 			switch (position) {
 			case 0:
-				return new WorkoutFragment(c);
+				return woFrag;
 			case 1:
-				return new ExerciseFragment(c);
+				return exFrag;
 			default:
 				return new HistoryFragment();
 			}
