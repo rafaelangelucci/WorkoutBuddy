@@ -15,7 +15,6 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 	private TextView desc;
 	private ListView list;
 
-
 	public UseWorkoutTest(){
 		super(UseWorkoutActivity.class);
 	}
@@ -66,10 +65,4 @@ ActivityInstrumentationTestCase2<UseWorkoutActivity> {
 	{
 		assertTrue(list.getCount() > 0);
 	}
-	
-	
-//	public void testStartingEmpty() {
-//		assertTrue("Kilos field is empty", "".equals(editKilos.getText().toString()));
-//		assertTrue("Pounds field is empty", "".equals(editPounds.getText().toString()));
-//	}
 }
