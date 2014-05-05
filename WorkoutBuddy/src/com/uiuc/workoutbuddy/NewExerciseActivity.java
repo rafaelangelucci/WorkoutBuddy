@@ -27,7 +27,8 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		setContentView(R.layout.activity_new_exercise);
 		// Show the Up button in the action bar.
 		setupActionBar();
-		final Button button = (Button) findViewById(R.id.buttonNewExerciseOK);
+		final Button button = (Button) findViewById(R.id.btn_new_exercise_ok);
+		//handle the button press
 		button.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				try {
@@ -78,13 +79,13 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 	 * @throws ExecutionException
 	 */
 	private void saveAndClose() throws InterruptedException, ExecutionException {
-		if (((EditText) findViewById(R.id.editTextExerciseName)).getText().toString().isEmpty()) {
+		if (((EditText) findViewById(R.id.edit_exercise_name)).getText().toString().isEmpty()) {
 			Toast.makeText(this.getApplicationContext(), "Please enter an exercise name.", Toast.LENGTH_SHORT).show();
 			return;
 		}
-		EditText editTextExerciseDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
-		EditText editTextExerciseName = (EditText) findViewById(R.id.editTextExerciseName);
-		Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinnerExerciseType);
+		EditText editTextExerciseDescription = (EditText) findViewById(R.id.edit_exercise_description);
+		EditText editTextExerciseName = (EditText) findViewById(R.id.edit_exercise_name);
+		Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinner_exercise_type);
 		
 		String desc = editTextExerciseDescription.getText().toString();
 		if(desc.equals("") || desc.isEmpty())
