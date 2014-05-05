@@ -89,6 +89,7 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 				LoginActivity.userName, //Where should this be coming from?
 				null); //sets
 		new AsyncHttpPostWrapper(this).addExercise(e);
+		ExerciseFragment.exercises.add(e);
 		finish();
 	}
 
