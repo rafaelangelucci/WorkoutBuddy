@@ -15,6 +15,10 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * Activity class for the login and registration functionality
+ *
+ */
 public class LoginActivity extends Activity implements OnClickListener, HttpRequestListener {
 	public static final String PREFS_NAME = "username";
 	private static final String PREF_USERNAME = "username";
@@ -59,6 +63,9 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		signup.setOnClickListener(this);
 	}
 
+	/**
+	 * Behavior for the login and signup buttons
+	 */
 	@Override
 	public void onClick(View v) {
 		switch (v.getId()) {
@@ -72,6 +79,11 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		}
 	}
 
+	/**
+	 * Takes the user input and checks its validity by connecting to the user database
+	 * 
+	 * @param v
+	 */
 	private void login(View v) {
 		String username = getUsername();
 		String password = getPassword();
@@ -102,6 +114,11 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	}
 
 
+	/**
+	 * Takes in the user input and adds it to the user database
+	 * 
+	 * @param v 
+	 */
 	private void signup(View v) {
 		String username = getUsername();
 		String password = getPassword();
@@ -130,11 +147,21 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		}
 	}
 	
+	/**
+	 * Gets the user name from the interface
+	 * 
+	 * @return The user name
+	 */
 	public String getUsername() {
 		EditText et = (EditText)findViewById(R.id.inputUsername);
 		return et.getText().toString();
 	}
 
+	/**
+	 * Gets the user password from the interface
+	 * 
+	 * @return The password
+	 */
 	public String getPassword() {
 		EditText et = (EditText)findViewById(R.id.inputPassword);
 		return et.getText().toString();
@@ -147,6 +174,12 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 		// signal.countDown();
 	}
 
+	/**
+	 * Stores a key-value pair for the user name and password
+	 * 
+	 * @param username Key
+	 * @param password Value
+	 */
 	private void sharedPrefer(String username, String password) {
 		SharedPreferences un = this.getSharedPreferences(PREFS_NAME,
 				Context.MODE_PRIVATE);
