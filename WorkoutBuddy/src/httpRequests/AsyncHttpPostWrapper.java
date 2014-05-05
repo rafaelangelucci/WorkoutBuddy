@@ -168,9 +168,22 @@ public class AsyncHttpPostWrapper {
 		HashMap<String, Object> postData = createPostData(keys, values);
 		int wid = toInt(this.makeRequest(postData, URL));
 		workout.setWid(wid);
+		// List of tempalteExercises to add to the database
+		ArrayList<TemplateExercise> texerciseList = new ArrayList<TemplateExercise>();
 		if (workout.getExercises() != null) {
 			addExercisesInWorkout(wid, workout.getExercises());
+			//Goes through all exercises and creates templates for them
+			for (int i = 0; i < workout.getExercises().size(); i++) {
+				texerciseList.add(new TemplateExercise(i, workout
+						.getExercises().get(i).getEid(), 1, 0, workout
+						.getExercises().get(i)));
+			}
 		}
+
+		// creates a template workout to add to the database
+		TemplateWorkout tworkout = new TemplateWorkout(workout.getName(),
+				workout.getDescription(), workout.getUsername(), texerciseList);
+		addTemplateWorkout(tworkout);
 	}
 
 	/**
@@ -361,15 +374,19 @@ public class AsyncHttpPostWrapper {
 		String URL = "http://workoutbuddy.web.engr.illinois.edu/PhpFiles/ExerciseDatabaseOperations.php";
 		String[] keys = { "operation", "username" };
 		Object[] values = { GET_LIST, username };
+		Object[] standardValues = {GET_LIST, "usernameA"};
 		HashMap<String, Object> postData = createPostData(keys, values);
+		HashMap<String, Object> standardPostData = createPostData(keys, standardValues);
 		String response = this.makeRequest(postData, URL);
+		String standardResponse = this.makeRequest(standardPostData, URL);
 
 		// get response and parse it into an array
 		Exercise[] exercises = {};
 		// take JSON format and put into array
 		try {
 			JSONArray jArray = new JSONArray(response);
-			int arrayLength = jArray.length();
+			JSONArray standardArray = new JSONArray(standardResponse);
+			int arrayLength = jArray.length() + standardArray.length();
 			exercises = new Exercise[arrayLength];
 			for (int i = 0; i < jArray.length(); i++) {
 				JSONObject jsonData = jArray.getJSONObject(i);
@@ -380,6 +397,16 @@ public class AsyncHttpPostWrapper {
 				Exercise exercise = new Exercise(eid, name, type, desc,
 						username, null);
 				exercises[i] = exercise;
+			}
+			for (int i = 0; i < standardArray.length(); i++){
+				JSONObject jsonData = standardArray.getJSONObject(i);
+				String name = jsonData.getString("name");
+				String type = jsonData.getString("type");
+				String desc = jsonData.getString("description");
+				int eid = Integer.parseInt(jsonData.getString("e_id"));
+				Exercise exercise = new Exercise(eid, name, type, desc,
+						username, null);
+				exercises[i + jArray.length()] = exercise;
 			}
 		} catch (JSONException e) {
 			e.printStackTrace();
@@ -598,6 +625,16 @@ public class AsyncHttpPostWrapper {
 		return sets;
 	}
 
+	/**
+	 * Makes a getSetList call using the Exercise ID. This function is used to
+	 * help in graphing.
+	 * 
+	 * @param eid
+	 *            Id of the exercise we want
+	 * @return Returns an ArrayList of Set objects
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	public ArrayList<Set> getSetListByEid(int eid) throws InterruptedException,
 			ExecutionException {
 		// Make post request with eid

@@ -126,7 +126,7 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		{	
 			AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 			try {
-				Workout workout = new Workout(name, createDate, descript, "usernameA", selectedExerc);
+				Workout workout = new Workout(name, createDate, descript, LoginActivity.userName, selectedExerc);
 				wrapper.addWorkout(workout);
 			} catch (InterruptedException e) {
 				e.printStackTrace();

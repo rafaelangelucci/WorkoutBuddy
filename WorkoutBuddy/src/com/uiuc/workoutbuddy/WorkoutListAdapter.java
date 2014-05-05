@@ -56,7 +56,7 @@ public class WorkoutListAdapter extends ArrayAdapter<Workout>
 			holder.name = (TextView) convertView.findViewById(R.id.row_name);
 			convertView.setTag(holder);
 		}
-		else{
+		else {
 			holder = (Holder)convertView.getTag();
 		}
 		
@@ -69,6 +69,11 @@ public class WorkoutListAdapter extends ArrayAdapter<Workout>
 		return convertView;
 	}
 	
+	/**
+	 * Static class used as a wrapper for each list entry item
+	 * @author tmadigan7
+	 *
+	 */
 	static class Holder
 	{
 	    TextView name;
