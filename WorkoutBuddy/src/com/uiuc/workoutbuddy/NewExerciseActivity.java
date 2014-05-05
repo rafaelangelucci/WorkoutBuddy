@@ -1,16 +1,11 @@
 package com.uiuc.workoutbuddy;
 
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
-
 import helperClasses.Exercise;
-import helperClasses.Set;
 import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
-import android.content.Intent;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,6 +15,10 @@ import android.widget.Spinner;
 import android.widget.Toast;
 import android.support.v4.app.NavUtils;
 
+/**
+ * The activity to input information and create a new exercise.
+ * @author Daniel
+ */
 public class NewExerciseActivity extends Activity implements HttpRequestListener {
 
 	@Override
@@ -34,10 +33,8 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 				try {
 					saveAndClose();
 				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				} catch (ExecutionException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
@@ -75,6 +72,11 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Attempt to get form information, save it to the database, and finally close the input window.
+	 * @throws InterruptedException
+	 * @throws ExecutionException
+	 */
 	private void saveAndClose() throws InterruptedException, ExecutionException {
 		if (((EditText) findViewById(R.id.editTextExerciseName)).getText().toString().isEmpty()) {
 			Toast.makeText(this.getApplicationContext(), "Please enter an exercise name.", Toast.LENGTH_SHORT).show();
@@ -86,7 +88,7 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		Exercise e = new Exercise(editTextExerciseName.getText().toString(),
 				spinnerExerciseType.getSelectedItem().toString(),
 				editTextExerciseDescription.getText().toString(),
-				"usernameA", //Where should this be coming from?
+				LoginActivity.userName,
 				null); //sets
 		new AsyncHttpPostWrapper(this).addExercise(e);
 		finish();
@@ -94,7 +96,5 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 
 	@Override
 	public void requestComplete() {
-		// TODO Auto-generated method stub
 	}
-
 }
