@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -40,6 +41,8 @@ public class PerformExerciseActivity extends Activity implements OnItemClickList
 		TextView exDesc = (TextView)findViewById(R.id.exercise_desc);
 		TextView exType = (TextView)findViewById(R.id.type);
 		TextView exSets = (TextView)findViewById(R.id.num_sets);
+		
+		EditText weight = (EditText)findViewById(R.id.weight_txt);
 		
 		exName.setText(ex.getName());
 		exDesc.setText("Description : " + ex.getDescription());
