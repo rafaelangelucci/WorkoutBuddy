@@ -83,9 +83,14 @@ public class NewExerciseActivity extends Activity implements HttpRequestListener
 		EditText editTextExerciseDescription = (EditText) findViewById(R.id.editTextExerciseDescription);
 		EditText editTextExerciseName = (EditText) findViewById(R.id.editTextExerciseName);
 		Spinner spinnerExerciseType = (Spinner) findViewById(R.id.spinnerExerciseType);
+		
+		String desc = editTextExerciseDescription.getText().toString();
+		if(desc.equals("") || desc.isEmpty())
+			desc = "none";
+		
 		Exercise e = new Exercise(editTextExerciseName.getText().toString(),
 				spinnerExerciseType.getSelectedItem().toString(),
-				editTextExerciseDescription.getText().toString(),
+				desc,
 				LoginActivity.userName, //Where should this be coming from?
 				null); //sets
 		new AsyncHttpPostWrapper(this).addExercise(e);
