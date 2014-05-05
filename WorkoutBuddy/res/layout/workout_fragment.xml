@@ -1,50 +1,45 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
+    android:background="#0099cc"
     android:gravity="center"
     android:orientation="vertical"
-    android:weightSum="2" 
-    android:background="#0099cc">
+    android:weightSum="2" >
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        >
+        android:gravity="center" >
+
         <Button
             android:id="@+id/btn_my_workouts"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/my_workouts" 
-            android:textColor="#000000"
             android:background="@drawable/button"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            />
+            android:text="@string/my_workouts"
+            android:textColor="#000000" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:gravity="center"
-        >
+        android:gravity="center" >
 
         <Button
             android:id="@+id/btn_new_workout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/new_workout" 
-            android:textColor="#000000"
             android:background="@drawable/button"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"
-            />
-
+            android:text="@string/new_workout"
+            android:textColor="#000000" />
     </LinearLayout>
-    
-    
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -55,24 +50,22 @@
             android:id="@+id/btn_timer"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Test Timer" 
-            android:onClick="goToTimer"
-            android:textColor="#000000"
             android:background="@drawable/button"
+            android:onClick="goToTimer"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp" />
+            android:paddingRight="10dp"
+            android:text="Test Timer"
+            android:textColor="#000000" />
 
-        
         <Button
             android:id="@+id/btn_schedule"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Schedule" 
-            android:textColor="#000000"
             android:background="@drawable/button"
             android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
-
+            android:paddingRight="10dp"
+            android:text="Schedule"
+            android:textColor="#000000" />
     </LinearLayout>
 
 </LinearLayout>

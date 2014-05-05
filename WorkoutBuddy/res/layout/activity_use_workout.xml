@@ -1,38 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" 
     android:layout_gravity="center"
     android:gravity="center"
-    >
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <TextView
         android:id="@+id/workout_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:gravity="center"
-       	android:textStyle="bold"
-       	android:textAllCaps="true"
-        />
-     <TextView
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <TextView
         android:id="@+id/workout_description"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:gravity="center"
-        android:textStyle="italic"
-        />
+        android:textSize="18sp"
+        android:textStyle="italic" />
+
     <ListView
         android:id="@+id/list"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:drawSelectorOnTop="false" 
-        />
+        android:drawSelectorOnTop="false" />
 
 </LinearLayout>

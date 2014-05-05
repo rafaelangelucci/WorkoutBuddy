@@ -48,8 +48,8 @@
         android:layout_alignParentLeft="true"
         android:layout_below="@+id/spnr_workouts"
         android:ems="10"
-        android:inputType="date"
-        android:hint="Start Date" >
+        android:hint="Start Date"
+        android:inputType="date" >
 
         <requestFocus />
     </EditText>
@@ -70,8 +70,8 @@
         android:layout_below="@+id/cb_repeat"
         android:layout_toLeftOf="@+id/btn_done"
         android:ems="10"
-        android:inputType="number"
-        android:hint="# Times" />
+        android:hint="# Times"
+        android:inputType="number" />
 
     <EditText
         android:id="@+id/et_numbetween"
@@ -81,8 +81,7 @@
         android:layout_below="@+id/cb_repeat"
         android:layout_toRightOf="@+id/et_numtimes"
         android:ems="10"
-        android:inputType="number"
-        android:hint="# Days Between" />
-
+        android:hint="# Days Between"
+        android:inputType="number" />
 
 </RelativeLayout>
