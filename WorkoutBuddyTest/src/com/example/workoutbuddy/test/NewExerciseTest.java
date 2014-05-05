@@ -71,7 +71,7 @@ public class NewExerciseTest extends
 	}
 
 	/**
-	 * Test that the spinner is able to accept and read value correctly.
+	 * Test that the spinner is able to accept and read values correctly.
 	 * 
 	 * @throws Throwable
 	 */
