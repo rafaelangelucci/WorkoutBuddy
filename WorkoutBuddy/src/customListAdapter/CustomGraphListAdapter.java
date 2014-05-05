@@ -113,10 +113,12 @@ public class CustomGraphListAdapter extends BaseAdapter implements OnClickListen
 	@Override
 	public void onClick(View v) {
 		Exercise selected = (Exercise)v.getTag();
+		String name = selected.getName();
 
 		Intent intent = new Intent(context, GraphActivity.class).setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		intent.putExtra("exercise", name);
 	    context.startActivity(intent);
 		
-		Log.i( "CustomListAdapter", "onClick : " + selected.getName());
+		Log.i( "CustomListAdapter", "onClick : " + name);
 	}
 }

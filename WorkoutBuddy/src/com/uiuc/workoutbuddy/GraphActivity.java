@@ -35,8 +35,8 @@ public class GraphActivity extends Activity implements HttpRequestListener
         setContentView(R.layout.activity_graph);
         
         //Get the exercise from the Extra data
-        //String exerciseName = getIntent().getStringExtra("exercise");
-        String exerciseName = "Squat";
+        String exerciseName = getIntent().getStringExtra("exercise");
+        //String exerciseName = "Squat";
         
         Log.i("GraphActivity", exerciseName);
         
@@ -44,10 +44,8 @@ public class GraphActivity extends Activity implements HttpRequestListener
         try {
 			GraphViewSeries series = createGraphViewSeries(exercise);
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
         
@@ -98,8 +96,10 @@ public class GraphActivity extends Activity implements HttpRequestListener
 	 */
 	public GraphViewSeries createGraphViewSeries(Exercise exercise) throws InterruptedException, ExecutionException {
 		
+		// Create the ArrayList to hold all values for the exercise
 		ArrayList<String> values = new ArrayList<String>();
 		
+		// Get all exercises
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		Exercise[] exercisesAll = wrapper.getExerciseList("usernameA");
 		
@@ -107,21 +107,20 @@ public class GraphActivity extends Activity implements HttpRequestListener
 		
 		int e_id = 0;
 		try {
+			//e_id = getEidFromEName(exercise.getName());
 			e_id = getEidFromEName("Squats");
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		//Get the exercise from exerciseList and put it into a ArrayList of size 1
-		ArrayList<Exercise> ex = new ArrayList<Exercise>();
-		for (int i = 0; i < exerciseList.size(); i++) {
-			if (exerciseList.get(i).getEid() == e_id)
-				ex.add(exerciseList.get(i));
-		}
+		ArrayList<Exercise> ex = getSoloArrayList(exerciseList, e_id);
+		
+		
+		
+		// TODO test that ex is not empty
 
 		// Update the set info of the exercise
 		wrapper.updateSetsInWorkout(ex);
@@ -135,6 +134,26 @@ public class GraphActivity extends Activity implements HttpRequestListener
 		GraphViewSeries series = new GraphViewSeries(data);
 		
 		return series;
+	}
+	
+	/**
+	 * Returns an ArrayList of size 1 with the exercise in the given exercise list that matches
+	 * the exercise id given
+	 * 
+	 * @param list The exercise list to search in
+	 * @param e_id The id to look for
+	 * 
+	 * @return An ArrayList with the matched exercise
+	 */
+	public ArrayList<Exercise> getSoloArrayList(ArrayList<Exercise> exerciseList, int e_id) {
+		ArrayList<Exercise> ex = new ArrayList<Exercise>();
+		
+		for (int i = 0; i < exerciseList.size(); i++) {
+			if (exerciseList.get(i).getEid() == e_id)
+				ex.add(exerciseList.get(i));
+		}
+		
+		return ex;
 	}
 	
 	/**
@@ -161,7 +180,7 @@ public class GraphActivity extends Activity implements HttpRequestListener
 	}
 	
 	/**
-	 * Searches all the exercises of all workouts for the dates an exercise was performed in a workout
+	 * Gets the dates that an exercise was performed on by searching through all exercises in all workouts
 	 * 
 	 * @return an ArrayList of dates 
 	 */
@@ -174,12 +193,14 @@ public class GraphActivity extends Activity implements HttpRequestListener
 		try {
 			workoutsAll = wrapper.getWorkoutList("usernameA");
 		} catch (ExecutionException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		//TODO Fill workouts with data
+		//create exercise list of size 1
+		//updateSetsInWorkout(exercise list)
 		
 		int e_id = 0;
 		try {

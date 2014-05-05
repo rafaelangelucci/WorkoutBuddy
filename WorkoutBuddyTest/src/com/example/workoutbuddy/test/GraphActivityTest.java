@@ -57,6 +57,7 @@ public class GraphActivityTest extends
 		Assert.assertFalse(0 == exercisesAll.length); // Not empty
 	}
 	
+	
 	public void testGetAllWorkouts() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		Workout[] exercisesAll = wrapper.getWorkoutList("usernameA");
@@ -69,6 +70,4 @@ public class GraphActivityTest extends
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 }
