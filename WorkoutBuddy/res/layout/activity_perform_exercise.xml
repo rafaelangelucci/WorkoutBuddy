@@ -1,54 +1,97 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout 
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp" 
     android:layout_gravity="center"
     android:gravity="center"
-    >
+    android:orientation="vertical"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp" >
 
     <TextView
         android:id="@+id/exercise_name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="24sp"
         android:gravity="center"
-       	android:textStyle="bold|italic"
-       	android:textAllCaps="true"
-       	android:paddingBottom="15dp"
-       	android:paddingTop="10dp"
-        />
-     <TextView
+        android:paddingBottom="15dp"
+        android:paddingTop="10dp"
+        android:textAllCaps="true"
+        android:textSize="24sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
         android:id="@+id/exercise_desc"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:gravity="left"
         android:paddingBottom="15dp"
-        />
-     <TextView
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/type"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
         android:gravity="left"
-        />
-     <TextView
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/num_sets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="18sp"
-        android:gravity="center"
-        />
-    <ListView
-        android:id="@+id/list"
+        android:gravity="left"
+        android:textSize="18sp" />
+
+    <TableLayout
+        android:id="@+id/table"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:drawSelectorOnTop="false" 
-        />
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <TableRow
+            android:id="@+id/set_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+         	android:background="#B0B0B0"
+			>
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Weight" 
+                android:gravity="center"/>
+
+            <NumberPicker
+                android:id="@+id/weight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <TextView
+                android:id="@+id/weight"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:text="Reps" 
+                android:gravity="center"/>
+
+            <NumberPicker
+                android:id="@+id/weight"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"/>
+
+            <Button
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:drawable/ic_delete" 
+                android:gravity="center"
+                android:layout_gravity="center"/>
+        </TableRow>
+    </TableLayout>
 
 </LinearLayout>

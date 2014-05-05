@@ -1,12 +1,7 @@
 package com.uiuc.workoutbuddy;
 
-import java.util.concurrent.ExecutionException;
-
-import customListAdapter.UseWorkoutAdapter;
 import helperClasses.Exercise;
 import helperClasses.Workout;
-import httpRequests.AsyncHttpPostWrapper;
-import httpRequests.HttpRequestListener;
 import android.os.Bundle;
 import android.app.Activity;
 import android.content.Intent;
@@ -49,27 +44,9 @@ public class PerformExerciseActivity extends Activity implements OnItemClickList
 		exName.setText(ex.getName());
 		exDesc.setText("Description : " + ex.getDescription());
 		exType.setText("Type : " + ex.getType());
-//		exSets.setText(ex.getNumSets());
-		
-		// Populate list view of exercises
-		ListView list = (ListView)findViewById(R.id.list);
-		
-//		UseWorkoutAdapter adapter;
-//		if(wo.getExercises() == null)
-//		{
-//			Log.i("PerformExerciseActivity", "ERROR. EXERCISE LIST IS NULL");
-//			adapter = new UseWorkoutAdapter(this, ExerciseFragment.exercises);
-//		}
-//		else
-//		{
-//			Log.i("PerformExerciseActivity", "Using workout's exercises");
-//			adapter = new UseWorkoutAdapter(this, wo.getExercises());
-//		}
-//		//TODO: fix
-//
-//		list.setAdapter(adapter);
-//		list.setOnItemClickListener(this);
-		
+		exSets.setText("Suggested number of sets: " + ((Integer)ex.getSets().size()).toString() );		
+
+		// TODO: set information here
 	}
 
 	@Override
