@@ -11,14 +11,16 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.CheckBox;
 import android.widget.Toast;
 
-public class ExerciseListActivity extends ListActivity implements OnItemClickListener {
-	
+public class ExerciseListActivity extends ListActivity implements
+		OnItemClickListener {
+
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_exercise_list);
 
-		ExerciseListAdapter adapter = new ExerciseListAdapter(this, ExerciseFragment.exercises);
+		ExerciseListAdapter adapter = new ExerciseListAdapter(this,
+				ExerciseFragment.exercises);
 
 		setListAdapter(adapter);
 	}
@@ -27,13 +29,14 @@ public class ExerciseListActivity extends ListActivity implements OnItemClickLis
 	 * Function to handle list item click
 	 */
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-		CheckBox cb = (CheckBox)view.findViewById(R.id.btn_check_box);
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
+		CheckBox cb = (CheckBox) view.findViewById(R.id.btn_check_box);
 		cb.performClick();
-		if(cb.isChecked())
-		{
+		if (cb.isChecked()) {
 			String name = ExerciseFragment.exercises.get(position).getName();
-			Toast.makeText(this.getApplicationContext(), name, Toast.LENGTH_SHORT).show();
+			Toast.makeText(this.getApplicationContext(), name,
+					Toast.LENGTH_SHORT).show();
 			Log.i("ExerciseListActivity", "onItemClick : cb is checked");
 		}
 	}

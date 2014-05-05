@@ -21,14 +21,14 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 /**
- * Class to contain information for the Workout Fragment tab 
+ * Class to contain information for the Workout Fragment tab
  * 
  * @author tmadigan7
- *
+ * 
  */
 @SuppressLint("ValidFragment")
-public class ExerciseFragment extends Fragment implements OnClickListener, HttpRequestListener
-{
+public class ExerciseFragment extends Fragment implements OnClickListener,
+		HttpRequestListener {
 	View view;
 	Context c;
 	public static ArrayList<Exercise> exercises = new ArrayList<Exercise>();
@@ -37,34 +37,37 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 	/**
 	 * Default Constructor
 	 */
-	public ExerciseFragment(){}
+	public ExerciseFragment() {
+	}
 
 	/**
 	 * Constructor
-	 * @param c context
+	 * 
+	 * @param c
+	 *            context
 	 */
-	public ExerciseFragment(Context c)
-	{
+	public ExerciseFragment(Context c) {
 		this.c = c;
 	}
 
 	/**
-	 * On Creation of this fragment, this method executes to load the layout
-	 * and registers all buttons and sets onclick listeners
+	 * On Creation of this fragment, this method executes to load the layout and
+	 * registers all buttons and sets onclick listeners
 	 */
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) 
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		try {
-			view = inflater.inflate(R.layout.exercise_fragment, container, false);
-		} catch(InflateException e) {
-			Log.i( "ExerciseFragment", "InflateException : onCreateView");
+			view = inflater.inflate(R.layout.exercise_fragment, container,
+					false);
+		} catch (InflateException e) {
+			Log.i("ExerciseFragment", "InflateException : onCreateView");
 		}
 
 		exercises.clear();
 
 		// Set up all button call backs
-		newExercise = (Button)view.findViewById(R.id.btn_new_exercise);
-		myExercises = (Button)view.findViewById(R.id.btn_my_exercises);
+		newExercise = (Button) view.findViewById(R.id.btn_new_exercise);
+		myExercises = (Button) view.findViewById(R.id.btn_my_exercises);
 
 		newExercise.setOnClickListener(this);
 		myExercises.setOnClickListener(this);
@@ -72,12 +75,12 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 		// Set up text view from database pull
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		try {
-			Exercise[] responses = wrapper.getExerciseList(LoginActivity.userName);
-			for(int i = 0; i < responses.length; i++)
-			{
-				exercises.add(new Exercise(responses[i].getEid(), 
-						responses[i].getName(), responses[i].getType(), 
-						responses[i].getDescription(), LoginActivity.userName, null));
+			Exercise[] responses = wrapper
+					.getExerciseList(LoginActivity.userName);
+			for (int i = 0; i < responses.length; i++) {
+				exercises.add(new Exercise(responses[i].getEid(), responses[i]
+						.getName(), responses[i].getType(), responses[i]
+						.getDescription(), LoginActivity.userName, null));
 			}
 		} catch (InterruptedException e) {
 			e.printStackTrace();
@@ -92,33 +95,30 @@ public class ExerciseFragment extends Fragment implements OnClickListener, HttpR
 	 * On click listener for exercise top row buttons
 	 */
 	@Override
-	public void onClick(View v) 
-	{
-		switch(v.getId())
-		{
+	public void onClick(View v) {
+		switch (v.getId()) {
 		case R.id.btn_my_exercises:
-			//TODO: add refresh functionality
-			Log.i( "ExerciseFragment", "OnClick : New Exercise");
+			// TODO: add refresh functionality
+			Log.i("ExerciseFragment", "OnClick : New Exercise");
 			Intent i = new Intent(c, ExerciseListActivity.class);
 			startActivity(i);
 			break;
 		case R.id.btn_new_exercise:
-			Log.i( "ExerciseFragment", "OnClick : Add Exercise");
+			Log.i("ExerciseFragment", "OnClick : Add Exercise");
 			startActivity(new Intent(c, NewExerciseActivity.class));
 			break;
 		default:
-			Log.i( "ExerciseFragment", "OnClick : No ID matched");
+			Log.i("ExerciseFragment", "OnClick : No ID matched");
 		}
 
 	}
 
 	@Override
-	public void requestComplete() 
-	{
-		Log.i( "requestComplete()", "Request Completed countDown()");
+	public void requestComplete() {
+		Log.i("requestComplete()", "Request Completed countDown()");
 	}
-	
-/************** GETTERS AND SETTERS **************/
+
+	/************** GETTERS AND SETTERS **************/
 
 	public ArrayList<Exercise> getExercises() {
 		return exercises;

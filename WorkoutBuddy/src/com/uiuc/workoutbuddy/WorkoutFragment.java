@@ -20,13 +20,13 @@ import android.widget.Button;
 
 /**
  * Class to contain information for the Workout Fragment tab
- *
+ * 
  * @author tmadigan7
- *
+ * 
  */
 @SuppressLint("ValidFragment")
-public class WorkoutFragment extends Fragment implements OnClickListener, HttpRequestListener
-{
+public class WorkoutFragment extends Fragment implements OnClickListener,
+		HttpRequestListener {
 	View view;
 	Context c;
 	Button myWorkouts, newWorkout, schedule;
@@ -36,35 +36,38 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 	/**
 	 * Default Constructor
 	 */
-	public WorkoutFragment(){}
+	public WorkoutFragment() {
+	}
 
 	/**
 	 * Constructor
-	 * @param c context
+	 * 
+	 * @param c
+	 *            context
 	 */
-	public WorkoutFragment(Context c)
-	{
+	public WorkoutFragment(Context c) {
 		this.c = c;
 	}
 
 	/**
-	 * On Creation of this fragment, this method executes to load the layout
-	 * and registers all buttons and sets onclick listeners
+	 * On Creation of this fragment, this method executes to load the layout and
+	 * registers all buttons and sets onclick listeners
 	 */
-	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
-	{
+	public View onCreateView(LayoutInflater inflater, ViewGroup container,
+			Bundle savedInstanceState) {
 		try {
-			view = inflater.inflate(R.layout.workout_fragment, container, false);
-		} catch(InflateException e) {
+			view = inflater
+					.inflate(R.layout.workout_fragment, container, false);
+		} catch (InflateException e) {
 			e.printStackTrace();
 		}
 
 		workouts.clear();
 
 		// Grab all buttons and set their onClick listeners
-		myWorkouts = (Button)view.findViewById(R.id.btn_my_workouts);
-		newWorkout = (Button)view.findViewById(R.id.btn_new_workout);
-		schedule = (Button)view.findViewById(R.id.btn_schedule);
+		myWorkouts = (Button) view.findViewById(R.id.btn_my_workouts);
+		newWorkout = (Button) view.findViewById(R.id.btn_new_workout);
+		schedule = (Button) view.findViewById(R.id.btn_schedule);
 		myWorkouts.setOnClickListener(this);
 		newWorkout.setOnClickListener(this);
 		schedule.setOnClickListener(this);
@@ -73,12 +76,12 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 
 		try {
-			Workout[] responses = wrapper.getWorkoutList(LoginActivity.userName);
-			if(responses.length == 0)
+			Workout[] responses = wrapper
+					.getWorkoutList(LoginActivity.userName);
+			if (responses.length == 0)
 				Log.i("Asyn Task", "0 workouts");
 
-			for(int i = 0; i < responses.length; i++)
-			{
+			for (int i = 0; i < responses.length; i++) {
 				workouts.add(responses[i]);
 				Log.i("Workout Added", responses[i].getName());
 			}
@@ -93,19 +96,17 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 	 * On click listener for my workouts and new workout buttons
 	 */
 	@Override
-	public void onClick(View v)
-	{
-		switch(v.getId())
-		{
+	public void onClick(View v) {
+		switch (v.getId()) {
 		case R.id.btn_my_workouts:
-			Log.i( "WorkoutFragment", "OnClick : My Workouts");
+			Log.i("WorkoutFragment", "OnClick : My Workouts");
 			Intent intent = new Intent(c, WorkoutListActivity.class);
 			startActivity(intent);
 			break;
 		case R.id.btn_new_workout:
 			Intent i = new Intent(c, NewWorkoutActivity.class);
 			startActivity(i);
-			Log.i( "WorkoutFragment", "OnClick : New Workout");
+			Log.i("WorkoutFragment", "OnClick : New Workout");
 			break;
 		case R.id.btn_schedule:
 			Intent i2 = new Intent(c, ScheduleActivity.class);
@@ -113,23 +114,22 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 			Log.i("ScheduleActivity", "OnClick : Schedule");
 			break;
 		default:
-			Log.i( "WorkoutFragment", "OnClick : No ID matched");
+			Log.i("WorkoutFragment", "OnClick : No ID matched");
 		}
 	}
 
 	/**
 	 * Function to grab workout from list by its specified id
-	 * @param id workout id of workout object desired
+	 * 
+	 * @param id
+	 *            workout id of workout object desired
 	 * @return workout with specified id
 	 */
-	public static Workout getWorkoutById(int id)
-	{
+	public static Workout getWorkoutById(int id) {
 		Workout tmp;
-		for(int i = 0; i < workouts.size(); i++)
-		{
+		for (int i = 0; i < workouts.size(); i++) {
 			tmp = workouts.get(i);
-			if(tmp.getWid() == id)
-			{
+			if (tmp.getWid() == id) {
 				return tmp;
 			}
 		}
@@ -138,14 +138,13 @@ public class WorkoutFragment extends Fragment implements OnClickListener, HttpRe
 	}
 
 	@Override
-	public void requestComplete() 
-	{
-		Log.i( "requestComplete()", "Request Completed countDown()");
+	public void requestComplete() {
+		Log.i("requestComplete()", "Request Completed countDown()");
 
 	}
 
-/************** GETTERS AND SETTERS **************/
-	
+	/************** GETTERS AND SETTERS **************/
+
 	public Button getMyWorkouts() {
 		return myWorkouts;
 	}

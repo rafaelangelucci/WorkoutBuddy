@@ -17,16 +17,18 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.AdapterView.OnItemLongClickListener;
 
 /**
- *
+ * 
  * @author tmadigan7
- *
- * Some code borrowed from: http://www.vogella.com/tutorials/AndroidListView/article.html#listactivity
- *
+ * 
+ *         Some code borrowed from:
+ *         http://www.vogella.com/tutorials/AndroidListView
+ *         /article.html#listactivity
+ * 
  */
-public class WorkoutListActivity extends ListActivity implements OnItemClickListener
-{
-	private static final String SUBJECT = 
-			"WorkoutBuddy : " + LoginActivity.userName + " shared a workout with you!";
+public class WorkoutListActivity extends ListActivity implements
+		OnItemClickListener {
+	private static final String SUBJECT = "WorkoutBuddy : "
+			+ LoginActivity.userName + " shared a workout with you!";
 	protected ActionMode mActionMode;
 	public int selectedItem = -1;
 	AsyncHttpPostWrapper postWrapper;
@@ -45,15 +47,15 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		adapter = new WorkoutListAdapter(this, WorkoutFragment.workouts);
 
 		setListAdapter(adapter);
-		
+
 		// Set short on click listener to use workout
 		getListView().setOnItemClickListener(this);
-		
+
 		// Set long on click listener to bring up the CAB
-		getListView().setOnItemLongClickListener(new OnItemLongClickListener()
-		{
+		getListView().setOnItemLongClickListener(new OnItemLongClickListener() {
 			@Override
-			public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+			public boolean onItemLongClick(AdapterView<?> parent, View view,
+					int position, long id) {
 				if (mActionMode != null) {
 					return false;
 				}
@@ -67,27 +69,27 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 	/**
 	 * Function to handle CAB startup and close REFACTORED
-	 * @param position int for which wo was selected
+	 * 
+	 * @param position
+	 *            int for which wo was selected
 	 */
 	private void onListItemSelect(int position) {
 		selectedItem = position;
 
 		// start the CAB using the ActionMode.Callback defined above
-		if(mActionMode == null)
-		{
+		if (mActionMode == null) {
 			mActionMode = startActionMode(new ActionModeCallback());
 			Log.i("WorkoutListActivity", "mActionMode Started");
 			mActionMode.setTag(position);
-		}
-		else
-		{
+		} else {
 			Log.i("WorkoutListActivity", "mActionMode Finish");
 			mActionMode.finish();
 		}
 	}
 
 	@Override
-	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+	public void onItemClick(AdapterView<?> parent, View view, int position,
+			long id) {
 		Workout wo = WorkoutFragment.workouts.get(position);
 		String name = wo.getName();
 		Log.i("WorkoutListActivity", "onItemClick : " + name);
@@ -107,23 +109,25 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 
 	/**
 	 * Function to share a work out via email or other methods REFACTORED
-	 * @param wo workout that was selected from the list
+	 * 
+	 * @param wo
+	 *            workout that was selected from the list
 	 * @return true if successful
 	 */
 	public boolean shareWorkout(Workout wo) {
 		Log.i("Share Selected", "Workout Selected : " + wo.getName());
 
-		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND); 
+		Intent sharingIntent = new Intent(android.content.Intent.ACTION_SEND);
 		sharingIntent.setType("text/plain");
 		String shareBody = wo.toString();
-		
+
 		sharingIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, SUBJECT);
 		sharingIntent.putExtra(android.content.Intent.EXTRA_TEXT, shareBody);
 		startActivity(Intent.createChooser(sharingIntent, "Share via"));
-		
+
 		return true;
 	}
-	
+
 	public void deleteWorkout(Workout wo, int pos) {
 		Log.i("Delete Selected", "Workout to delete : " + wo.getName());
 		try {
@@ -131,13 +135,14 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		
+
 		WorkoutFragment.workouts.remove(pos);
 		getListView().invalidateViews();
 	}
 
 	/**
-	 * Action mode call back that inflates CAB layout and registers on click functionality
+	 * Action mode call back that inflates CAB layout and registers on click
+	 * functionality
 	 */
 	private class ActionModeCallback implements ActionMode.Callback {
 		public boolean onCreateActionMode(ActionMode mode, Menu menu) {
@@ -153,7 +158,8 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		// called when the user selects a contextual menu item
 		public boolean onActionItemClicked(ActionMode mode, MenuItem item) {
 			int item_postion = Integer.parseInt(mode.getTag().toString());
-			int wid = ((Workout)getListView().getAdapter().getItem(item_postion)).getWid();
+			int wid = ((Workout) getListView().getAdapter().getItem(
+					item_postion)).getWid();
 			Workout wo = null;
 			try {
 				wo = postWrapper.getWorkout(wid);
@@ -161,8 +167,7 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 				Log.i("UseWorkoutActivity", "EXCEPTION CAUGHT");
 				e.printStackTrace();
 			}
-			switch(item.getItemId())
-			{
+			switch (item.getItemId()) {
 			case R.id.action_settings:
 				Log.i("WorkoutListActivity", "SETTINGS onActionItemClicked");
 				break;
@@ -193,4 +198,3 @@ public class WorkoutListActivity extends ListActivity implements OnItemClickList
 		}
 	};
 }
-
