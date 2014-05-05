@@ -34,7 +34,6 @@ public class GraphActivity extends Activity implements HttpRequestListener
 		super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_graph);
         
-        Log.i("GraphActivity", "on create");
         //Get the exercise from the Extra data
         //String exerciseName = getIntent().getStringExtra("exercise");
         String exerciseName = "Squat";
