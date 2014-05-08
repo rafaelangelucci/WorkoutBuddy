@@ -6,11 +6,13 @@ import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
 import com.uiuc.workoutbuddy.GraphActivity;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
+import android.util.Log;
 
 
 public class GraphActivityTest extends
@@ -39,10 +41,6 @@ public class GraphActivityTest extends
 		assertEquals(expected, "Workout\nBuddy");
 	}
 	
-	public void testGetDates() {
-		ArrayList<String> dates = lActivity.getDates();
-		Assert.assertEquals(1, dates.size()); // 
-	}
 	
 	public void testGetEid() throws InterruptedException, ExecutionException {
 		String eName = "Squats";

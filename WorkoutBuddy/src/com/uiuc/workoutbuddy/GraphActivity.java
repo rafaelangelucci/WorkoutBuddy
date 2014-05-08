@@ -36,9 +36,6 @@ public class GraphActivity extends Activity implements HttpRequestListener
         
         //Get the exercise from the Extra data
         String exerciseName = getIntent().getStringExtra("exercise");
-        //String exerciseName = "Squat";
-        
-        Log.i("GraphActivity", exerciseName);
         
         // Create the GraphViewSeries to graph
         try {
@@ -118,10 +115,6 @@ public class GraphActivity extends Activity implements HttpRequestListener
 		//Get the exercise from exerciseList and put it into a ArrayList of size 1
 		ArrayList<Exercise> ex = getSoloArrayList(exerciseList, e_id);
 		
-		
-		
-		// TODO test that ex is not empty
-
 		// Update the set info of the exercise
 		wrapper.updateSetsInWorkout(ex);
 		 
@@ -198,10 +191,6 @@ public class GraphActivity extends Activity implements HttpRequestListener
 			e.printStackTrace();
 		}
 		
-		//TODO Fill workouts with data
-		//create exercise list of size 1
-		//updateSetsInWorkout(exercise list)
-		
 		int e_id = 0;
 		try {
 			e_id = getEidFromEName("Squats");
@@ -210,6 +199,28 @@ public class GraphActivity extends Activity implements HttpRequestListener
 			e.printStackTrace();
 		} catch (ExecutionException e) {
 			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// Create an ArrayList with just the exercise we are trying to graph
+		Exercise[] exercisesAll = null;
+		try {
+			exercisesAll = wrapper.getExerciseList("usernameA");
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
+			e.printStackTrace();
+		}
+		
+		ArrayList<Exercise> exerciseList = new ArrayList<Exercise>(Arrays.asList(exercisesAll));
+		ArrayList<Exercise> ex = getSoloArrayList(exerciseList, e_id);
+		
+		// Update the values in the exercise
+		try {
+			wrapper.updateSetsInWorkout(ex);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		} catch (ExecutionException e) {
 			e.printStackTrace();
 		}
 		
