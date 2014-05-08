@@ -3,10 +3,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
-<<<<<<< HEAD
-    android:gravity="center"
-=======
->>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
@@ -35,28 +31,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
-<<<<<<< HEAD
-        android:textSize="18sp" />
-=======
         android:textSize="18sp" 
         android:paddingBottom="15dp"/>
->>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
 
     <TextView
         android:id="@+id/num_sets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-<<<<<<< HEAD
-        android:gravity="center"
-        android:textSize="18sp" />
-
-    <ListView
-        android:id="@+id/list"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:drawSelectorOnTop="false" />
-=======
         android:gravity="left"
         android:textSize="18sp" 
         android:paddingBottom="15dp"/>
@@ -117,6 +98,5 @@
             
         </TableRow>
     </TableLayout>
->>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
 
 </LinearLayout>
