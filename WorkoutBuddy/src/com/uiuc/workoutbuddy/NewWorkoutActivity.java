@@ -32,7 +32,6 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 {
 
 	public int numExercises = 0;
-	public Exercise[] exerciseList;
 
 	/**
 	 * Sets the onclicklisteners for buttons.
@@ -52,12 +51,6 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		plus.setOnClickListener(this);
 		minus.setOnClickListener(this);
 
-		exerciseList = new Exercise[ExerciseFragment.exercises.size()];
-		for(int i = 0; i < ExerciseFragment.exercises.size(); i++)
-		{
-			exerciseList[i] = ExerciseFragment.exercises.get(i);
-		}
-		
 		addExerciseSpinner();
 	}
 
@@ -168,9 +161,9 @@ public class NewWorkoutActivity extends Activity implements OnClickListener, Htt
 		
 
 		Spinner spinner = new Spinner(this);
-		String[] exerciseNames = new String[exerciseList.length];
+		String[] exerciseNames = new String[ExerciseFragment.exercises.size()];
 		for(int i = 0; i < exerciseNames.length; i++){
-			exerciseNames[i] = exerciseList[i].getName();
+			exerciseNames[i] = ExerciseFragment.exercises.get(i).getName();
 		}
 		ArrayAdapter<CharSequence> adapter = new ArrayAdapter<CharSequence> (this, android.R.layout.simple_spinner_item, exerciseNames);
 		// Specify the layout to use when the list of choices appears

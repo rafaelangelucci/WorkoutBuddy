@@ -7,12 +7,19 @@ import android.view.View;
 import android.widget.Button;
 import com.uiuc.workoutbuddy.NewWorkoutActivity;
 
+/**
+ * This class test NewWorkoutActivity class.
+ * @author Joel
+ *
+ */
 public class NewWorkoutActivityTest extends
 	ActivityInstrumentationTestCase2<NewWorkoutActivity> {
 
 	private NewWorkoutActivity myActivity;
 
-	
+	/**
+	 * Basic constructor
+	 */
 	public NewWorkoutActivityTest(){
 		super(NewWorkoutActivity.class);
 	}
@@ -29,8 +36,7 @@ public class NewWorkoutActivityTest extends
 	/**
 	 * Test successful start up of NewWorkoutActivity aka BasicActivity
 	 */
-	public void testActivityStartup()
-	{
+	public void testActivityStartup() {
 		final String expected = myActivity.getString(com.uiuc.workoutbuddy.R.string.title_activity_new_workout);
 		assertEquals(expected, "NewWorkoutActivity");
 	}
@@ -48,49 +54,17 @@ public class NewWorkoutActivityTest extends
 	 * Test all button clicks and verify they work as designed
 	 * @param view
 	 */
-	public void testButtonLayout(View view)
-	{
+	public void testButtonLayout(View view) {
 		Assert.assertNotNull(view);
 		Assert.assertTrue(view.isShown());
 		Assert.assertTrue(view.isClickable());
 	}
-	
-	@SuppressLint("NewApi")
-	public void testbuttonDoneClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_done);
-		Assert.assertTrue(button.callOnClick());
-	}
-	
-	@SuppressLint("NewApi")
-	public void testbuttonPlusClick(){
-		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_plus);
-		Assert.assertTrue(button.callOnClick());
-	}
+
+
 	
 	@SuppressLint("NewApi")
 	public void testbuttonMinusClick(){
 		Button button = (Button)myActivity.findViewById(com.uiuc.workoutbuddy.R.id.btn_minus);
 		Assert.assertTrue(button.callOnClick());
-	}
-	
-
-	public void testExerciseAdded()
-	{
-		Assert.fail();
-	}
-	
-	public void testExerciseRemoved()
-	{
-		Assert.fail();
-	}
-	
-	public void testWorkoutAdded()
-	{
-		Assert.fail();
-	}
-	
-	public void testWorkoutNotAdded()
-	{
-		Assert.fail();
 	}
 }

@@ -34,12 +34,10 @@ public class UseWorkoutActivity extends Activity implements OnItemClickListener 
 		// Grab and set text views of activity
 		TextView woName = (TextView) findViewById(R.id.workout_name);
 		TextView woDesc = (TextView) findViewById(R.id.workout_description);
-
+		ListView list = (ListView) findViewById(R.id.list);
+		
 		woName.setText(wo.getName());
 		woDesc.setText(wo.getDescription());
-
-		// Populate list view of exercises
-		ListView list = (ListView) findViewById(R.id.list);
 
 		UseWorkoutAdapter adapter;
 		if (wo.getExercises() == null) {

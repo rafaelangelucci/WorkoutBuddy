@@ -6,16 +6,13 @@ import httpRequests.AsyncHttpPostWrapper;
 import httpRequests.HttpRequestListener;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.concurrent.ExecutionException;
-
-import com.jjoe64.graphview.GraphViewSeries;
-import com.jjoe64.graphview.GraphView.GraphViewData;
-import com.uiuc.workoutbuddy.ExerciseGraphListActivity;
 import com.uiuc.workoutbuddy.GraphActivity;
 
 import junit.framework.Assert;
 import android.test.ActivityInstrumentationTestCase2;
-import android.view.View;
+import android.util.Log;
 
 
 public class GraphActivityTest extends
@@ -44,25 +41,6 @@ public class GraphActivityTest extends
 		assertEquals(expected, "Workout\nBuddy");
 	}
 	
-	public void testSeries() {
-		GraphViewSeries series = new GraphViewSeries(new GraphViewData[] {
-			      new GraphViewData(1, 150.0d)
-			      , new GraphViewData(2, 155.0d)
-			      , new GraphViewData(3, 160.0d)
-			      , new GraphViewData(4, 160.0d)
-			      , new GraphViewData(5, 162.5d)
-			      , new GraphViewData(6, 165.0d)
-			      , new GraphViewData(7, 167.5d)
-			});
-		
-		GraphViewSeries activitySeries = lActivity.exampleSeries;
-		//Assert.assertTrue(series == activitySeries);
-	}
-	
-	public void testGetDates() {
-		ArrayList<String> dates = lActivity.getDates();
-		Assert.assertEquals(1, dates.size()); // 
-	}
 	
 	public void testGetEid() throws InterruptedException, ExecutionException {
 		String eName = "Squats";
@@ -77,6 +55,7 @@ public class GraphActivityTest extends
 		Assert.assertFalse(0 == exercisesAll.length); // Not empty
 	}
 	
+	
 	public void testGetAllWorkouts() throws InterruptedException, ExecutionException {
 		AsyncHttpPostWrapper wrapper = new AsyncHttpPostWrapper(this);
 		Workout[] exercisesAll = wrapper.getWorkoutList("usernameA");
@@ -89,6 +68,4 @@ public class GraphActivityTest extends
 		// TODO Auto-generated method stub
 		
 	}
-	
-	
 }

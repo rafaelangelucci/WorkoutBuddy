@@ -3,7 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:layout_gravity="center"
+<<<<<<< HEAD
     android:gravity="center"
+=======
+>>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
     android:orientation="vertical"
     android:paddingLeft="8dp"
     android:paddingRight="8dp" >
@@ -32,12 +35,18 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="left"
+<<<<<<< HEAD
         android:textSize="18sp" />
+=======
+        android:textSize="18sp" 
+        android:paddingBottom="15dp"/>
+>>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
 
     <TextView
         android:id="@+id/num_sets"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:gravity="center"
         android:textSize="18sp" />
 
@@ -47,5 +56,67 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:drawSelectorOnTop="false" />
+=======
+        android:gravity="left"
+        android:textSize="18sp" 
+        android:paddingBottom="15dp"/>
+
+    <TableLayout
+        android:id="@+id/table"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center" >
+
+        <TableRow
+            android:id="@+id/set_row"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#B0B0B0" >
+
+            <TextView
+                android:id="@+id/weight_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Weight" />
+
+            <EditText
+                android:id="@+id/weight_txt"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="lbs"
+                android:inputType="number" />
+
+            <TextView
+                android:id="@+id/reps_tv"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text="Reps" />
+
+            <EditText
+                android:id="@+id/reps_txt"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:hint="NumReps"
+                android:inputType="number" />
+
+            <Button
+                android:id="@+id/weight"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@android:drawable/ic_delete"
+                android:gravity="center" />
+            
+        </TableRow>
+    </TableLayout>
+>>>>>>> 5551bc615e67364d0004a8d27d0f22d5569f0852
 
 </LinearLayout>
