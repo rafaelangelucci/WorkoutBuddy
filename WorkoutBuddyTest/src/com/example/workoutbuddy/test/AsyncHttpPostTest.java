@@ -110,7 +110,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener {
 	public void testAddGetModifyGetDeleteSet() throws InterruptedException,
 			ExecutionException {
 		// Test Add
-		Set set = new Set(10, 135, "", 1, 1, 1);
+		Set set = new Set(10, 135, "", 1, 2, 254);
 		wrapper.addSet(set);
 
 		// Test Get
@@ -128,7 +128,7 @@ public class AsyncHttpPostTest extends TestCase implements HttpRequestListener {
 		set.setReps(8);
 		wrapper.updateSet(set);
 		dbSet = wrapper.getSet(set.getSid());
-		// assertEquals(dbSet.getPriority(), set.getPriority());
+		assertEquals(dbSet.getPriority(), set.getPriority());
 		assertEquals(dbSet.getReps(), set.getReps());
 		assertEquals(dbSet.getWeight(), set.getWeight());
 
