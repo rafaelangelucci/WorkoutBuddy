@@ -102,17 +102,18 @@ public class FullWorkoutTest extends TestCase implements HttpRequestListener {
 				dbSets.add(iterSet.get(j));
 			}
 		}
-		
-		//Add set to workout
+
+		// Add set to workout
 		int priority = dbExercises.get(0).getSets().get(0).getPriority();
-		Set newSet = new Set(8, 15, "", priority, dbExercises.get(0).getEid(), dbWorkout.getWid());
+		Set newSet = new Set(8, 15, "", priority, dbExercises.get(0).getEid(),
+				dbWorkout.getWid());
 		dbExercises.get(0).getSets().add(newSet);
 		Set changeSet = dbExercises.get(0).getSets().get(0);
 		changeSet.setReps(100);
 		changeSet.setWeight(1000);
 		wrapper.updateWorkout(dbWorkout);
 		Workout updatedWO = wrapper.getWorkout(dbWorkout.getWid());
-		
+
 		ArrayList<Exercise> updatedEx = updatedWO.getExercises();
 		ArrayList<Set> updatedSets = new ArrayList<Set>();
 		for (int i = 0; i < updatedEx.size(); i++) {
@@ -128,7 +129,7 @@ public class FullWorkoutTest extends TestCase implements HttpRequestListener {
 		wrapper.deleteWorkout(workout.getWid());
 		wrapper.deleteExercise(exercise1.getEid());
 		wrapper.deleteExercise(exercise2.getEid());
-		
+
 		assertEquals(changeSet.getReps(), updatedSet.getReps());
 		assertEquals(changeSet.getWeight(), updatedSet.getWeight());
 		assertEquals(newSet.getReps(), dbNewSet.getReps());

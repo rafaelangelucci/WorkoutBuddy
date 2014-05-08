@@ -50,5 +50,7 @@
         <item >Weight</item>
         <item >Time</item>
     </string-array>
+        <string name="exercise_name">Exercise Name:</string>
+        <string name="exercise_description">Exercise Description:</string>
 
 </resources>
