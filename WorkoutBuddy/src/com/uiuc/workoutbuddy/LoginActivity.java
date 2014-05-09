@@ -86,6 +86,7 @@ public class LoginActivity extends Activity implements OnClickListener, HttpRequ
 	 */
 	private void login(View v) {
 		String username = getUsername();
+		userName = username;
 		String password = getPassword();
 
 		// Call userlogin() in the wrapper class to check is the user exists and
